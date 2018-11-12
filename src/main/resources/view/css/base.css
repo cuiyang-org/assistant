@@ -1,0 +1,60 @@
+.root {
+    -fx-base: #3C3F41;
+    -fx-background: -fx-base;
+    -fx-control-inner-background: #323232;
+    -fx-accent: #4B6EAF;
+    -fx-focus-color: -fx-accent;
+    -fx-cell-focus-inner-border: -fx-accent;
+}
+
+/* 按钮 */
+.button {
+    -fx-cursor: hand;
+    -fx-background-color: -fx-base;
+}
+.button:hover {
+    -fx-background-color: -fx-accent;
+}
+.selected {
+    -fx-background-color: #515658;
+}
+
+/** 滚动条 */
+.scroll-bar > .increment-button,
+.scroll-bar > .decrement-button,
+.scroll-bar:horizontal,
+.scroll-bar:vertical,
+.scroll-bar:horizontal .track ,
+.scroll-bar:vertical .track,
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: -fx-control-inner-background;
+}
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #545454;
+    -fx-background-radius: 2px;
+}
+
+/* 文本域 */
+.text-area, .text-area .scroll-pane .content {
+    -fx-background-color: -fx-control-inner-background;
+}
+
+/* 树 */
+.tree-view, .tree-view:focused {
+    -fx-background-color: -fx-control-inner-background;
+    -fx-background-insets: -1.4, 0, 1;
+    -fx-background-radius: 1.4, 0, 0;
+    -fx-padding: 1;
+}
+.tree-view:focused {
+    -fx-background-color: -fx-control-inner-background;
+}
+.tree-cell:filled:selected {
+    -fx-background-color: #515658;
+    -fx-text-fill: #ffffff;
+}
+.tree-cell > .tree-disclosure-node > .arrow {
+    -fx-background-color: #ffffff;
+}
