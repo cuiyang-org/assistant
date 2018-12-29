@@ -12,6 +12,7 @@
                     <Insets bottom="5" left="5" right="5" top="5"/>
                 </padding>
                 <Button onMouseClicked="#switchTab" styleClass="selected" text="JSON"/>
+                <Button onMouseClicked="#switchTab" text="HTML"/>
                 <Button onMouseClicked="#switchTab" text="编码转换"/>
                 <Button onMouseClicked="#switchTab" text="加解密"/>
                 <!--<Button onMouseClicked="#switchTab" text="正则匹配"/>-->
@@ -22,76 +23,13 @@
     <center>
         <StackPane fx:id="container">
             <!-- json -->
-            <HBox spacing="5">
-                <padding>
-                    <Insets bottom="5" left="5" right="5" top="5"/>
-                </padding>
-                <VBox HBox.hgrow="ALWAYS">
-                    <HBox alignment="CENTER_LEFT" spacing="1">
-                        <padding>
-                            <Insets bottom="5" right="5"/>
-                        </padding>
-                        <Button onMouseClicked="#jsonFormat" text="格式化"/>
-                        <Button onMouseClicked="#jsonSimple" text="去格式化"/>
-                    </HBox>
-                    <TextArea fx:id="jsonTextArea" wrapText="true" VBox.vgrow="ALWAYS"/>
-                </VBox>
-                <Separator orientation="VERTICAL"/>
-                <VBox HBox.hgrow="ALWAYS">
-                    <HBox alignment="CENTER_LEFT" spacing="1">
-                        <padding>
-                            <Insets bottom="5" right="5"/>
-                        </padding>
-                        <Button onMouseClicked="#jsonFold" text="折叠"/>
-                        <Button onMouseClicked="#jsonExpanded" text="展开"/>
-                    </HBox>
-                    <TreeView fx:id="jsonTreeView" VBox.vgrow="ALWAYS">
-                        <contextMenu>
-                            <ContextMenu>
-                                <items><MenuItem text="复制" onAction="#copyJson"/></items>
-                                <items><MenuItem text="复制值" onAction="#copyJsonValue"/></items>
-                                <items><MenuItem text="复制名字" onAction="#copyJsonName"/></items>
-                            </ContextMenu>
-                        </contextMenu>
-                    </TreeView>
-                </VBox>
-            </HBox>
-
+            <fx:include source="json.fxml" fx:id="json"/>
+            <!-- html -->
+            <fx:include source="html.fxml"/>
             <!-- 编码 -->
-            <VBox spacing="5" visible="false">
-                <padding>
-                    <Insets bottom="5" left="5" right="5" top="5"/>
-                </padding>
-                <TextArea fx:id="encodeInput" wrapText="true" VBox.vgrow="ALWAYS"/>
-                <HBox alignment="CENTER_LEFT" spacing="1">
-                    <Button onMouseClicked="#encodeExchange" text="互换"/>
-                    <Button onMouseClicked="#encodeOrDecode" text="URLEncode"/>
-                    <Button onMouseClicked="#encodeOrDecode" text="URLDecode"/>
-                    <Button onMouseClicked="#encodeOrDecode" text="Base64Encode"/>
-                    <Button onMouseClicked="#encodeOrDecode" text="Base64Decode"/>
-                    <Button onMouseClicked="#encodeOrDecode" text="UnicodeEncode"/>
-                    <Button onMouseClicked="#encodeOrDecode" text="UnicodeDecode"/>
-                </HBox>
-                <TextArea fx:id="encodeOutput" wrapText="true" VBox.vgrow="ALWAYS"/>
-            </VBox>
-
+            <fx:include source="encode.fxml"/>
             <!-- 加解密 -->
-            <VBox spacing="5" visible="false">
-                <padding>
-                    <Insets bottom="5" left="5" right="5" top="5"/>
-                </padding>
-                <TextArea fx:id="encryptionInput" wrapText="true" VBox.vgrow="ALWAYS"/>
-                <HBox alignment="CENTER_LEFT" spacing="1">
-                    <Button onMouseClicked="#encryptionExchange" text="互换"/>
-                    <Button onMouseClicked="#digest" text="MD2"/>
-                    <Button onMouseClicked="#digest" text="MD5"/>
-                    <Button onMouseClicked="#digest" text="SHA-1"/>
-                    <Button onMouseClicked="#digest" text="SHA-256"/>
-                    <Button onMouseClicked="#digest" text="SHA-384"/>
-                    <Button onMouseClicked="#digest" text="SHA-512"/>
-                </HBox>
-                <TextArea fx:id="encryptionOutput" wrapText="true" VBox.vgrow="ALWAYS"/>
-            </VBox>
+            <fx:include source="encryption.fxml"/>
         </StackPane>
     </center>
     <bottom>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<HBox spacing="5" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.cuiyang.assistant.controller.JsonController">
+    <padding>
+        <Insets bottom="5" left="5" right="5" top="5"/>
+    </padding>
+    <VBox HBox.hgrow="ALWAYS">
+        <HBox alignment="CENTER_LEFT" spacing="1">
+            <padding>
+                <Insets bottom="5" right="5"/>
+            </padding>
+            <Button onMouseClicked="#jsonFormat" text="格式化"/>
+            <Button onMouseClicked="#jsonSimple" text="去格式化"/>
+        </HBox>
+        <TextArea fx:id="jsonTextArea" wrapText="true" VBox.vgrow="ALWAYS"/>
+    </VBox>
+    <Separator orientation="VERTICAL"/>
+    <VBox HBox.hgrow="ALWAYS">
+        <HBox alignment="CENTER_LEFT" spacing="1">
+            <padding>
+                <Insets bottom="5" right="5"/>
+            </padding>
+            <Button onMouseClicked="#jsonFold" text="折叠"/>
+            <Button onMouseClicked="#jsonExpanded" text="展开"/>
+        </HBox>
+        <TreeView fx:id="jsonTreeView" VBox.vgrow="ALWAYS">
+            <contextMenu>
+                <ContextMenu>
+                    <items><MenuItem text="复制" onAction="#copyJson"/></items>
+                    <items><MenuItem text="复制值" onAction="#copyJsonValue"/></items>
+                    <items><MenuItem text="复制名字" onAction="#copyJsonName"/></items>
+                </ContextMenu>
+            </contextMenu>
+        </TreeView>
+    </VBox>
+</HBox>

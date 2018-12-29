@@ -29,6 +29,7 @@
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
     -fx-background-color: -fx-control-inner-background;
+    -fx-font-size: 12;
 }
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
@@ -39,6 +40,7 @@
 /* 文本域 */
 .text-area, .text-area .scroll-pane .content {
     -fx-background-color: -fx-control-inner-background;
+    -fx-font-size: 13;
 }
 
 /* 树 */
@@ -47,6 +49,7 @@
     -fx-background-insets: -1.4, 0, 1;
     -fx-background-radius: 1.4, 0, 0;
     -fx-padding: 1;
+    -fx-font-size: 13;
 }
 .tree-view:focused {
     -fx-background-color: -fx-control-inner-background;

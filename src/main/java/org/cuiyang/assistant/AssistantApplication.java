@@ -23,7 +23,7 @@ public class AssistantApplication extends Application {
         MainController controller = fxmlLoader.getController();
         controller.init();
         primaryStage.setScene(new Scene(root));
-        primaryStage.setTitle("Assistant");
+        primaryStage.setTitle("小助手");
         primaryStage.setWidth(1200);
         primaryStage.setHeight(800);
         primaryStage.show();
