@@ -24,8 +24,8 @@ public class AssistantApplication extends Application {
         controller.init();
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Assistant");
-        primaryStage.setWidth(1000);
-        primaryStage.setHeight(750);
+        primaryStage.setWidth(1200);
+        primaryStage.setHeight(800);
         primaryStage.show();
     }
 }
