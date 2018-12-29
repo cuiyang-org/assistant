@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.cuiyang.assistant.controller.MainController;
 import org.cuiyang.assistant.util.ResourceUtils;
@@ -27,5 +28,19 @@ public class AssistantApplication extends Application {
         primaryStage.setWidth(1200);
         primaryStage.setHeight(800);
         primaryStage.show();
+
+        // 设置快捷键
+        setShortcutKey(root, controller);
+    }
+
+    /**
+     * 设置快捷键
+     */
+    private void setShortcutKey(Parent parent, MainController controller) {
+        parent.setOnKeyPressed(event -> {
+            if (event.isControlDown() && KeyCode.TAB.equals(event.getCode())) {
+                controller.switchNextTab();
+            }
+        });
     }
 }

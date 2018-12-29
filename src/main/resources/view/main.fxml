@@ -7,7 +7,7 @@
             fx:controller="org.cuiyang.assistant.controller.MainController">
     <top>
         <VBox>
-            <HBox alignment="CENTER_LEFT" spacing="5">
+            <HBox alignment="CENTER_LEFT" spacing="5" fx:id="menuContainer">
                 <padding>
                     <Insets bottom="5" left="5" right="5" top="5"/>
                 </padding>
@@ -21,7 +21,7 @@
         </VBox>
     </top>
     <center>
-        <StackPane fx:id="container">
+        <StackPane fx:id="tabContainer">
             <!-- json -->
             <fx:include source="json.fxml" fx:id="json"/>
             <!-- html -->

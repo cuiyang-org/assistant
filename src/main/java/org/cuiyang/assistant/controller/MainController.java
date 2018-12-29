@@ -17,9 +17,13 @@ public class MainController {
     public JsonController jsonController;
 
     /** tab容器 */
-    public Pane container;
+    public Pane tabContainer;
+    /** 按钮容器 */
+    public Pane menuContainer;
     /** json */
     public HBox json;
+
+    private int tabIndex;
 
     public void init() {
         jsonController.init();
@@ -30,24 +34,42 @@ public class MainController {
      */
     public void switchTab(MouseEvent mouseEvent) {
         Node source = (Node) mouseEvent.getSource();
-        Pane parent = (Pane) source.getParent();
-        ObservableList<Node> children = parent.getChildren();
+        ObservableList<Node> children = menuContainer.getChildren();
         for (int i = 0; i < children.size(); i++) {
-            children.get(i).getStyleClass().remove("selected");
             if (source == children.get(i)) {
+                this.tabIndex = i;
                 show(i);
+                break;
             }
         }
-        source.getStyleClass().add("selected");
+    }
+
+    /**
+     * 切换到下一个tab
+     */
+    public void switchNextTab() {
+        if (++this.tabIndex >= menuContainer.getChildren().size()) {
+            this.tabIndex = 0;
+        }
+        show(this.tabIndex);
     }
 
     /**
      * 显示对应的tab
      */
     private void show(int index) {
-        ObservableList<Node> children = container.getChildren();
-        for (int i = 0; i < children.size(); i++) {
-            children.get(i).setVisible(i == index);
+        ObservableList<Node> tabChildren = tabContainer.getChildren();
+        for (int i = 0; i < tabChildren.size(); i++) {
+            tabChildren.get(i).setVisible(i == index);
+        }
+
+        ObservableList<Node> menuChildren = menuContainer.getChildren();
+        for (int i = 0; i < menuChildren.size(); i++) {
+            if (i == index) {
+                menuChildren.get(index).getStyleClass().add("selected");
+            } else {
+                menuChildren.get(i).getStyleClass().remove("selected");
+            }
         }
     }
 
