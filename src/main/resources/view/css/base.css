@@ -41,6 +41,15 @@
 .text-area, .text-area .scroll-pane .content {
     -fx-background-color: -fx-control-inner-background;
     -fx-font-size: 13;
+    -fx-prompt-text-fill: #ffffff;
+}
+
+/* 文本框 */
+.text-field {
+    -fx-prompt-text-fill: gray;
+}
+.text-field:focused {
+    -fx-background-insets: 0, 0 0 0 0;
 }
 
 /* 树 */

@@ -5,16 +5,32 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox HBox.hgrow="ALWAYS" visible="false" xmlns:fx="http://javafx.com/fxml/1"
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<HBox spacing="5" visible="false" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.cuiyang.assistant.controller.HtmlController">
     <padding>
         <Insets bottom="5" left="5" right="5" top="5"/>
     </padding>
-    <HBox alignment="CENTER_LEFT" spacing="1">
-        <padding>
-            <Insets bottom="5" right="5"/>
-        </padding>
-        <Button onMouseClicked="#htmlFormat" text="格式化"/>
-    </HBox>
-    <TextArea fx:id="htmlTextArea" VBox.vgrow="ALWAYS"/>
-</VBox>
+    <VBox HBox.hgrow="ALWAYS">
+        <HBox alignment="CENTER_LEFT" spacing="1">
+            <padding>
+                <Insets bottom="5" right="5"/>
+            </padding>
+            <Button onMouseClicked="#htmlFormat" text="格式化"/>
+        </HBox>
+        <TextArea fx:id="htmlTextArea" VBox.vgrow="ALWAYS"/>
+    </VBox>
+    <Separator orientation="VERTICAL"/>
+    <VBox>
+        <HBox alignment="CENTER_LEFT" spacing="5">
+            <padding>
+                <Insets bottom="5" right="5"/>
+            </padding>
+            <TextField HBox.hgrow="ALWAYS" fx:id="cssQueryTextField" promptText="请输入CSS选择器" onKeyReleased="#cssQuery"/>
+            <Button onMouseClicked="#cssQuery" text="查询"/>
+            <Button onMouseClicked="#openCssManual" text="手册"/>
+        </HBox>
+        <TextArea fx:id="cssQueryTextArea" VBox.vgrow="ALWAYS"/>
+    </VBox>
+</HBox>
