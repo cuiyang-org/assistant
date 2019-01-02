@@ -41,7 +41,7 @@
 .text-area, .text-area .scroll-pane .content {
     -fx-background-color: -fx-control-inner-background;
     -fx-font-size: 13;
-    -fx-prompt-text-fill: #ffffff;
+    -fx-prompt-text-fill: gray;
 }
 
 /* 文本框 */
@@ -50,6 +50,17 @@
 }
 .text-field:focused {
     -fx-background-insets: 0, 0 0 0 0;
+}
+
+/* 复选框 */
+.check-box {
+    -fx-cursor: hand;
+}
+.check-box > .box {
+    -fx-background-color: -fx-control-inner-background;
+}
+.check-box:hover > .box > .mark {
+    -fx-background-color: #ffffff;
 }
 
 /* 树 */

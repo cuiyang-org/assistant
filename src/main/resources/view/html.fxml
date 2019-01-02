@@ -19,7 +19,7 @@
             </padding>
             <Button onMouseClicked="#htmlFormat" text="格式化"/>
         </HBox>
-        <TextArea fx:id="htmlTextArea" VBox.vgrow="ALWAYS"/>
+        <TextArea fx:id="htmlTextArea" VBox.vgrow="ALWAYS" promptText="请输入html"/>
     </VBox>
     <Separator orientation="VERTICAL"/>
     <VBox>
@@ -29,8 +29,9 @@
             </padding>
             <TextField HBox.hgrow="ALWAYS" fx:id="cssQueryTextField" promptText="请输入CSS选择器" onKeyReleased="#cssQuery"/>
             <Button onMouseClicked="#cssQuery" text="查询"/>
+            <Separator orientation="VERTICAL"/>
             <Button onMouseClicked="#openCssManual" text="手册"/>
         </HBox>
-        <TextArea fx:id="cssQueryTextArea" VBox.vgrow="ALWAYS"/>
+        <TextArea fx:id="cssQueryTextArea" VBox.vgrow="ALWAYS" promptText="css选择结果"/>
     </VBox>
 </HBox>

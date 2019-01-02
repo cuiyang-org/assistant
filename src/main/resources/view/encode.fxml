@@ -9,7 +9,7 @@
     <padding>
         <Insets bottom="5" left="5" right="5" top="5"/>
     </padding>
-    <TextArea fx:id="encodeInput" wrapText="true" VBox.vgrow="ALWAYS"/>
+    <TextArea fx:id="encodeInput" wrapText="true" VBox.vgrow="ALWAYS" promptText="请输入要编码/解码的内容"/>
     <HBox alignment="CENTER_LEFT" spacing="1">
         <Button onMouseClicked="#encodeExchange" text="互换"/>
         <Button onMouseClicked="#encodeOrDecode" text="URLEncode"/>
@@ -19,5 +19,5 @@
         <Button onMouseClicked="#encodeOrDecode" text="UnicodeEncode"/>
         <Button onMouseClicked="#encodeOrDecode" text="UnicodeDecode"/>
     </HBox>
-    <TextArea fx:id="encodeOutput" wrapText="true" VBox.vgrow="ALWAYS"/>
+    <TextArea fx:id="encodeOutput" wrapText="true" VBox.vgrow="ALWAYS" promptText="编码/解码结果"/>
 </VBox>

@@ -13,9 +13,9 @@
                 </padding>
                 <Button onMouseClicked="#switchTab" styleClass="selected" text="JSON"/>
                 <Button onMouseClicked="#switchTab" text="HTML"/>
+                <Button onMouseClicked="#switchTab" text="正则"/>
                 <Button onMouseClicked="#switchTab" text="编码转换"/>
                 <Button onMouseClicked="#switchTab" text="加解密"/>
-                <!--<Button onMouseClicked="#switchTab" text="正则匹配"/>-->
             </HBox>
             <Separator/>
         </VBox>
@@ -26,6 +26,8 @@
             <fx:include source="json.fxml" fx:id="json"/>
             <!-- html -->
             <fx:include source="html.fxml"/>
+            <!-- 正则 -->
+            <fx:include source="regex.fxml"/>
             <!-- 编码 -->
             <fx:include source="encode.fxml"/>
             <!-- 加解密 -->

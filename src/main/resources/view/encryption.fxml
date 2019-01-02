@@ -9,7 +9,7 @@
     <padding>
         <Insets bottom="5" left="5" right="5" top="5"/>
     </padding>
-    <TextArea fx:id="encryptionInput" wrapText="true" VBox.vgrow="ALWAYS"/>
+    <TextArea fx:id="encryptionInput" wrapText="true" VBox.vgrow="ALWAYS" promptText="请输入要加密/解码的内容"/>
     <HBox alignment="CENTER_LEFT" spacing="1">
         <Button onMouseClicked="#encryptionExchange" text="互换"/>
         <Button onMouseClicked="#digest" text="MD2"/>
@@ -19,5 +19,5 @@
         <Button onMouseClicked="#digest" text="SHA-384"/>
         <Button onMouseClicked="#digest" text="SHA-512"/>
     </HBox>
-    <TextArea fx:id="encryptionOutput" wrapText="true" VBox.vgrow="ALWAYS"/>
+    <TextArea fx:id="encryptionOutput" wrapText="true" VBox.vgrow="ALWAYS" promptText="加密/解码结果"/>
 </VBox>

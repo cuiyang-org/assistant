@@ -16,7 +16,7 @@
             <Button onMouseClicked="#jsonFormat" text="格式化"/>
             <Button onMouseClicked="#jsonSimple" text="去格式化"/>
         </HBox>
-        <TextArea fx:id="jsonTextArea" wrapText="true" VBox.vgrow="ALWAYS"/>
+        <TextArea fx:id="jsonTextArea" wrapText="true" VBox.vgrow="ALWAYS" promptText="请输入json串"/>
     </VBox>
     <Separator orientation="VERTICAL"/>
     <VBox HBox.hgrow="ALWAYS">
