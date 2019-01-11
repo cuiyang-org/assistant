@@ -6,6 +6,9 @@
     -fx-focus-color: -fx-accent;
     -fx-cell-focus-inner-border: -fx-accent;
 }
+*:focused {
+    -fx-background-insets: 0, 0 0 0 0;
+}
 
 /* 按钮 */
 .button {
@@ -48,9 +51,6 @@
 .text-field {
     -fx-prompt-text-fill: gray;
 }
-.text-field:focused {
-    -fx-background-insets: 0, 0 0 0 0;
-}
 
 /* 复选框 */
 .check-box {
@@ -61,6 +61,15 @@
 }
 .check-box:hover > .box > .mark {
     -fx-background-color: #ffffff;
+}
+
+/** 下拉列表 */
+.combo-box {
+    -fx-cursor: hand;
+    -fx-background-insets: 0, 0 0 0 0;
+}
+.combo-box-popup > .list-view {
+    -fx-cursor: hand;
 }
 
 /* 树 */

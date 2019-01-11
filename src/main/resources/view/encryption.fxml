@@ -4,20 +4,75 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <VBox spacing="5" visible="false" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.cuiyang.assistant.controller.EncryptionController">
     <padding>
         <Insets bottom="5" left="5" right="5" top="5"/>
     </padding>
-    <TextArea fx:id="encryptionInput" wrapText="true" VBox.vgrow="ALWAYS" promptText="请输入要加密/解码的内容"/>
-    <HBox alignment="CENTER_LEFT" spacing="1">
-        <Button onMouseClicked="#encryptionExchange" text="互换"/>
-        <Button onMouseClicked="#digest" text="MD2"/>
-        <Button onMouseClicked="#digest" text="MD5"/>
-        <Button onMouseClicked="#digest" text="SHA-1"/>
-        <Button onMouseClicked="#digest" text="SHA-256"/>
-        <Button onMouseClicked="#digest" text="SHA-384"/>
-        <Button onMouseClicked="#digest" text="SHA-512"/>
+    <TextArea fx:id="encryptionInput" wrapText="true" VBox.vgrow="ALWAYS" promptText="请输入要加密/解码的内容" onKeyReleased="#encryptionAndDecryption"/>
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <HBox alignment="CENTER_LEFT" spacing="5">
+            <Label text="算法" textFill="gray"/>
+            <ComboBox fx:id="algorithmComboBox" value="MD5" onAction="#encryptionAndDecryption">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="MD2" />
+                        <String fx:value="MD5" />
+                        <String fx:value="SHA-1" />
+                        <String fx:value="SHA-256" />
+                        <String fx:value="SHA-384" />
+                        <String fx:value="SHA-512" />
+                        <String fx:value="DES" />
+                        <String fx:value="AES" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="10" fx:id="desAndAesOptionHBox" visible="false">
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <Label text="模式" textFill="gray" />
+                <ComboBox fx:id="modeComboBox" value="ECB" onAction="#encryptionAndDecryption">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="ECB" />
+                            <String fx:value="CBC" />
+                            <String fx:value="CTR" />
+                            <String fx:value="OFB" />
+                            <String fx:value="CFB" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <Label text="填充" textFill="gray" />
+                <ComboBox fx:id="paddingComboBox" value="pkcs5padding" onAction="#encryptionAndDecryption">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="pkcs5padding" />
+                            <String fx:value="pkcs7padding" />
+                            <String fx:value="zeropadding" />
+                            <String fx:value="iso10126" />
+                            <String fx:value="ansix923" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </HBox>
+            <TextField fx:id="keyTextField" HBox.hgrow="ALWAYS" promptText="密码" onKeyReleased="#encryptionAndDecryption"/>
+            <TextField fx:id="ivTextField" HBox.hgrow="ALWAYS" promptText="偏移量，ECB模式不用" onKeyReleased="#encryptionAndDecryption"/>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <Label text="输出" textFill="gray" />
+                <ComboBox fx:id="outputComboBox" value="base64" onAction="#encryptionAndDecryption">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="base64" />
+                            <String fx:value="hex" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </HBox>
+        </HBox>
     </HBox>
     <TextArea fx:id="encryptionOutput" wrapText="true" VBox.vgrow="ALWAYS" promptText="加密/解码结果"/>
 </VBox>
