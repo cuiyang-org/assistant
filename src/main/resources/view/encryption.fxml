@@ -26,7 +26,8 @@
                         <String fx:value="SHA-512" />
                         <String fx:value="To DES" />
                         <String fx:value="From DES" />
-                        <String fx:value="AES" />
+                        <String fx:value="To AES" />
+                        <String fx:value="From AES" />
                     </FXCollections>
                 </items>
             </ComboBox>
