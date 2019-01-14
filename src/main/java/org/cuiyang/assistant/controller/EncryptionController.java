@@ -91,10 +91,10 @@ public class EncryptionController {
                         encryptionOutput.setText("");
                     }
                     break;
-                case "DES" :
+                case "To DES" :
                     desAndAesOptionHBox.setVisible(true);
                     if (StringUtils.isNotEmpty(encryptionInput.getText()) && StringUtils.isNotEmpty(keyTextField.getText())) {
-                        DesUtils.DEFAULT_TRANSFORMATION = algorithmComboBox.getValue() + "/" + modeComboBox.getValue() + "/" + paddingComboBox.getValue();
+                        DesUtils.DEFAULT_TRANSFORMATION = "DES/" + modeComboBox.getValue() + "/" + paddingComboBox.getValue();
                         byte[] iv = null;
                         if (StringUtils.isNotEmpty(ivTextField.getText())) {
                             iv = ivTextField.getText().getBytes();
@@ -105,6 +105,26 @@ public class EncryptionController {
                         } else if ("hex".equals(outputComboBox.getValue())) {
                             encryptionOutput.setText(Hex.encodeHexString(encrypt));
                         }
+                    } else {
+                        encryptionOutput.setText("");
+                    }
+                    break;
+                case "From DES" :
+                    desAndAesOptionHBox.setVisible(true);
+                    if (StringUtils.isNotEmpty(encryptionInput.getText()) && StringUtils.isNotEmpty(keyTextField.getText())) {
+                        DesUtils.DEFAULT_TRANSFORMATION = "DES/" + modeComboBox.getValue() + "/" + paddingComboBox.getValue();
+                        byte[] iv = null;
+                        if (StringUtils.isNotEmpty(ivTextField.getText())) {
+                            iv = ivTextField.getText().getBytes();
+                        }
+                        byte[] data = null;
+                        if ("base64".equals(outputComboBox.getValue())) {
+                            data = Base64.getDecoder().decode(encryptionInput.getText());
+                        } else if ("hex".equals(outputComboBox.getValue())) {
+                            data = Hex.decodeHex(encryptionInput.getText().toCharArray());
+                        }
+                        byte[] decrypt = DesUtils.decrypt(data, keyTextField.getText().getBytes(), iv);
+                        encryptionOutput.setText(new String(decrypt));
                     } else {
                         encryptionOutput.setText("");
                     }

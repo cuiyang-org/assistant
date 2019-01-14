@@ -24,7 +24,8 @@
                         <String fx:value="SHA-256" />
                         <String fx:value="SHA-384" />
                         <String fx:value="SHA-512" />
-                        <String fx:value="DES" />
+                        <String fx:value="To DES" />
+                        <String fx:value="From DES" />
                         <String fx:value="AES" />
                     </FXCollections>
                 </items>
