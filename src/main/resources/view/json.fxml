@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import org.cuiyang.assistant.control.texteditor.TextEditor?>
 <HBox spacing="5" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.cuiyang.assistant.controller.JsonController">
     <padding>
@@ -16,7 +17,7 @@
             <Button onMouseClicked="#jsonFormat" text="格式化"/>
             <Button onMouseClicked="#jsonSimple" text="去格式化"/>
         </HBox>
-        <TextArea fx:id="jsonTextArea" wrapText="true" VBox.vgrow="ALWAYS" promptText="请输入json串"/>
+        <TextEditor fx:id="jsonTextArea" VBox.vgrow="ALWAYS"/>
     </VBox>
     <Separator orientation="VERTICAL"/>
     <VBox HBox.hgrow="ALWAYS">

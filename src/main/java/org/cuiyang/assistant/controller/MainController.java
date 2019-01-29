@@ -13,21 +13,14 @@ import javafx.scene.layout.Pane;
  */
 public class MainController {
 
-    /** json 控制器 */
-    public JsonController jsonController;
-
     /** tab容器 */
     public Pane tabContainer;
     /** 按钮容器 */
     public Pane menuContainer;
     /** json */
     public HBox json;
-
+    /** tab索引 */
     private int tabIndex;
-
-    public void init() {
-        jsonController.init();
-    }
 
     /**
      * 切换tab

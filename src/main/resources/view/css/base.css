@@ -46,6 +46,10 @@
     -fx-font-size: 13;
     -fx-prompt-text-fill: gray;
 }
+.text-input, .text-input:focused {
+    -fx-highlight-fill: -fx-accent;
+    -fx-highlight-text-fill: white;
+}
 
 /* 文本框 */
 .text-field {

@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import org.cuiyang.assistant.control.texteditor.TextEditor?>
 <HBox spacing="5" visible="false" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.cuiyang.assistant.controller.HtmlController">
     <padding>
@@ -19,7 +20,7 @@
             </padding>
             <Button onMouseClicked="#htmlFormat" text="格式化"/>
         </HBox>
-        <TextArea fx:id="htmlTextArea" VBox.vgrow="ALWAYS" promptText="请输入html"/>
+        <TextEditor fx:id="htmlTextArea" VBox.vgrow="ALWAYS"/>
     </VBox>
     <Separator orientation="VERTICAL"/>
     <VBox>

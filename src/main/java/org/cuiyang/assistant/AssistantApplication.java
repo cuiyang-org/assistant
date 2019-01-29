@@ -23,7 +23,6 @@ public class AssistantApplication extends Application {
         fxmlLoader.setLocation(ResourceUtils.getResource("view/main.fxml"));
         Parent root = fxmlLoader.load();
         MainController controller = fxmlLoader.getController();
-        controller.init();
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("小助手");
         primaryStage.getIcons().add(new Image(this.getClass().getClassLoader().getResourceAsStream("logo.png")));
