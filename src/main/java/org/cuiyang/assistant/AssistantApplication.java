@@ -17,6 +17,8 @@ import org.cuiyang.assistant.util.ResourceUtils;
  */
 public class AssistantApplication extends Application {
 
+    private static int num = 0;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -24,7 +26,7 @@ public class AssistantApplication extends Application {
         Parent root = fxmlLoader.load();
         MainController controller = fxmlLoader.getController();
         primaryStage.setScene(new Scene(root));
-        primaryStage.setTitle("小助手");
+        primaryStage.setTitle("iToolBox" + (++num > 1 ? num : ""));
         primaryStage.getIcons().add(new Image(this.getClass().getClassLoader().getResourceAsStream("logo.png")));
         primaryStage.setWidth(1200);
         primaryStage.setHeight(800);
@@ -43,5 +45,9 @@ public class AssistantApplication extends Application {
                 controller.switchNextTab();
             }
         });
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }

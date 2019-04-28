@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<VBox spacing="5" visible="false" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.cuiyang.assistant.controller.IdController">
+    <padding>
+        <Insets bottom="5" left="5" right="5" top="5"/>
+    </padding>
+    <HBox alignment="CENTER_LEFT" spacing="1">
+        <Button onMouseClicked="#uuid" text="UUID"/>
+        <Button onMouseClicked="#uuid2" text="UUID2"/>
+        <Button onMouseClicked="#timestamp" text="时间戳"/>
+        <Button onMouseClicked="#datetime" text="日期"/>
+    </HBox>
+    <TextArea fx:id="idOutput" wrapText="true" VBox.vgrow="ALWAYS" promptText="ID"/>
+</VBox>

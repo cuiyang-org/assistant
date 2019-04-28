@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.cuiyang.assistant.control.texteditor.TextEditor?>
-<AnchorPane visible="false" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.JsonController">
+<AnchorPane visible="false" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.CookieController">
     <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
         <padding>
             <Insets bottom="5" left="5" right="5" top="5"/>
@@ -17,10 +17,10 @@
                 <padding>
                     <Insets bottom="5" right="5"/>
                 </padding>
-                <Button onMouseClicked="#jsonFormat" text="格式化"/>
-                <Button onMouseClicked="#jsonSimple" text="去格式化"/>
+                <Button onMouseClicked="#cookieFormat" text="格式化"/>
+                <Button onMouseClicked="#cookieSimple" text="去格式化"/>
             </HBox>
-            <TextEditor fx:id="jsonTextArea" VBox.vgrow="ALWAYS"/>
+            <TextEditor fx:id="cookieTextArea" VBox.vgrow="ALWAYS"/>
         </VBox>
         <VBox>
             <padding>
@@ -30,15 +30,15 @@
                 <padding>
                     <Insets bottom="5" right="5"/>
                 </padding>
-                <Button onMouseClicked="#jsonFold" text="折叠"/>
-                <Button onMouseClicked="#jsonExpanded" text="展开"/>
+                <Button onMouseClicked="#cookieFold" text="折叠"/>
+                <Button onMouseClicked="#cookieExpanded" text="展开"/>
             </HBox>
-            <TreeView fx:id="jsonTreeView" VBox.vgrow="ALWAYS">
+            <TreeView fx:id="cookieTreeView" VBox.vgrow="ALWAYS">
                 <contextMenu>
                     <ContextMenu>
-                        <items><MenuItem text="复制" onAction="#copyJson"/></items>
-                        <items><MenuItem text="复制值" onAction="#copyJsonValue"/></items>
-                        <items><MenuItem text="复制名字" onAction="#copyJsonName"/></items>
+                        <items><MenuItem text="复制" onAction="#copyCookie"/></items>
+                        <items><MenuItem text="复制值" onAction="#copyCookieValue"/></items>
+                        <items><MenuItem text="复制名字" onAction="#copyCookieName"/></items>
                     </ContextMenu>
                 </contextMenu>
             </TreeView>

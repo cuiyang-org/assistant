@@ -1,24 +1,27 @@
 package org.cuiyang.assistant.controller;
 
 import javafx.collections.ObservableList;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import org.cuiyang.assistant.AssistantApplication;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * MainController
  *
  * @author cy48576
  */
-public class MainController {
+public class MainController implements Initializable {
 
     /** tab容器 */
     public Pane tabContainer;
     /** 按钮容器 */
     public Pane menuContainer;
-    /** json */
-    public HBox json;
     /** tab索引 */
     private int tabIndex;
 
@@ -66,4 +69,16 @@ public class MainController {
         }
     }
 
+    /**
+     * 多开
+     */
+    public void moreOpen() throws Exception {
+        AssistantApplication application = new AssistantApplication();
+        application.start(new Stage());
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        show(0);
+    }
 }

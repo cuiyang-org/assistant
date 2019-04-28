@@ -11,11 +11,15 @@
                 <padding>
                     <Insets bottom="5" left="5" right="5" top="5"/>
                 </padding>
-                <Button onMouseClicked="#switchTab" styleClass="selected" text="JSON"/>
+                <Button onMouseClicked="#switchTab" text="JSON"/>
                 <Button onMouseClicked="#switchTab" text="HTML"/>
+                <Button onMouseClicked="#switchTab" text="Cookie"/>
+                <Button onMouseClicked="#switchTab" text="表单"/>
                 <Button onMouseClicked="#switchTab" text="正则"/>
                 <Button onMouseClicked="#switchTab" text="编码转换"/>
                 <Button onMouseClicked="#switchTab" text="加解密"/>
+                <Button onMouseClicked="#switchTab" text="ID生成器"/>
+                <Button onMouseClicked="#moreOpen" text="多开"/>
             </HBox>
             <Separator/>
         </VBox>
@@ -23,15 +27,21 @@
     <center>
         <StackPane fx:id="tabContainer">
             <!-- json -->
-            <fx:include source="json.fxml" fx:id="json"/>
+            <fx:include source="json.fxml"/>
             <!-- html -->
             <fx:include source="html.fxml"/>
+            <!-- cookie  -->
+            <fx:include source="cookie.fxml"/>
+            <!-- 表单 -->
+            <fx:include source="form.fxml"/>
             <!-- 正则 -->
             <fx:include source="regex.fxml"/>
             <!-- 编码 -->
             <fx:include source="encode.fxml"/>
             <!-- 加解密 -->
             <fx:include source="encryption.fxml"/>
+            <!-- ID生成器 -->
+            <fx:include source="id.fxml"/>
         </StackPane>
     </center>
     <bottom>

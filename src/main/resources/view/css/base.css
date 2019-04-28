@@ -1,3 +1,4 @@
+/* 缺省的JavaFX CSS modena.css */
 .root {
     -fx-base: #3C3F41;
     -fx-background: -fx-base;
@@ -93,4 +94,18 @@
 }
 .tree-cell > .tree-disclosure-node > .arrow {
     -fx-background-color: #ffffff;
+}
+
+/* SplitPane */
+.split-pane {
+    -fx-background-insets: 0, 0, 0, 0;
+}
+.split-pane > .split-pane-divider {
+    -fx-padding: 0;
+    -fx-background-color: none;
+    -fx-background-insets: 0, 0 0 0 0;
+    -fx-border-color: transparent transparent transparent -fx-shadow-highlight-color,
+    transparent transparent transparent -fx-text-box-border;
+    -fx-border-width: 3, 1;
+    -fx-border-insets: 0, 0 0 0 1;
 }
