@@ -89,15 +89,23 @@ public class TextEditor extends VBox implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.getChildren().remove(search);
         this.setOnKeyReleased(event -> {
             if (event.isControlDown() && event.getCode().equals(KeyCode.F)) {
+                search.setManaged(!search.isManaged());
                 search.setVisible(!search.isVisible());
                 if (search.isVisible()) {
-                    TextEditor.this.getChildren().add(0, search);
+                    keyTextField.requestFocus();
                 } else {
-                    TextEditor.this.getChildren().remove(search);
+                    textArea.requestFocus();
                 }
+            } else if (event.getCode().equals(KeyCode.ESCAPE)) {
+                if (!search.isVisible()) {
+                    textArea.requestFocus();
+                    return;
+                }
+                search.setManaged(false);
+                search.setVisible(false);
+                textArea.requestFocus();
             }
         });
         this.keyTextField.setOnKeyReleased(event -> {

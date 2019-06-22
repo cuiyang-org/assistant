@@ -3,11 +3,14 @@ package org.cuiyang.assistant.controller;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.texteditor.TextEditor;
 import org.cuiyang.assistant.util.BrowseUtils;
 import org.jsoup.Jsoup;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -54,6 +57,15 @@ public class HtmlController implements Initializable {
      */
     public void openCssManual() {
         BrowseUtils.open("http://www.w3school.com.cn/cssref/css_selectors.asp");
+    }
+
+    /**
+     * 打开浏览器
+     */
+    public void openBrowser() throws IOException {
+        File file = new File("temp.html");
+        FileUtils.writeStringToFile(file, this.htmlTextArea.textArea.getText(), "UTF-8");
+        BrowseUtils.open(file.getPath());
     }
 
     @Override

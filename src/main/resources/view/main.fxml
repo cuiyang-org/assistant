@@ -13,6 +13,7 @@
                 </padding>
                 <Button onMouseClicked="#switchTab" text="JSON"/>
                 <Button onMouseClicked="#switchTab" text="HTML"/>
+                <Button onMouseClicked="#switchTab" text="XML"/>
                 <Button onMouseClicked="#switchTab" text="Cookie"/>
                 <Button onMouseClicked="#switchTab" text="表单"/>
                 <Button onMouseClicked="#switchTab" text="正则"/>
@@ -30,6 +31,8 @@
             <fx:include source="json.fxml"/>
             <!-- html -->
             <fx:include source="html.fxml"/>
+            <!-- xml -->
+            <fx:include source="xml.fxml"/>
             <!-- cookie  -->
             <fx:include source="cookie.fxml"/>
             <!-- 表单 -->

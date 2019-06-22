@@ -9,7 +9,7 @@
     <padding>
         <Insets bottom="5" left="5" right="5" top="5"/>
     </padding>
-    <TextArea fx:id="inputTextArea" promptText="待匹配的文本" VBox.vgrow="ALWAYS"/>
+    <TextArea fx:id="inputTextArea" promptText="待匹配的文本" VBox.vgrow="ALWAYS" onKeyReleased="#match"/>
     <HBox alignment="CENTER_LEFT" spacing="5">
         <TextField HBox.hgrow="ALWAYS" fx:id="regexTextField" promptText="正则表达式" onKeyReleased="#match"/>
         <CheckBox fx:id="ignoreCaseCheckBox" text="忽略大小写" selected="true" onMouseClicked="#match"/>

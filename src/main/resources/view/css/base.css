@@ -64,8 +64,9 @@
 .check-box > .box {
     -fx-background-color: -fx-control-inner-background;
 }
-.check-box:hover > .box > .mark {
+.check-box:selected:hover > .box > .mark {
     -fx-background-color: #ffffff;
+    -fx-background-insets: 0 0 0 0, 0;
 }
 
 /** 下拉列表 */
@@ -108,4 +109,22 @@
     transparent transparent transparent -fx-text-box-border;
     -fx-border-width: 3, 1;
     -fx-border-insets: 0, 0 0 0 1;
+}
+
+/* MenuBar */
+.menu-bar {
+    -fx-background-color: -fx-base;
+    -fx-background-insets: 0, 0 0 0 0;
+    -fx-border-color: transparent transparent -fx-shadow-highlight-color transparent,
+    transparent transparent -fx-text-box-border transparent;
+    -fx-border-insets: 0, 0 0 1 0;
+    /*-fx-font-size: 1.166em;*/
+}
+.menu-bar .menu-item > .label {
+    -fx-text-fill: -fx-text-background-color;
+}
+
+/* 自定义类 */
+.inner {
+    -fx-background-color: -fx-control-inner-background;
 }

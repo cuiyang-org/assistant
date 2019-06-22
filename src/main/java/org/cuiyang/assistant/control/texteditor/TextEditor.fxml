@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 
 <fx:root xmlns:fx="http://javafx.com/fxml/1" type="VBox" spacing="5" stylesheets="@TextEditor.css">
-    <HBox spacing="5" fx:id="search" visible="false">
+    <HBox spacing="5" fx:id="search" visible="false" managed="false">
         <TextField fx:id="keyTextField" promptText="搜索" HBox.hgrow="ALWAYS"/>
         <Button styleClass="up" onMouseClicked="#searchLast"/>
         <Button styleClass="down" onMouseClicked="#searchNext"/>

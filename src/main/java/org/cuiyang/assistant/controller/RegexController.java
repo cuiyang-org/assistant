@@ -3,6 +3,7 @@ package org.cuiyang.assistant.controller;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.util.BrowseUtils;
 
 import java.util.regex.Matcher;
@@ -45,6 +46,10 @@ public class RegexController {
      */
     public void replace() {
         try {
+            if (StringUtils.isEmpty(replaceTextField.getText())) {
+                match();
+                return;
+            }
             outputTextArea.setText(matcher().replaceAll(replaceTextField.getText()));
         } catch (Exception ignore) {
         }
