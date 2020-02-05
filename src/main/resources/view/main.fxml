@@ -54,7 +54,7 @@
                 <padding>
                     <Insets bottom="5" left="5" right="5" top="5"/>
                 </padding>
-                <Label text="v1.0" BorderPane.alignment="CENTER_LEFT"/>
+                <Label text="v${version}" BorderPane.alignment="CENTER_LEFT"/>
             </HBox>
         </VBox>
     </bottom>
