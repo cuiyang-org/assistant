@@ -48,6 +48,14 @@ public class ConfigUtils {
     }
 
     /**
+     * 设置配置并立即保存
+     */
+    public synchronized static void setAndSave(String key, String value) {
+        set(key, value);
+        save();
+    }
+
+    /**
      *  加载配置文件
      */
     public synchronized static void load() {

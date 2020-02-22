@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane stylesheets="@css/base.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.cuiyang.assistant.controller.MainController">
     <top>
@@ -20,32 +22,33 @@
                 <Button onMouseClicked="#switchTab" text="编码转换"/>
                 <Button onMouseClicked="#switchTab" text="加解密"/>
                 <Button onMouseClicked="#switchTab" text="ID生成器"/>
+                <Button onMouseClicked="#switchTab" text="逆向"/>
                 <Button onMouseClicked="#moreOpen" text="多开"/>
             </HBox>
             <Separator/>
         </VBox>
     </top>
     <center>
-        <StackPane fx:id="tabContainer">
-            <!-- json -->
-            <fx:include source="json.fxml"/>
-            <!-- html -->
-            <fx:include source="html.fxml"/>
-            <!-- xml -->
-            <fx:include source="xml.fxml"/>
-            <!-- cookie  -->
-            <fx:include source="cookie.fxml"/>
-            <!-- 表单 -->
-            <fx:include source="form.fxml"/>
-            <!-- 正则 -->
-            <fx:include source="regex.fxml"/>
-            <!-- 编码 -->
-            <fx:include source="encode.fxml"/>
-            <!-- 加解密 -->
-            <fx:include source="encryption.fxml"/>
-            <!-- ID生成器 -->
-            <fx:include source="id.fxml"/>
-        </StackPane>
+        <SplitPane fx:id="splitPane" dividerPositions="0.8" orientation="VERTICAL" styleClass="no-divider">
+            <StackPane fx:id="tabContainer">
+                <fx:include source="json.fxml"/>
+                <fx:include source="html.fxml"/>
+                <fx:include source="xml.fxml"/>
+                <fx:include source="cookie.fxml"/>
+                <fx:include source="form.fxml"/>
+                <fx:include source="regex.fxml"/>
+                <fx:include source="encode.fxml"/>
+                <fx:include source="encryption.fxml"/>
+                <fx:include source="id.fxml"/>
+                <fx:include source="reverse.fxml" fx:id="reverse"/>
+            </StackPane>
+            <VBox>
+                <padding>
+                    <Insets bottom="5" left="5" right="5" top="5"/>
+                </padding>
+                <TextArea fx:id="logOut" editable="false" VBox.vgrow="ALWAYS" promptText="日志输出"/>
+            </VBox>
+        </SplitPane >
     </center>
     <bottom>
         <VBox>
@@ -54,7 +57,13 @@
                 <padding>
                     <Insets bottom="5" left="5" right="5" top="5"/>
                 </padding>
-                <Label text="v${version}" BorderPane.alignment="CENTER_LEFT"/>
+                <Label text="v${version}"/>
+
+                <HBox HBox.hgrow="ALWAYS" alignment="CENTER_RIGHT" >
+                    <ImageView fx:id="logImageView" styleClass="pointer" onMouseClicked="#switchLogOut">
+                        <Image url="/view/image/log-open.png"/>
+                    </ImageView>
+                </HBox>
             </HBox>
         </VBox>
     </bottom>

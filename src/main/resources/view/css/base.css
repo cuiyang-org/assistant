@@ -105,10 +105,21 @@
     -fx-padding: 0;
     -fx-background-color: none;
     -fx-background-insets: 0, 0 0 0 0;
+}
+.split-pane:horizontal > .split-pane-divider {
     -fx-border-color: transparent transparent transparent -fx-shadow-highlight-color,
     transparent transparent transparent -fx-text-box-border;
     -fx-border-width: 3, 1;
     -fx-border-insets: 0, 0 0 0 1;
+}
+.split-pane:vertical > .split-pane-divider {
+    -fx-border-color: transparent transparent -fx-shadow-highlight-color transparent,
+    transparent transparent -fx-text-box-border transparent;
+    -fx-border-insets: 0, 0 0 1 0;
+}
+.no-divider > .split-pane-divider {
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
 }
 
 /* MenuBar */
@@ -127,4 +138,7 @@
 /* 自定义类 */
 .inner {
     -fx-background-color: -fx-control-inner-background;
+}
+.pointer {
+    -fx-cursor: hand;
 }

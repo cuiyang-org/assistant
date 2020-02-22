@@ -15,19 +15,27 @@ import org.cuiyang.assistant.util.ResourceUtils;
  */
 public class AssistantApplication extends Application {
 
-    private static int num = 0;
+    private static int openWindowNum = 0;
+    private static int windowNum = 0;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        openWindowNum++;
+        windowNum++;
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(ResourceUtils.getResource("view/main.fxml"));
         Parent root = fxmlLoader.load();
         primaryStage.setScene(new Scene(root));
-        primaryStage.setTitle("iToolBox" + (++num > 1 ? num : ""));
-        primaryStage.getIcons().add(new Image(this.getClass().getClassLoader().getResourceAsStream("logo.png")));
+        primaryStage.setTitle("iToolBox" + (windowNum > 1 ? windowNum : ""));
+        primaryStage.getIcons().add(new Image(ResourceUtils.getResourceAsStream("logo.png")));
         primaryStage.setWidth(1200);
         primaryStage.setHeight(800);
         primaryStage.show();
+        primaryStage.setOnCloseRequest(event -> {
+            if (--openWindowNum == 1) {
+                windowNum = 1;
+            }
+        });
     }
 
     public static void main(String[] args) {
