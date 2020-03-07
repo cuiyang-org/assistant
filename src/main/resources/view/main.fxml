@@ -5,50 +5,49 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<BorderPane stylesheets="@css/base.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane stylesheets="@css/default.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.cuiyang.assistant.controller.MainController">
     <top>
         <VBox>
-            <HBox alignment="CENTER_LEFT" spacing="5" fx:id="menuContainer">
+            <HBox alignment="CENTER_LEFT" spacing="5" fx:id="menuContainer" styleClass="menu">
                 <padding>
                     <Insets bottom="5" left="5" right="5" top="5"/>
                 </padding>
-                <Button onMouseClicked="#switchTab" text="JSON"/>
-                <Button onMouseClicked="#switchTab" text="HTML"/>
-                <Button onMouseClicked="#switchTab" text="XML"/>
-                <Button onMouseClicked="#switchTab" text="Cookie"/>
-                <Button onMouseClicked="#switchTab" text="表单"/>
-                <Button onMouseClicked="#switchTab" text="正则"/>
-                <Button onMouseClicked="#switchTab" text="编码转换"/>
-                <Button onMouseClicked="#switchTab" text="加解密"/>
-                <Button onMouseClicked="#switchTab" text="ID生成器"/>
-                <Button onMouseClicked="#switchTab" text="逆向"/>
-                <Button onMouseClicked="#moreOpen" text="多开"/>
+                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="JSON"/>
+                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="HTML"/>
+                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="XML"/>
+                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="Cookie"/>
+                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="表单"/>
+                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="正则"/>
+                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="编码转换"/>
+                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="加解密"/>
+                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="ID生成器"/>
+                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="逆向"/>
             </HBox>
             <Separator/>
         </VBox>
     </top>
     <center>
-        <SplitPane fx:id="splitPane" dividerPositions="0.8" orientation="VERTICAL" styleClass="no-divider">
+        <SplitPane fx:id="splitPane" dividerPositions="0.8" orientation="VERTICAL">
             <StackPane fx:id="tabContainer">
                 <fx:include source="json.fxml"/>
                 <fx:include source="html.fxml"/>
                 <fx:include source="xml.fxml"/>
                 <fx:include source="cookie.fxml"/>
-                <fx:include source="form.fxml"/>
+                <fx:include source="form.fxml" fx:id="form"/>
                 <fx:include source="regex.fxml"/>
                 <fx:include source="encode.fxml"/>
                 <fx:include source="encryption.fxml"/>
                 <fx:include source="id.fxml"/>
                 <fx:include source="reverse.fxml" fx:id="reverse"/>
             </StackPane>
-            <VBox>
+            <VBox fx:id="logOutParent">
                 <padding>
                     <Insets bottom="5" left="5" right="5" top="5"/>
                 </padding>
-                <TextArea fx:id="logOut" editable="false" VBox.vgrow="ALWAYS" promptText="日志输出"/>
+                <TextArea fx:id="logOut" VBox.vgrow="ALWAYS" promptText="日志输出"/>
             </VBox>
-        </SplitPane >
+        </SplitPane>
     </center>
     <bottom>
         <VBox>
@@ -58,11 +57,21 @@
                     <Insets bottom="5" left="5" right="5" top="5"/>
                 </padding>
                 <Label text="v${version}"/>
-
-                <HBox HBox.hgrow="ALWAYS" alignment="CENTER_RIGHT" >
-                    <ImageView fx:id="logImageView" styleClass="pointer" onMouseClicked="#switchLogOut">
-                        <Image url="/view/image/log-open.png"/>
-                    </ImageView>
+                <HBox HBox.hgrow="ALWAYS" alignment="CENTER_RIGHT" spacing="2">
+                    <Button onMouseClicked="#switchTheme">
+                        <graphic>
+                            <ImageView fx:id="themeImageView">
+                                <Image url="/view/image/theme-dark.png"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Button onMouseClicked="#switchLogOut">
+                        <graphic>
+                            <ImageView fx:id="logImageView">
+                                <Image url="/view/image/log-open.png"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
                 </HBox>
             </HBox>
         </VBox>

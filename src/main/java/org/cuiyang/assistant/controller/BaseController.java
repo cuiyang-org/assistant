@@ -15,6 +15,9 @@ public abstract class BaseController {
      * 输出日志
      */
     public void log(String str) {
+        if (mainController.splitPane.getItems().size() == 1) {
+            mainController.showLogOut(true);
+        }
         mainController.logOut.appendText(str);
         mainController.logOut.appendText("\r\n");
     }
@@ -23,6 +26,9 @@ public abstract class BaseController {
      * 输出异常日志
      */
     public void log(Throwable t) {
+        if (mainController.splitPane.getItems().size() == 1) {
+            mainController.showLogOut(true);
+        }
         mainController.logOut.appendText(ExceptionUtils.getStackTrace(t));
         mainController.logOut.appendText("\r\n");
     }

@@ -1,8 +1,7 @@
-/* 缺省的JavaFX CSS modena.css */
 .root {
     -fx-base: #3C3F41;
     -fx-background: -fx-base;
-    -fx-control-inner-background: #323232;
+    -fx-control-inner-background: #2B2B2B;
     -fx-accent: #4B6EAF;
     -fx-focus-color: -fx-accent;
     -fx-cell-focus-inner-border: -fx-accent;
@@ -13,14 +12,10 @@
 
 /* 按钮 */
 .button {
-    -fx-cursor: hand;
     -fx-background-color: -fx-base;
 }
 .button:hover {
     -fx-background-color: -fx-accent;
-}
-.selected {
-    -fx-background-color: #515658;
 }
 
 /** 滚动条 */
@@ -135,10 +130,77 @@
     -fx-text-fill: -fx-text-background-color;
 }
 
-/* 自定义类 */
-.inner {
-    -fx-background-color: -fx-control-inner-background;
-}
-.pointer {
+/* 菜单 */
+.menu .menu-item {
     -fx-cursor: hand;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+}
+.menu .menu-item:hover {
+    -fx-background-color: #4B6EAF;
+}
+.menu .menu-item.selected {
+    -fx-background-color: #515658;
+}
+
+/* 编辑器 */
+/* 行号 */
+.lineno {
+    -fx-background-color: #313335;
+}
+/* 文本框 */
+.styled-text-area {
+    -fx-background-color: #2B2B2B;
+}
+.styled-text-area .text {
+    -fx-fill: #BABABA;
+}
+.styled-text-area .text.keyword {
+    -fx-fill: #f82671;
+    -fx-font-weight: bold;
+}
+.styled-text-area .text.semicolon {
+    -fx-fill: #f82671;
+    -fx-font-weight: bold;
+}
+.styled-text-area .text.paren {
+    -fx-fill: #f8f8f2;
+    -fx-font-weight: bold;
+}
+.styled-text-area .text.bracket {
+    -fx-fill: #f8f8f2;
+    -fx-font-weight: bold;
+}
+.styled-text-area .text.brace {
+    -fx-fill: #f8f8f2;
+    -fx-font-weight: bold;
+}
+.styled-text-area .text.string {
+    -fx-fill: #e6da74;
+}
+.styled-text-area .text.comment {
+    -fx-fill: #529955;
+}
+.styled-text-area .text.tagmark {
+    -fx-fill: #808080;
+}
+.styled-text-area .text.anytag {
+    -fx-fill: #569CD6;
+}
+.styled-text-area .text.attribute {
+    -fx-fill: #9CDCFE;
+}
+.styled-text-area .text.avalue {
+    -fx-fill: #CE9178;
+}
+/* 光标 */
+.caret {
+    -fx-stroke: #f8f8f2;
+}
+/* 当前行 */
+.paragraph-box:has-caret {
+    -fx-background-color: #323232;
+}
+/* 选择的行 */
+.main-selection {
+    -fx-fill: #4B6EAF;
 }

@@ -9,7 +9,7 @@
     <padding>
         <Insets bottom="5" left="5" right="5" top="5"/>
     </padding>
-    <HBox alignment="CENTER_LEFT" spacing="1">
+    <HBox alignment="CENTER_LEFT" spacing="2">
         <Button onMouseClicked="#uuid" text="UUID"/>
         <Button onMouseClicked="#uuid2" text="UUID2"/>
         <Button onMouseClicked="#timestamp" text="时间戳"/>

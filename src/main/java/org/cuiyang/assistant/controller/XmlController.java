@@ -4,34 +4,33 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cuiyang.assistant.control.texteditor.TextEditor;
+import org.cuiyang.assistant.control.XmlEditor;
 import org.cuiyang.assistant.util.BrowseUtils;
 import org.cuiyang.assistant.util.XmlUtils;
 
 /**
- * Html 控制器
+ * Xml 控制器
  *
  * @author cy48576
  */
 public class XmlController implements Initializable {
 
     /** xml文本框 */
-    public TextEditor xmlTextArea;
+    public XmlEditor xmlTextArea;
     /** xpath */
     public TextField xpathTextField;
     /** xpath */
-    public TextArea xpathTextArea;
+    public XmlEditor xpathTextArea;
 
     /**
      * xml 格式化
      */
     public void xmlFormat() {
         try {
-            this.xmlTextArea.textArea.setText(XmlUtils.format(this.xmlTextArea.textArea.getText()));
+            this.xmlTextArea.setText(XmlUtils.format(this.xmlTextArea.getText()));
         } catch (Exception ignore) {
         }
     }
@@ -44,7 +43,7 @@ public class XmlController implements Initializable {
             if (StringUtils.isEmpty(this.xpathTextField.getText())) {
                 this.xpathTextArea.setText("");
             } else {
-                this.xpathTextArea.setText(XmlUtils.xpath(this.xmlTextArea.textArea.getText(), this.xpathTextField.getText()));
+                this.xpathTextArea.setText(XmlUtils.xpath(this.xmlTextArea.getText(), this.xpathTextField.getText()));
             }
         } catch (Exception ignore) {
         }
@@ -59,6 +58,5 @@ public class XmlController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.xmlTextArea.textArea.setPromptText("请输入xml");
     }
 }

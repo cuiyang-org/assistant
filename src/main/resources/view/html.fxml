@@ -3,7 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.cuiyang.assistant.control.texteditor.TextEditor?>
+<?import org.cuiyang.assistant.control.XmlEditor?>
 <AnchorPane visible="false" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.HtmlController">
     <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
         <padding>
@@ -13,14 +13,14 @@
             <padding>
                 <Insets right="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="1">
+            <HBox alignment="CENTER_LEFT" spacing="2">
                 <padding>
                     <Insets bottom="5" right="5"/>
                 </padding>
                 <Button onMouseClicked="#htmlFormat" text="格式化"/>
                 <Button onMouseClicked="#openBrowser" text="浏览器"/>
             </HBox>
-            <TextEditor fx:id="htmlTextArea" VBox.vgrow="ALWAYS"/>
+            <XmlEditor fx:id="htmlTextArea" VBox.vgrow="ALWAYS"/>
         </VBox>
         <VBox>
             <padding>
@@ -35,7 +35,7 @@
                 <Separator orientation="VERTICAL"/>
                 <Button onMouseClicked="#openCssManual" text="手册"/>
             </HBox>
-            <TextArea fx:id="cssQueryTextArea" VBox.vgrow="ALWAYS" promptText="css选择结果"/>
+            <XmlEditor fx:id="cssQueryTextArea" VBox.vgrow="ALWAYS"/>
         </VBox>
     </SplitPane>
 </AnchorPane>

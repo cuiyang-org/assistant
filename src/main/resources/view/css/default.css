@@ -1,0 +1,11 @@
+/* 缺省的JavaFX CSS modena.css */
+
+/* 按钮 */
+.button {
+    -fx-cursor: hand;
+}
+
+/* 编辑器 */
+.styled-text-area {
+    -fx-font-size: 14px;
+}

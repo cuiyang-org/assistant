@@ -1,5 +1,6 @@
 package org.cuiyang.assistant.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -18,7 +19,7 @@ import org.cuiyang.assistant.util.ClipBoardUtils;
  *
  * @author cy48576
  */
-public class FormController implements Initializable {
+public class FormController extends BaseController implements Initializable {
 
     /** 文本框 */
     public TextEditor textArea;
@@ -153,4 +154,23 @@ public class FormController implements Initializable {
         }
     }
 
+    /**
+     * 生成Java代码
+     */
+    public void genJava() throws UnsupportedEncodingException {
+        String text = this.textArea.textArea.getText();
+        if (StringUtils.isEmpty(text)) {
+            log("表单内容为空");
+            return;
+        }
+        text = URLDecoder.decode(text, "UTF-8");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Map<String, Object> form = new HashMap<>();").append("\r\n");
+        String[] split = text.split("[&\\n]");
+        for (String line : split) {
+            String[] split2 = line.split("=");
+            sb.append(String.format("form.put(\"%s\", \"%s\");", split2[0], split2.length >= 2 ? split2[1] : "")).append("\r\n");
+        }
+        log(sb.toString());
+    }
 }

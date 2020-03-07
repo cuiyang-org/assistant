@@ -1,11 +1,10 @@
 package org.cuiyang.assistant.controller;
 
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.cuiyang.assistant.control.texteditor.TextEditor;
+import org.cuiyang.assistant.control.XmlEditor;
 import org.cuiyang.assistant.util.BrowseUtils;
 import org.jsoup.Jsoup;
 
@@ -22,18 +21,18 @@ import java.util.ResourceBundle;
 public class HtmlController implements Initializable {
 
     /** html文本框 */
-    public TextEditor htmlTextArea;
+    public XmlEditor htmlTextArea;
     /** css选择器 */
     public TextField cssQueryTextField;
     /** css选择器 */
-    public TextArea cssQueryTextArea;
+    public XmlEditor cssQueryTextArea;
 
     /**
      * html 格式化
      */
     public void htmlFormat() {
         try {
-            this.htmlTextArea.textArea.setText(Jsoup.parse(this.htmlTextArea.textArea.getText()).toString());
+            this.htmlTextArea.setText(Jsoup.parse(this.htmlTextArea.getText()).toString());
         } catch (Exception ignore) {
         }
     }
@@ -46,7 +45,7 @@ public class HtmlController implements Initializable {
             if (StringUtils.isEmpty(this.cssQueryTextField.getText())) {
                 this.cssQueryTextArea.setText("");
             } else {
-                this.cssQueryTextArea.setText(Jsoup.parse(this.htmlTextArea.textArea.getText()).select(this.cssQueryTextField.getText()).toString());
+                this.cssQueryTextArea.setText(Jsoup.parse(this.htmlTextArea.getText()).select(this.cssQueryTextField.getText()).toString());
             }
         } catch (Exception ignore) {
         }
@@ -64,12 +63,11 @@ public class HtmlController implements Initializable {
      */
     public void openBrowser() throws IOException {
         File file = new File("temp.html");
-        FileUtils.writeStringToFile(file, this.htmlTextArea.textArea.getText(), "UTF-8");
+        FileUtils.writeStringToFile(file, this.htmlTextArea.getText(), "UTF-8");
         BrowseUtils.open(file.getPath());
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.htmlTextArea.textArea.setPromptText("请输入html");
     }
 }

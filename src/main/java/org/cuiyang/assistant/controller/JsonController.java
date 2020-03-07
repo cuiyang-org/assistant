@@ -8,7 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import org.apache.commons.lang3.StringUtils;
-import org.cuiyang.assistant.control.texteditor.TextEditor;
+import org.cuiyang.assistant.control.BaseEditor;
 import org.cuiyang.assistant.util.ClipBoardUtils;
 
 import java.net.URL;
@@ -26,7 +26,7 @@ import static com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValu
 public class JsonController implements Initializable {
 
     /** json文本框 */
-    public TextEditor jsonTextArea;
+    public BaseEditor editor;
     /** json树 */
     public TreeView<String> jsonTreeView;
 
@@ -34,10 +34,14 @@ public class JsonController implements Initializable {
      * json格式化
      */
     public void jsonFormat() {
+        String text = this.editor.getText();
+        if (StringUtils.isEmpty(text)) {
+            return;
+        }
         try {
-            String jsonStr = JSON.toJSONString(JSON.parse(this.jsonTextArea.textArea.getText(), Feature.OrderedField), WriteMapNullValue, PrettyFormat);
+            String jsonStr = JSON.toJSONString(JSON.parse(text, Feature.OrderedField), WriteMapNullValue, PrettyFormat);
             jsonStr = jsonStr.replaceAll("\t", "    ");
-            this.jsonTextArea.textArea.setText(jsonStr);
+            this.editor.setText(jsonStr);
         } catch (Exception ignore) {
         }
     }
@@ -46,8 +50,12 @@ public class JsonController implements Initializable {
      * json去格式化
      */
     public void jsonSimple() {
+        String text = this.editor.getText();
+        if (StringUtils.isEmpty(text)) {
+            return;
+        }
         try {
-            this.jsonTextArea.textArea.setText(JSON.toJSONString(JSON.parse(this.jsonTextArea.textArea.getText(), Feature.OrderedField), WriteMapNullValue));
+            this.editor.setText(JSON.toJSONString(JSON.parse(text, Feature.OrderedField), WriteMapNullValue));
         } catch (Exception ignore) {
         }
     }
@@ -119,8 +127,7 @@ public class JsonController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.jsonTextArea.textArea.setPromptText("请输入json串");
-        this.jsonTextArea.textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+        this.editor.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {
                 jsonTreeView.setRoot(null);
                 return;
@@ -160,7 +167,7 @@ public class JsonController implements Initializable {
                 buildJsonTreeItem("[" + i + "]", jsonArray.get(i), item);
             }
         } else {
-            TreeItem<String> item = new TreeItem<>(key + " : " + String.valueOf(o));
+            TreeItem<String> item = new TreeItem<>(key + " : " + o);
             item.setExpanded(true);
             parent.getChildren().add(item);
         }

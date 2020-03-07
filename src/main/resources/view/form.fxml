@@ -13,12 +13,13 @@
             <padding>
                 <Insets right="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="1">
+            <HBox alignment="CENTER_LEFT" spacing="2">
                 <padding>
                     <Insets bottom="5" right="5"/>
                 </padding>
                 <Button onMouseClicked="#format" text="格式化"/>
                 <Button onMouseClicked="#simple" text="去格式化"/>
+                <Button onMouseClicked="#genJava" text="生成Java代码"/>
             </HBox>
             <TextEditor fx:id="textArea" VBox.vgrow="ALWAYS"/>
         </VBox>
@@ -26,7 +27,7 @@
             <padding>
                 <Insets left="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="1">
+            <HBox alignment="CENTER_LEFT" spacing="2">
                 <padding>
                     <Insets bottom="5" right="5"/>
                 </padding>
