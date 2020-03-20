@@ -2,12 +2,12 @@ package org.cuiyang.assistant.control.texteditor;
 
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.StringUtils;
+import org.cuiyang.assistant.control.CodeEditor;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 public class TextEditor extends VBox implements Initializable {
 
     /** 文本域 */
-    public TextArea textArea;
+    public CodeEditor textArea;
     /** 搜索区域 */
     public Pane search;
     /** 搜索框 */

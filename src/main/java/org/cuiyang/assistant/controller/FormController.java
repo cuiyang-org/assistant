@@ -125,7 +125,6 @@ public class FormController extends BaseController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.textArea.textArea.setPromptText("请输入Form");
         this.textArea.textArea.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {
                 treeView.setRoot(null);

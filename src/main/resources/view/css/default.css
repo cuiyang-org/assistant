@@ -7,5 +7,38 @@
 
 /* 编辑器 */
 .styled-text-area {
-    -fx-font-size: 14px;
+    -fx-font-size: 13;
 }
+
+.up {
+    -fx-background-image: url('../image/up.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+.down {
+    -fx-background-image: url('../image/down.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.code-area {
+    -fx-font-family: Consolas;
+}
+
+.styled-text-area {
+    -fx-cursor: text;
+}
+
+.styled-text-area .paragraph-box {
+    -fx-padding: -0.5 0 -0.5 0;
+}
+
+.styled-text-area .paragraph-box .paragraph-text {
+    -fx-line-spacing: 5px;
+}
+
+.styled-text-area .caret {
+    -rtfx-blink-rate: 500ms;
+    -fx-stroke-width: 1.0;
+}
+

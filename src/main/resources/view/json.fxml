@@ -3,7 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.cuiyang.assistant.control.JsonEditor?>
+<?import org.cuiyang.assistant.control.CodeEditor?>
+<?import org.fxmisc.flowless.VirtualizedScrollPane?>
 <AnchorPane visible="false" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.JsonController">
     <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
         <padding>
@@ -20,7 +21,11 @@
                 <Button onMouseClicked="#jsonFormat" text="格式化"/>
                 <Button onMouseClicked="#jsonSimple" text="去格式化"/>
             </HBox>
-            <JsonEditor fx:id="editor" VBox.vgrow="ALWAYS"/>
+            <VirtualizedScrollPane VBox.vgrow="ALWAYS">
+                <content>
+                    <CodeEditor fx:id="editor"/>
+                </content>
+            </VirtualizedScrollPane>
         </VBox>
         <VBox>
             <padding>

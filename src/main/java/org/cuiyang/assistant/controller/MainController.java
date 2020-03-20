@@ -153,9 +153,7 @@ public class MainController extends BaseController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.mainController = this;
-        reverseController.mainController = this;
-        formController.mainController = this;
+        mainController = this;
 
         show(Integer.parseInt(ConfigUtils.get(TAB_INDEX, "0")));
         showLogOut(Boolean.parseBoolean(ConfigUtils.get(SHOW_LOG_OUT, "false")));

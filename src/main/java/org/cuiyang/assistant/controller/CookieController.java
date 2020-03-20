@@ -115,7 +115,6 @@ public class CookieController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.cookieTextArea.textArea.setPromptText("请输入Cookie");
         this.cookieTextArea.textArea.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {
                 cookieTreeView.setRoot(null);

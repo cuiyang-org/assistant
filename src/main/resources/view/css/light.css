@@ -26,6 +26,9 @@
 .tree-view:focused {
     -fx-background-color: -fx-control-inner-background;
 }
+.tree-cell {
+    -fx-text-fill: #558658;
+}
 
 /* 菜单 */
 .menu .menu-item {
@@ -67,6 +70,16 @@
 .styled-text-area .text.comment {
     -fx-fill: teal;
 }
+/** json */
+.styled-text-area .text.key, .key {
+    -fx-fill: #9227AC;
+    -fx-text-fill: #9227AC;
+}
+.styled-text-area .text.value, .value {
+    -fx-fill: #3AB54A;
+    -fx-text-fill: #3AB54A;
+}
+/** xml */
 .styled-text-area .text.tagmark {
     -fx-fill: gray;
 }

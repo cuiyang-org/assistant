@@ -9,7 +9,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  * @author cuiyang
  */
 public abstract class BaseController {
-    public MainController mainController;
+    public static MainController mainController;
 
     /**
      * 输出日志

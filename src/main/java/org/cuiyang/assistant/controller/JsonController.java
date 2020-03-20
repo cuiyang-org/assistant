@@ -8,7 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import org.apache.commons.lang3.StringUtils;
-import org.cuiyang.assistant.control.BaseEditor;
+import org.cuiyang.assistant.control.CodeEditor;
+import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.util.ClipBoardUtils;
 
 import java.net.URL;
@@ -23,10 +24,10 @@ import static com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValu
  *
  * @author cy48576
  */
-public class JsonController implements Initializable {
+public class JsonController extends BaseController implements Initializable {
 
     /** json文本框 */
-    public BaseEditor editor;
+    public CodeEditor editor;
     /** json树 */
     public TreeView<String> jsonTreeView;
 
@@ -42,7 +43,8 @@ public class JsonController implements Initializable {
             String jsonStr = JSON.toJSONString(JSON.parse(text, Feature.OrderedField), WriteMapNullValue, PrettyFormat);
             jsonStr = jsonStr.replaceAll("\t", "    ");
             this.editor.setText(jsonStr);
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            log(e.getMessage());
         }
     }
 
@@ -85,12 +87,12 @@ public class JsonController implements Initializable {
     /**
      * json折叠/展开
      */
-    private void expanded(TreeItem<String> root, boolean expanded) {
+    private void expanded(TreeItem<?> root, boolean expanded) {
         if (root == null) {
             return;
         }
         root.setExpanded(expanded);
-        for (TreeItem<String> item : root.getChildren()) {
+        for (TreeItem<?> item : root.getChildren()) {
             expanded(item, expanded);
         }
     }
@@ -99,34 +101,29 @@ public class JsonController implements Initializable {
      * copyJson
      */
     public void copyJson() {
-        TreeItem<String> treeItem = jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
-        ClipBoardUtils.setSysClipboardText(treeItem.getValue());
+        KeyValueTreeItem treeItem = (KeyValueTreeItem) jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
+        ClipBoardUtils.setSysClipboardText(treeItem.getKey() + ":" + treeItem.getValue2());
     }
 
     /**
      * copyJsonValue
      */
     public void copyJsonValue() {
-        TreeItem<String> treeItem = jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
-        String value;
-        if (treeItem.getChildren().size() <= 0) {
-            value = treeItem.getValue().split(":")[1];
-        } else {
-            value = treeItem.getValue();
-        }
-        ClipBoardUtils.setSysClipboardText(value.trim());
+        KeyValueTreeItem treeItem = (KeyValueTreeItem) jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
+        ClipBoardUtils.setSysClipboardText(String.valueOf(treeItem.getValue2()));
     }
 
     /**
      * copyJsonName
      */
     public void copyJsonName() {
-        TreeItem<String> treeItem = jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
-        ClipBoardUtils.setSysClipboardText(treeItem.getValue().split(":")[0].trim());
+        KeyValueTreeItem treeItem = (KeyValueTreeItem) jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
+        ClipBoardUtils.setSysClipboardText(treeItem.getKey());
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.editor.setType(CodeEditor.Type.JSON);
         this.editor.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {
                 jsonTreeView.setRoot(null);
@@ -134,10 +131,11 @@ public class JsonController implements Initializable {
             }
             try {
                 Object jsonObject = JSON.parse(newValue, Feature.OrderedField);
-                TreeItem<String> root = new TreeItem<>("Root");
+                KeyValueTreeItem root = new KeyValueTreeItem("Root", null);
                 buildJsonTreeItem("JSON", jsonObject, root);
                 jsonTreeView.setRoot(root);
                 jsonTreeView.setShowRoot(false);
+                jsonExpanded();
             } catch (Exception e) {
                 jsonTreeView.setRoot(null);
             }
@@ -147,28 +145,25 @@ public class JsonController implements Initializable {
     /**
      * 构建json树
      */
-    private void buildJsonTreeItem(String key, Object o, TreeItem<String> parent) {
-        if (o instanceof JSONObject) {
-            TreeItem<String> item = new TreeItem<>(key);
-            item.setExpanded(true);
+    private void buildJsonTreeItem(String key, Object value, KeyValueTreeItem parent) {
+        if (value instanceof JSONObject) {
+            KeyValueTreeItem item = new KeyValueTreeItem(key, value);
             parent.getChildren().add(item);
 
-            JSONObject jsonObject = (JSONObject) o;
+            JSONObject jsonObject = (JSONObject) value;
             for (Map.Entry<String, Object> entry : jsonObject.entrySet()) {
                 buildJsonTreeItem(entry.getKey(), entry.getValue(), item);
             }
-        } else if (o instanceof JSONArray) {
-            TreeItem<String> item = new TreeItem<>(key);
-            item.setExpanded(true);
+        } else if (value instanceof JSONArray) {
+            KeyValueTreeItem item = new KeyValueTreeItem(key, value);
             parent.getChildren().add(item);
 
-            JSONArray jsonArray = (JSONArray) o;
+            JSONArray jsonArray = (JSONArray) value;
             for (int i = 0; i < jsonArray.size(); i++) {
                 buildJsonTreeItem("[" + i + "]", jsonArray.get(i), item);
             }
         } else {
-            TreeItem<String> item = new TreeItem<>(key + " : " + o);
-            item.setExpanded(true);
+            KeyValueTreeItem item = new KeyValueTreeItem(key, value);
             parent.getChildren().add(item);
         }
     }

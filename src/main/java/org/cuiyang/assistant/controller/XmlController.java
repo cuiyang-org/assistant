@@ -7,7 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cuiyang.assistant.control.XmlEditor;
+import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.util.BrowseUtils;
 import org.cuiyang.assistant.util.XmlUtils;
 
@@ -19,11 +19,11 @@ import org.cuiyang.assistant.util.XmlUtils;
 public class XmlController implements Initializable {
 
     /** xml文本框 */
-    public XmlEditor xmlTextArea;
+    public CodeEditor xmlTextArea;
     /** xpath */
     public TextField xpathTextField;
     /** xpath */
-    public XmlEditor xpathTextArea;
+    public CodeEditor xpathTextArea;
 
     /**
      * xml 格式化
@@ -58,5 +58,7 @@ public class XmlController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.xmlTextArea.setType(CodeEditor.Type.XML);
+        this.xpathTextArea.setType(CodeEditor.Type.XML);
     }
 }

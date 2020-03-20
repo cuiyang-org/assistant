@@ -41,6 +41,8 @@
     -fx-background-color: -fx-control-inner-background;
     -fx-font-size: 13;
     -fx-prompt-text-fill: gray;
+    -fx-font-family: Consolas;
+    -fx-text-fill: #BABABA;
 }
 .text-input, .text-input:focused {
     -fx-highlight-fill: -fx-accent;
@@ -76,20 +78,25 @@
 /* 树 */
 .tree-view, .tree-view:focused {
     -fx-background-color: -fx-control-inner-background;
-    -fx-background-insets: -1.4, 0, 1;
-    -fx-background-radius: 1.4, 0, 0;
-    -fx-padding: 1;
+    -fx-padding: 0;
     -fx-font-size: 13;
+    -fx-font-family: Consolas;
 }
 .tree-view:focused {
     -fx-background-color: -fx-control-inner-background;
 }
+.tree-cell {
+    -fx-padding: 2.5;
+    -fx-text-fill: #558658;
+}
 .tree-cell:filled:selected {
-    -fx-background-color: #515658;
-    -fx-text-fill: #ffffff;
+    -fx-background-color: #323232;
 }
 .tree-cell > .tree-disclosure-node > .arrow {
     -fx-background-color: #ffffff;
+}
+.tree-cell .key {
+    -fx-text-fill: #9876AA;
 }
 
 /* SplitPane */
@@ -180,6 +187,14 @@
 .styled-text-area .text.comment {
     -fx-fill: #529955;
 }
+/** json */
+.styled-text-area .text.key {
+    -fx-fill: #9876AA;
+}
+.styled-text-area .text.value {
+    -fx-fill: #558658;
+}
+/** xml */
 .styled-text-area .text.tagmark {
     -fx-fill: #808080;
 }
@@ -202,5 +217,5 @@
 }
 /* 选择的行 */
 .main-selection {
-    -fx-fill: #4B6EAF;
+    -fx-fill: #214283;
 }
