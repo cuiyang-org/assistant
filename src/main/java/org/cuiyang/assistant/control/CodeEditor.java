@@ -2,6 +2,7 @@ package org.cuiyang.assistant.control;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
+import javafx.scene.control.IndexRange;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.cuiyang.assistant.util.ClipBoardUtils;
@@ -15,6 +16,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.apache.commons.lang3.StringUtils.isAllUpperCase;
 
 /**
  * 代码编辑器
@@ -115,7 +118,8 @@ public class CodeEditor extends CodeArea {
     public void setText(String text) {
         this.clear();
         this.replaceText(text);
-        this.scrollToPixel(0, 0);
+        this.requestFollowCaret();
+        this.moveTo(0, 0);
     }
 
     /**
@@ -142,6 +146,7 @@ public class CodeEditor extends CodeArea {
     }
 
     private void init() {
+        this.setWrapText(false);
         // 设置行号
         this.setParagraphGraphicFactory(LineNumberFactory.get(this));
         // 监听按键
@@ -187,6 +192,15 @@ public class CodeEditor extends CodeArea {
                 } else {
                     this.deleteText(index, 0, index + 1, 0);
                 }
+            } else if (keyEvent.getCode() == KeyCode.U && keyEvent.isControlDown() && keyEvent.isShiftDown()) {
+                // 大小写转换
+                IndexRange selection = this.getSelection();
+                String selectedText = this.getSelectedText();
+                this.replaceText(selection, isAllUpperCase(selectedText) ? selectedText.toLowerCase() : selectedText.toUpperCase());
+                this.selectRange(selection.getStart(), selection.getEnd());
+            } else if (keyEvent.getCode() == KeyCode.W && keyEvent.isControlDown()) {
+                // 选择单词
+                this.selectWord();
             }
         });
     }

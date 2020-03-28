@@ -10,17 +10,6 @@
     -fx-font-size: 13;
 }
 
-.up {
-    -fx-background-image: url('../image/up.png');
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-}
-.down {
-    -fx-background-image: url('../image/down.png');
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-}
-
 .code-area {
     -fx-font-family: Consolas;
 }

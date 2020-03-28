@@ -3,8 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.cuiyang.assistant.control.CodeEditor?>
-<?import org.fxmisc.flowless.VirtualizedScrollPane?>
+<?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
 <AnchorPane visible="false" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.HtmlController">
     <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
         <padding>
@@ -21,11 +20,7 @@
                 <Button onMouseClicked="#htmlFormat" text="格式化"/>
                 <Button onMouseClicked="#openBrowser" text="浏览器"/>
             </HBox>
-            <VirtualizedScrollPane VBox.vgrow="ALWAYS">
-                <content>
-                    <CodeEditor fx:id="htmlTextArea"/>
-                </content>
-            </VirtualizedScrollPane>
+            <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="htmlTextArea"/>
         </VBox>
         <VBox>
             <padding>
@@ -40,11 +35,7 @@
                 <Separator orientation="VERTICAL"/>
                 <Button onMouseClicked="#openCssManual" text="手册"/>
             </HBox>
-            <VirtualizedScrollPane VBox.vgrow="ALWAYS">
-                <content>
-                    <CodeEditor fx:id="cssQueryTextArea"/>
-                </content>
-            </VirtualizedScrollPane>
+            <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="cssQueryTextArea"/>
         </VBox>
     </SplitPane>
 </AnchorPane>

@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 
 import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.CodeEditor;
+import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.util.BrowseUtils;
 import org.cuiyang.assistant.util.XmlUtils;
 
@@ -19,11 +20,11 @@ import org.cuiyang.assistant.util.XmlUtils;
 public class XmlController implements Initializable {
 
     /** xml文本框 */
-    public CodeEditor xmlTextArea;
+    public SearchCodeEditor xmlTextArea;
     /** xpath */
     public TextField xpathTextField;
     /** xpath */
-    public CodeEditor xpathTextArea;
+    public SearchCodeEditor xpathTextArea;
 
     /**
      * xml 格式化

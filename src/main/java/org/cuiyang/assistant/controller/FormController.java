@@ -11,7 +11,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cuiyang.assistant.control.texteditor.TextEditor;
+import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.util.ClipBoardUtils;
 
 /**
@@ -22,7 +22,7 @@ import org.cuiyang.assistant.util.ClipBoardUtils;
 public class FormController extends BaseController implements Initializable {
 
     /** 文本框 */
-    public TextEditor textArea;
+    public SearchCodeEditor textArea;
     /** 树 */
     public TreeView<String> treeView;
 
@@ -31,10 +31,10 @@ public class FormController extends BaseController implements Initializable {
      */
     public void format() {
         try {
-            this.textArea.textArea.setWrapText(false);
-            String text = URLDecoder.decode(this.textArea.textArea.getText(), "UTF-8");
+            this.textArea.setWrapText(false);
+            String text = URLDecoder.decode(this.textArea.getText(), "UTF-8");
             text = text.replaceAll("&", "\n");
-            this.textArea.textArea.setText(text);
+            this.textArea.setText(text);
         } catch (Exception ignore) {
         }
     }
@@ -44,8 +44,8 @@ public class FormController extends BaseController implements Initializable {
      */
     public void simple() {
         try {
-            this.textArea.textArea.setWrapText(true);
-            String text = URLDecoder.decode(this.textArea.textArea.getText(), "UTF-8");
+            this.textArea.setWrapText(true);
+            String text = URLDecoder.decode(this.textArea.getText(), "UTF-8");
             StringBuilder sb = new StringBuilder();
             String[] split = text.split("[&\\n]");
             for (String line : split) {
@@ -53,7 +53,7 @@ public class FormController extends BaseController implements Initializable {
                 sb.append(split2[0]).append("=").append(split2.length >= 2 ? URLEncoder.encode(split2[1], "UTF-8") : "").append("&");
             }
             sb.deleteCharAt(sb.length() - 1);
-            this.textArea.textArea.setText(sb.toString());
+            this.textArea.setText(sb.toString());
         } catch (Exception ignore) {
         }
     }
@@ -125,7 +125,7 @@ public class FormController extends BaseController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.textArea.textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+        this.textArea.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {
                 treeView.setRoot(null);
                 return;
@@ -157,7 +157,7 @@ public class FormController extends BaseController implements Initializable {
      * 生成Java代码
      */
     public void genJava() throws UnsupportedEncodingException {
-        String text = this.textArea.textArea.getText();
+        String text = this.textArea.getText();
         if (StringUtils.isEmpty(text)) {
             log("表单内容为空");
             return;

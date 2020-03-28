@@ -122,7 +122,7 @@
                     <needMenu>true</needMenu>
                     <!-- 桌面图标 -->
                     <needShortcut>true</needShortcut>
-                    <bundler>exe</bundler>
+                    <bundler>dmg</bundler>
                     <bundleArguments>
                         <runtime/>
                         <identifier>babdf94d-3157-49f5-9249-38d2e6869639</identifier>

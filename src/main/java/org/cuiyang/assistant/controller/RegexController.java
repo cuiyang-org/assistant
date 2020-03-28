@@ -31,6 +31,7 @@ public class RegexController {
      */
     public void match() {
         try {
+            outputTextArea.setText("");
             Matcher matcher = matcher();
             StringBuilder sb = new StringBuilder();
             while (matcher.find()) {

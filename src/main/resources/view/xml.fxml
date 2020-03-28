@@ -3,8 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.cuiyang.assistant.control.CodeEditor?>
-<?import org.fxmisc.flowless.VirtualizedScrollPane?>
+<?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
 <AnchorPane visible="false" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.XmlController">
     <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
         <padding>
@@ -20,11 +19,7 @@
                 </padding>
                 <Button onMouseClicked="#xmlFormat" text="格式化"/>
             </HBox>
-            <VirtualizedScrollPane VBox.vgrow="ALWAYS">
-                <content>
-                    <CodeEditor fx:id="xmlTextArea"/>
-                </content>
-            </VirtualizedScrollPane>
+            <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="xmlTextArea"/>
         </VBox>
         <VBox>
             <padding>
@@ -39,11 +34,7 @@
                 <Separator orientation="VERTICAL"/>
                 <Button onMouseClicked="#openCssManual" text="手册"/>
             </HBox>
-            <VirtualizedScrollPane VBox.vgrow="ALWAYS">
-                <content>
-                    <CodeEditor fx:id="xpathTextArea"/>
-                </content>
-            </VirtualizedScrollPane>
+            <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="xpathTextArea"/>
         </VBox>
     </SplitPane>
 </AnchorPane>

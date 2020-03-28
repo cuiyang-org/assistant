@@ -4,7 +4,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import org.apache.commons.lang3.StringUtils;
-import org.cuiyang.assistant.control.texteditor.TextEditor;
+import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.util.ClipBoardUtils;
 
 import java.net.URL;
@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 public class CookieController implements Initializable {
 
     /** cookie文本框 */
-    public TextEditor cookieTextArea;
+    public SearchCodeEditor cookieTextArea;
     /** cookie树 */
     public TreeView<String> cookieTreeView;
 
@@ -27,10 +27,10 @@ public class CookieController implements Initializable {
      */
     public void cookieFormat() {
         try {
-            this.cookieTextArea.textArea.setWrapText(false);
-            String text = this.cookieTextArea.textArea.getText();
+            this.cookieTextArea.setWrapText(false);
+            String text = this.cookieTextArea.getText();
             text = text.replaceAll(";\\s*", ";\n");
-            this.cookieTextArea.textArea.setText(text);
+            this.cookieTextArea.setText(text);
         } catch (Exception ignore) {
         }
     }
@@ -40,10 +40,10 @@ public class CookieController implements Initializable {
      */
     public void cookieSimple() {
         try {
-            this.cookieTextArea.textArea.setWrapText(true);
-            String text = this.cookieTextArea.textArea.getText();
+            this.cookieTextArea.setWrapText(true);
+            String text = this.cookieTextArea.getText();
             text = text.replaceAll(";\\s*", "; ");
-            this.cookieTextArea.textArea.setText(text);
+            this.cookieTextArea.setText(text);
         } catch (Exception ignore) {
         }
     }
@@ -115,7 +115,7 @@ public class CookieController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.cookieTextArea.textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+        this.cookieTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {
                 cookieTreeView.setRoot(null);
                 return;

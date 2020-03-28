@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.CodeEditor;
+import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.util.BrowseUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,11 +26,11 @@ import java.util.ResourceBundle;
 public class HtmlController implements Initializable {
 
     /** html文本框 */
-    public CodeEditor htmlTextArea;
+    public SearchCodeEditor htmlTextArea;
     /** css选择器 */
     public TextField cssQueryTextField;
     /** css选择器 */
-    public CodeEditor cssQueryTextArea;
+    public SearchCodeEditor cssQueryTextArea;
 
     /**
      * html 格式化

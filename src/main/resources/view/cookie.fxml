@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.cuiyang.assistant.control.texteditor.TextEditor?>
+<?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
 <AnchorPane visible="false" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.CookieController">
     <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
         <padding>
@@ -20,7 +20,7 @@
                 <Button onMouseClicked="#cookieFormat" text="格式化"/>
                 <Button onMouseClicked="#cookieSimple" text="去格式化"/>
             </HBox>
-            <TextEditor fx:id="cookieTextArea" VBox.vgrow="ALWAYS"/>
+            <SearchCodeEditor fx:id="cookieTextArea" VBox.vgrow="ALWAYS"/>
         </VBox>
         <VBox>
             <padding>

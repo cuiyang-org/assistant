@@ -5,11 +5,16 @@
 <?import javafx.scene.layout.*?>
 
 <?import org.cuiyang.assistant.control.CodeEditor?>
+<?import org.fxmisc.flowless.VirtualizedScrollPane?>
 <fx:root xmlns:fx="http://javafx.com/fxml/1" type="VBox" spacing="5" stylesheets="@TextEditor.css">
     <HBox spacing="5" fx:id="search" visible="false" managed="false">
         <TextField fx:id="keyTextField" promptText="搜索" HBox.hgrow="ALWAYS"/>
         <Button styleClass="up" onMouseClicked="#searchLast"/>
         <Button styleClass="down" onMouseClicked="#searchNext"/>
     </HBox>
-    <CodeEditor fx:id="textArea" VBox.vgrow="ALWAYS" wrapText="true"/>
+    <VirtualizedScrollPane VBox.vgrow="ALWAYS">
+        <content>
+            <CodeEditor fx:id="codeEditor" VBox.vgrow="ALWAYS" wrapText="true"/>
+        </content>
+    </VirtualizedScrollPane>
 </fx:root>

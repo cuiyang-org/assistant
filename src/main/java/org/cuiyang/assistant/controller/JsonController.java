@@ -10,6 +10,7 @@ import javafx.scene.control.TreeView;
 import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
+import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.util.ClipBoardUtils;
 
 import java.net.URL;
@@ -27,7 +28,7 @@ import static com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValu
 public class JsonController extends BaseController implements Initializable {
 
     /** json文本框 */
-    public CodeEditor editor;
+    public SearchCodeEditor editor;
     /** json树 */
     public TreeView<String> jsonTreeView;
 
