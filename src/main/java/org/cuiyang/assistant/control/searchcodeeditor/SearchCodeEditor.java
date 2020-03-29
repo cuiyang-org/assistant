@@ -132,7 +132,7 @@ public class SearchCodeEditor extends VBox implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.setOnKeyReleased(event -> {
-            if (event.isControlDown() && event.getCode().equals(KeyCode.F)) {
+            if ((event.isControlDown() || event.isMetaDown()) && event.getCode().equals(KeyCode.F)) {
                 search.setManaged(true);
                 search.setVisible(true);
                 String selectedText = codeEditor.getSelectedText();

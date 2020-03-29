@@ -173,11 +173,11 @@ public class CodeEditor extends CodeArea {
                 } else {
                     this.replaceText(caretPosition - 1, caretPosition, tab);
                 }
-            } else if (keyEvent.getCode() == KeyCode.D && keyEvent.isControlDown()) {
+            } else if (keyEvent.getCode() == KeyCode.D && (keyEvent.isControlDown() || keyEvent.isMetaDown())) {
                 // 复制当前行
                 int index = this.getCurrentParagraph();
                 this.insertText(index, this.getParagraphLength(index), "\n" + this.getParagraph(index).getText());
-            } else if (keyEvent.getCode() == KeyCode.X && keyEvent.isControlDown()) {
+            } else if (keyEvent.getCode() == KeyCode.X && (keyEvent.isControlDown() || keyEvent.isMetaDown())) {
                 // 剪贴当前行
                 int index = this.getCurrentParagraph();
                 String content = this.getParagraph(index).getText();
@@ -192,13 +192,13 @@ public class CodeEditor extends CodeArea {
                 } else {
                     this.deleteText(index, 0, index + 1, 0);
                 }
-            } else if (keyEvent.getCode() == KeyCode.U && keyEvent.isControlDown() && keyEvent.isShiftDown()) {
+            } else if (keyEvent.getCode() == KeyCode.U && (keyEvent.isControlDown() || keyEvent.isMetaDown()) && keyEvent.isShiftDown()) {
                 // 大小写转换
                 IndexRange selection = this.getSelection();
                 String selectedText = this.getSelectedText();
                 this.replaceText(selection, isAllUpperCase(selectedText) ? selectedText.toLowerCase() : selectedText.toUpperCase());
                 this.selectRange(selection.getStart(), selection.getEnd());
-            } else if (keyEvent.getCode() == KeyCode.W && keyEvent.isControlDown()) {
+            } else if (keyEvent.getCode() == KeyCode.W && (keyEvent.isControlDown() || keyEvent.isMetaDown())) {
                 // 选择单词
                 this.selectWord();
             }
