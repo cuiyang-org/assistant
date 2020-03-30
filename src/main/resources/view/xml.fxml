@@ -4,18 +4,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
-<AnchorPane visible="false" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.XmlController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.XmlController">
     <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
-        <padding>
-            <Insets bottom="5" left="5" right="5" top="5"/>
-        </padding>
         <VBox>
             <padding>
                 <Insets right="5"/>
             </padding>
             <HBox alignment="CENTER_LEFT" spacing="2">
                 <padding>
-                    <Insets bottom="5" right="5"/>
+                    <Insets top="2" bottom="5" right="5"/>
                 </padding>
                 <Button onMouseClicked="#xmlFormat" text="格式化"/>
             </HBox>
@@ -27,7 +24,7 @@
             </padding>
             <HBox alignment="CENTER_LEFT" spacing="5">
                 <padding>
-                    <Insets bottom="5" right="5"/>
+                    <Insets top="2" bottom="5" right="5"/>
                 </padding>
                 <TextField HBox.hgrow="ALWAYS" fx:id="xpathTextField" promptText="请输入XPath" onKeyReleased="#xpath"/>
                 <Button onMouseClicked="#xpath" text="查询"/>

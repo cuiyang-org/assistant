@@ -4,11 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox spacing="5" visible="false" xmlns:fx="http://javafx.com/fxml/1"
+<VBox spacing="5" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.cuiyang.assistant.controller.EncodeController">
-    <padding>
-        <Insets bottom="5" left="5" right="5" top="5"/>
-    </padding>
     <TextArea fx:id="encodeInput" wrapText="true" VBox.vgrow="ALWAYS" promptText="请输入要编码/解码的内容"/>
     <HBox alignment="CENTER_LEFT" spacing="2">
         <Button onMouseClicked="#encodeExchange" text="互换"/>

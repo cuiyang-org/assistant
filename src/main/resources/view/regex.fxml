@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox spacing="5" visible="false" xmlns:fx="http://javafx.com/fxml/1"
+<VBox spacing="5" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.cuiyang.assistant.controller.RegexController">
-    <padding>
-        <Insets bottom="5" left="5" right="5" top="5"/>
-    </padding>
     <TextArea fx:id="inputTextArea" promptText="待匹配的文本" VBox.vgrow="ALWAYS" onKeyReleased="#match"/>
     <HBox alignment="CENTER_LEFT" spacing="5">
         <TextField HBox.hgrow="ALWAYS" fx:id="regexTextField" promptText="正则表达式" onKeyReleased="#match"/>

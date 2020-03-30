@@ -1,23 +1,29 @@
 package org.cuiyang.assistant.controller;
 
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import lombok.SneakyThrows;
 import org.cuiyang.assistant.util.ConfigUtils;
 import org.cuiyang.assistant.util.ResourceUtils;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static org.cuiyang.assistant.constant.ConfigConstant.*;
+import static org.cuiyang.assistant.constant.ConfigConstant.SHOW_LOG_OUT;
+import static org.cuiyang.assistant.constant.ConfigConstant.THEME;
 
 /**
  * MainController
@@ -26,16 +32,9 @@ import static org.cuiyang.assistant.constant.ConfigConstant.*;
  */
 public class MainController extends BaseController implements Initializable {
 
-    /** 逆向控制器 */
-    public ReverseController reverseController;
-    /** 表单控制器 */
-    public FormController formController;
-
     /** 场景 */
     public Scene scene;
 
-    /** tab容器 */
-    public Pane tabContainer;
     /** 按钮容器 */
     public Pane menuContainer;
     /** 日志输出 */
@@ -47,8 +46,8 @@ public class MainController extends BaseController implements Initializable {
     public ImageView logImageView;
     /** 主题开关 */
     public ImageView themeImageView;
-    /** tab索引 */
-    private int tabIndex;
+    /** tab pan */
+    public TabPane tabPane;
     /** 主题 */
     private String theme;
 
@@ -59,23 +58,59 @@ public class MainController extends BaseController implements Initializable {
     public void init(Scene scene) {
         this.scene = scene;
         this.theme = ConfigUtils.get(THEME, "dark");
+        this.tabPane.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.F4 && (event.isControlDown() || event.isMetaDown()) && tabPane.getTabs().size() > 1) {
+                this.tabPane.getTabs().remove(this.tabPane.getSelectionModel().getSelectedItem());
+            }
+        });
         scene.getStylesheets().add(ResourceUtils.getResource(String.format("view/css/%s.css", theme)).toExternalForm());
     }
 
     /**
-     * 切换tab
+     * 打开tab
      */
-    public void switchTab(MouseEvent mouseEvent) {
-        Node source = (Node) mouseEvent.getSource();
-        ObservableList<Node> children = menuContainer.getChildren();
-        for (int i = 0; i < children.size(); i++) {
-            if (source == children.get(i)) {
-                this.tabIndex = i;
-                show(i);
+    public void openTab(MouseEvent mouseEvent) throws IOException {
+        URL resource;
+        Label source = (Label) mouseEvent.getSource();
+        String text = source.getText();
+        switch (text) {
+            case "JSON":
+                resource = ResourceUtils.getResource("view/json.fxml");
                 break;
-            }
+            case "HTML":
+                resource = ResourceUtils.getResource("view/html.fxml");
+                break;
+            case "XML":
+                resource = ResourceUtils.getResource("view/xml.fxml");
+                break;
+            case "Cookie":
+                resource = ResourceUtils.getResource("view/cookie.fxml");
+                break;
+            case "表单":
+                resource = ResourceUtils.getResource("view/form.fxml");
+                break;
+            case "正则":
+                resource = ResourceUtils.getResource("view/regex.fxml");
+                break;
+            case "编码转换":
+                resource = ResourceUtils.getResource("view/encode.fxml");
+                break;
+            case "加解密":
+                resource = ResourceUtils.getResource("view/encryption.fxml");
+                break;
+            case "ID生成器":
+                resource = ResourceUtils.getResource("view/id.fxml");
+                break;
+            case "逆向":
+                resource = ResourceUtils.getResource("view/reverse.fxml");
+                break;
+            default:
+                throw new RuntimeException(text);
         }
+        openTab(text, FXMLLoader.load(resource));
     }
+
+
 
     /**
      * 切换日志显示
@@ -121,42 +156,49 @@ public class MainController extends BaseController implements Initializable {
         stylesheets.add(ResourceUtils.getResource(String.format("view/css/%s.css", theme)).toExternalForm());
     }
 
-    /**
-     * 切换到下一个tab
-     */
-    public void switchNextTab() {
-        if (++this.tabIndex >= menuContainer.getChildren().size()) {
-            this.tabIndex = 0;
-        }
-        show(this.tabIndex);
-    }
-
-    /**
-     * 显示对应的tab
-     */
-    private void show(int index) {
-        ObservableList<Node> tabChildren = tabContainer.getChildren();
-        for (int i = 0; i < tabChildren.size(); i++) {
-            tabChildren.get(i).setVisible(i == index);
-        }
-
-        ObservableList<Node> menuChildren = menuContainer.getChildren();
-        for (int i = 0; i < menuChildren.size(); i++) {
-            if (i == index) {
-                menuChildren.get(index).getStyleClass().add("selected");
-            } else {
-                menuChildren.get(i).getStyleClass().remove("selected");
-            }
-        }
-        ConfigUtils.setAndSave(TAB_INDEX, String.valueOf(index));
-    }
-
+    @SneakyThrows
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mainController = this;
-
-        show(Integer.parseInt(ConfigUtils.get(TAB_INDEX, "0")));
+        openTab("JSON", FXMLLoader.load(ResourceUtils.getResource("view/json.fxml")));
         showLogOut(Boolean.parseBoolean(ConfigUtils.get(SHOW_LOG_OUT, "false")));
     }
 
+    /**
+     * 打开tab
+     */
+    private void openTab(String text, Node node) {
+        Tab tab = new Tab();
+        tab.setClosable(true);
+        tab.setText(text);
+        tab.setContent(node);
+        tab.setContextMenu(tabContextMenu(tab));
+        tab.setOnCloseRequest(event -> {
+            if (tabPane.getTabs().size() <= 1) {
+                event.consume();
+            }
+        });
+
+        tabPane.getTabs().add(tab);
+        tabPane.getSelectionModel().selectLast();
+    }
+
+    /**
+     * tab 右键菜单
+     */
+    private ContextMenu tabContextMenu(Tab tab) {
+        ContextMenu menu = new ContextMenu();
+        MenuItem close = new MenuItem("关闭");
+        menu.getItems().add(close);
+        close.setOnAction(event -> tabPane.getTabs().remove(tab));
+
+        MenuItem closeOther = new MenuItem("关闭其它");
+        menu.getItems().add(closeOther);
+        closeOther.setOnAction(event -> tabPane.getTabs().removeIf(tab1 -> !tab1.equals(tab)));
+
+        MenuItem closeAll = new MenuItem("关闭全部");
+        menu.getItems().add(closeAll);
+        closeAll.setOnAction(event -> tabPane.getTabs().removeIf(tab1 -> true));
+        return menu;
+    }
 }

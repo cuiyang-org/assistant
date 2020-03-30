@@ -124,6 +124,45 @@
     -fx-border-insets: 0;
 }
 
+/* tab-pan */
+.tab-pane > .tab-header-area > .headers-region > .tab,
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-background-color: -fx-background;
+    /*-fx-background-insets: 0 1 1 0, 1 2 0 1, 2 3 0 2;*/
+    -fx-background-insets: 0;
+    -fx-focus-color: -fx-background;
+    -fx-cursor: hand;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-background-color: #4E5254;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab:hover {
+    -fx-background-color: #27292A;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-close-button {
+    -fx-background-color: white;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-close-button:hover {
+    -fx-background-color: derive(white, -30%);
+}
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-width: 0;
+}
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: null;
+}
+.tab-pane > .tab-header-area {
+    -fx-padding: 0;
+    /*-fx-border-width: 0 0 1 0;*/
+    /*-fx-border-color: #323232;*/
+    -fx-border-color: transparent transparent -fx-shadow-highlight-color transparent,
+    transparent transparent -fx-text-box-border transparent;
+    -fx-border-insets: 0, 0 0 1 0;
+}
+.tab-pane > .tab-content-area {
+    -fx-padding: 0 5 5 5;
+}
+
 /* MenuBar */
 .menu-bar {
     -fx-background-color: -fx-base;

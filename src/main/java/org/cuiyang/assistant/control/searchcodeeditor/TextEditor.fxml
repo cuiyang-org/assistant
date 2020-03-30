@@ -14,7 +14,7 @@
     </HBox>
     <VirtualizedScrollPane VBox.vgrow="ALWAYS">
         <content>
-            <CodeEditor fx:id="codeEditor" VBox.vgrow="ALWAYS" wrapText="true"/>
+            <CodeEditor fx:id="codeEditor" VBox.vgrow="ALWAYS"/>
         </content>
     </VirtualizedScrollPane>
 </fx:root>

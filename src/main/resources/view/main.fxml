@@ -13,34 +13,24 @@
                 <padding>
                     <Insets bottom="5" left="5" right="5" top="5"/>
                 </padding>
-                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="JSON"/>
-                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="HTML"/>
-                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="XML"/>
-                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="Cookie"/>
-                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="表单"/>
-                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="正则"/>
-                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="编码转换"/>
-                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="加解密"/>
-                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="ID生成器"/>
-                <Label styleClass="menu-item" onMouseClicked="#switchTab" text="逆向"/>
+                <Label styleClass="menu-item" onMouseClicked="#openTab" text="JSON"/>
+                <Label styleClass="menu-item" onMouseClicked="#openTab" text="HTML"/>
+                <Label styleClass="menu-item" onMouseClicked="#openTab" text="XML"/>
+                <Label styleClass="menu-item" onMouseClicked="#openTab" text="Cookie"/>
+                <Label styleClass="menu-item" onMouseClicked="#openTab" text="表单"/>
+                <Label styleClass="menu-item" onMouseClicked="#openTab" text="正则"/>
+                <Label styleClass="menu-item" onMouseClicked="#openTab" text="编码转换"/>
+                <Label styleClass="menu-item" onMouseClicked="#openTab" text="加解密"/>
+                <Label styleClass="menu-item" onMouseClicked="#openTab" text="ID生成器"/>
+                <Label styleClass="menu-item" onMouseClicked="#openTab" text="逆向"/>
             </HBox>
             <Separator/>
         </VBox>
     </top>
     <center>
         <SplitPane fx:id="splitPane" dividerPositions="0.8" orientation="VERTICAL">
-            <StackPane fx:id="tabContainer">
-                <fx:include source="json.fxml"/>
-                <fx:include source="html.fxml"/>
-                <fx:include source="xml.fxml"/>
-                <fx:include source="cookie.fxml"/>
-                <fx:include source="form.fxml" fx:id="form"/>
-                <fx:include source="regex.fxml"/>
-                <fx:include source="encode.fxml"/>
-                <fx:include source="encryption.fxml"/>
-                <fx:include source="id.fxml"/>
-                <fx:include source="reverse.fxml" fx:id="reverse"/>
-            </StackPane>
+            <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
+            </TabPane>
             <VBox fx:id="logOutParent">
                 <padding>
                     <Insets bottom="5" left="5" right="5" top="5"/>

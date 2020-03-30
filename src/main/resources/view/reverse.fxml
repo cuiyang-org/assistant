@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="rootPane" spacing="5" visible="false" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="org.cuiyang.assistant.controller.ReverseController">
-    <padding>
-        <Insets bottom="5" left="5" right="5" top="5" />
-    </padding>
+<VBox fx:id="rootPane" spacing="5" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="org.cuiyang.assistant.controller.ReverseController">
     <HBox alignment="CENTER_LEFT" spacing="2">
         <Button onMouseClicked="#merge" text="合并DEX" />
     </HBox>

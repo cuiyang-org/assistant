@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
-<VBox spacing="5" visible="false" xmlns:fx="http://javafx.com/fxml/1"
+<VBox spacing="5" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.cuiyang.assistant.controller.EncryptionController">
-    <padding>
-        <Insets bottom="5" left="5" right="5" top="5"/>
-    </padding>
     <TextArea fx:id="encryptionInput" wrapText="true" VBox.vgrow="ALWAYS" promptText="请输入要加密/解码的内容" onKeyReleased="#encryptionAndDecryption"/>
     <HBox alignment="CENTER_LEFT" spacing="10">
         <HBox alignment="CENTER_LEFT" spacing="5">

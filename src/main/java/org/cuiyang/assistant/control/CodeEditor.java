@@ -157,7 +157,7 @@ public class CodeEditor extends CodeArea {
                 int currentParagraph = this.getCurrentParagraph();
                 Matcher m0 = whiteSpace.matcher(this.getParagraph(currentParagraph - 1).getSegments().get(0));
                 if (m0.find()) Platform.runLater(() -> this.insertText(caretPosition, m0.group()));
-            } else if (keyEvent.getCode() == KeyCode.TAB) {
+            } else if (keyEvent.getCode() == KeyCode.TAB && !(keyEvent.isControlDown() || keyEvent.isMetaDown())) {
                 // tab转空格
                 int caretPosition = this.getCaretPosition();
                 if (keyEvent.isShiftDown()) {
