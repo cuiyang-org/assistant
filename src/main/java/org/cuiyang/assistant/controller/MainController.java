@@ -1,8 +1,6 @@
 package org.cuiyang.assistant.controller;
 
 import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -59,7 +57,7 @@ public class MainController extends BaseController implements Initializable {
         this.scene = scene;
         this.theme = ConfigUtils.get(THEME, "dark");
         this.tabPane.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.F4 && (event.isControlDown() || event.isMetaDown()) && tabPane.getTabs().size() > 1) {
+            if (event.getCode() == KeyCode.W && (event.isControlDown() || event.isMetaDown()) && tabPane.getTabs().size() > 1) {
                 this.tabPane.getTabs().remove(this.tabPane.getSelectionModel().getSelectedItem());
             }
         });
@@ -109,8 +107,6 @@ public class MainController extends BaseController implements Initializable {
         }
         openTab(text, FXMLLoader.load(resource));
     }
-
-
 
     /**
      * 切换日志显示

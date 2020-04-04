@@ -6,11 +6,13 @@
 
 <?import org.cuiyang.assistant.control.CodeEditor?>
 <?import org.fxmisc.flowless.VirtualizedScrollPane?>
+<?import javafx.scene.control.Label?>
 <fx:root xmlns:fx="http://javafx.com/fxml/1" type="VBox" spacing="5" stylesheets="@TextEditor.css">
-    <HBox spacing="5" fx:id="search" visible="false" managed="false">
+    <HBox spacing="5" fx:id="search" visible="false" managed="false" alignment="CENTER">
         <TextField fx:id="keyTextField" promptText="搜索" HBox.hgrow="ALWAYS"/>
         <Button styleClass="up" onMouseClicked="#searchLast"/>
         <Button styleClass="down" onMouseClicked="#searchNext"/>
+        <Label fx:id="matchNum" text="0/0" style="-fx-text-fill: #B9B9B9;"/>
     </HBox>
     <VirtualizedScrollPane VBox.vgrow="ALWAYS">
         <content>

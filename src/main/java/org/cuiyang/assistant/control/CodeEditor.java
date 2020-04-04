@@ -198,9 +198,6 @@ public class CodeEditor extends CodeArea {
                 String selectedText = this.getSelectedText();
                 this.replaceText(selection, isAllUpperCase(selectedText) ? selectedText.toLowerCase() : selectedText.toUpperCase());
                 this.selectRange(selection.getStart(), selection.getEnd());
-            } else if (keyEvent.getCode() == KeyCode.W && (keyEvent.isControlDown() || keyEvent.isMetaDown())) {
-                // 选择单词
-                this.selectWord();
             }
         });
     }
