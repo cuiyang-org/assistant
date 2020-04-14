@@ -12,11 +12,19 @@ import java.net.URISyntaxException;
  */
 public class BrowseUtils {
 
-    public static void open(String url) {
+    public static void open(String uri) {
+        try {
+            open(new URI(uri));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void open(URI uri) {
         Desktop d = Desktop.getDesktop();
         try {
-            d.browse(new URI(url));
-        } catch (URISyntaxException | IOException e) {
+            d.browse(uri);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -70,7 +70,7 @@ public class HtmlController implements Initializable {
         File file = new File("temp.html");
         Document document = Jsoup.parse(this.htmlTextArea.getText());
         FileUtils.writeStringToFile(file, this.htmlTextArea.getText(), charset(document));
-        BrowseUtils.open(file.getPath());
+        BrowseUtils.open(file.toURI());
     }
 
     @Override
