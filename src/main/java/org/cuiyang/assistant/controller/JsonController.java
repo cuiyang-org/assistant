@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
@@ -31,6 +33,12 @@ public class JsonController extends BaseController implements Initializable {
     public SearchCodeEditor editor;
     /** json树 */
     public TreeView<String> jsonTreeView;
+    /** split */
+    public SplitPane splitPane;
+    /** left */
+    public Node splitLeft;
+    /** right */
+    public Node splitRight;
 
     /**
      * json格式化
@@ -141,6 +149,35 @@ public class JsonController extends BaseController implements Initializable {
                 jsonTreeView.setRoot(null);
             }
         });
+
+        // 视图切换
+        ContextMenu contextMenu = new ContextMenu();
+        MaterialDesignIconView icon1 = new MaterialDesignIconView(MaterialDesignIcon.BORDER_LEFT);
+        icon1.setStyleClass("context-icon");
+        MenuItem item1 = new MenuItem("编辑", icon1);
+        item1.setOnAction(event -> {
+            splitPane.getItems().removeIf(item -> true);
+            splitPane.getItems().add(splitLeft);
+        });
+        MaterialDesignIconView icon2 = new MaterialDesignIconView(MaterialDesignIcon.BORDER_RIGHT);
+        icon2.setStyleClass("context-icon");
+        MenuItem item2 = new MenuItem("折叠", icon2);
+        item2.setOnAction(event -> {
+            splitPane.getItems().removeIf(item -> true);
+            splitPane.getItems().add(splitRight);
+        });
+        MaterialDesignIconView icon3 = new MaterialDesignIconView(MaterialDesignIcon.BORDER_VERTICAL);
+        icon3.setStyleClass("context-icon");
+        MenuItem item3 = new MenuItem("左右", icon3);
+        item3.setOnAction(event -> {
+            splitPane.getItems().removeIf(item -> true);
+            splitPane.getItems().add(splitLeft);
+            splitPane.getItems().add(splitRight);
+        });
+        contextMenu.getItems().add(item1);
+        contextMenu.getItems().add(item2);
+        contextMenu.getItems().add(item3);
+        splitPane.setContextMenu(contextMenu);
     }
 
     /**

@@ -5,30 +5,30 @@
 <?import javafx.scene.layout.*?>
 <?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.JsonController">
-    <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
-        <VBox>
+    <SplitPane fx:id="splitPane" dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
+        <VBox fx:id="splitLeft">
             <padding>
                 <Insets right="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2">
+            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
-                <Button onMouseClicked="#jsonFormat" text="格式化"/>
-                <Button onMouseClicked="#jsonSimple" text="去格式化"/>
+                <Label styleClass="menu-item" onMouseClicked="#jsonFormat" text="格式化"/>
+                <Label styleClass="menu-item" onMouseClicked="#jsonSimple" text="去格式化"/>
             </HBox>
             <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="editor"/>
         </VBox>
-        <VBox>
+        <VBox fx:id="splitRight">
             <padding>
                 <Insets left="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2">
+            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
-                <Button onMouseClicked="#jsonFold" text="折叠"/>
-                <Button onMouseClicked="#jsonExpanded" text="展开"/>
+                <Button styleClass="menu-item" onMouseClicked="#jsonFold" text="折叠"/>
+                <Button styleClass="menu-item" onMouseClicked="#jsonExpanded" text="展开"/>
             </HBox>
             <TreeView fx:id="jsonTreeView" VBox.vgrow="ALWAYS">
                 <contextMenu>

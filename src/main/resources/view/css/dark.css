@@ -258,3 +258,6 @@
 .main-selection {
     -fx-fill: #214283;
 }
+.context-icon {
+    -fx-fill: white;
+}
