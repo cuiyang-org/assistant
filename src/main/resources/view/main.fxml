@@ -17,12 +17,12 @@
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="HTML"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="XML"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="Cookie"/>
-                <Label styleClass="menu-item" onMouseClicked="#openTab" text="表单"/>
+                <Label styleClass="menu-item" onMouseClicked="#openTab" text="Form"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="正则"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="编码转换"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="加解密"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="ID生成器"/>
-                <Label styleClass="menu-item" onMouseClicked="#openTab" text="逆向"/>
+<!--                <Label styleClass="menu-item" onMouseClicked="#openTab" text="逆向"/>-->
             </HBox>
             <Separator/>
         </VBox>

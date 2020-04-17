@@ -13,15 +13,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import lombok.SneakyThrows;
+import org.cuiyang.assistant.constant.FileTypeEnum;
+import org.cuiyang.assistant.control.InputDialog;
 import org.cuiyang.assistant.util.ConfigUtils;
 import org.cuiyang.assistant.util.ResourceUtils;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static org.cuiyang.assistant.constant.ConfigConstant.SHOW_LOG_OUT;
 import static org.cuiyang.assistant.constant.ConfigConstant.THEME;
+import static org.cuiyang.assistant.util.ThemeUtils.*;
 
 /**
  * MainController
@@ -55,13 +59,13 @@ public class MainController extends BaseController implements Initializable {
      */
     public void init(Scene scene) {
         this.scene = scene;
-        this.theme = ConfigUtils.get(THEME, "dark");
+        this.theme = getTheme();
         this.tabPane.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.W && (event.isControlDown() || event.isMetaDown()) && tabPane.getTabs().size() > 1) {
+            if (event.getCode() == KeyCode.W && (event.isControlDown() || event.isMetaDown())) {
                 this.tabPane.getTabs().remove(this.tabPane.getSelectionModel().getSelectedItem());
             }
         });
-        scene.getStylesheets().add(ResourceUtils.getResource(String.format("view/css/%s.css", theme)).toExternalForm());
+        scene.getStylesheets().add(getThemeResource());
     }
 
     /**
@@ -84,7 +88,7 @@ public class MainController extends BaseController implements Initializable {
             case "Cookie":
                 resource = ResourceUtils.getResource("view/cookie.fxml");
                 break;
-            case "表单":
+            case "Form":
                 resource = ResourceUtils.getResource("view/form.fxml");
                 break;
             case "正则":
@@ -139,17 +143,18 @@ public class MainController extends BaseController implements Initializable {
      */
     public void switchTheme() {
         ObservableList<String> stylesheets = scene.getStylesheets();
-        stylesheets.remove(ResourceUtils.getResource(String.format("view/css/%s.css", theme)).toExternalForm());
-        if (theme.equals("dark")) {
+        stylesheets.remove(getThemeResource());
+        if (theme.equals(DARK)) {
             // 切换成亮色
             themeImageView.setImage(new Image("/view/image/theme-light.png"));
-            theme = "light";
+            theme = LIGHT;
         } else {
             // 切换成暗色
             themeImageView.setImage(new Image("/view/image/theme-dark.png"));
-            theme = "dark";
+            theme = DARK;
         }
-        stylesheets.add(ResourceUtils.getResource(String.format("view/css/%s.css", theme)).toExternalForm());
+        stylesheets.add(getThemeResource(theme));
+        ConfigUtils.setAndSave(THEME, theme);
     }
 
     @SneakyThrows
@@ -169,11 +174,6 @@ public class MainController extends BaseController implements Initializable {
         tab.setText(text);
         tab.setContent(node);
         tab.setContextMenu(tabContextMenu(tab));
-        tab.setOnCloseRequest(event -> {
-            if (tabPane.getTabs().size() <= 1) {
-                event.consume();
-            }
-        });
 
         tabPane.getTabs().add(tab);
         tabPane.getSelectionModel().selectLast();
@@ -195,6 +195,17 @@ public class MainController extends BaseController implements Initializable {
         MenuItem closeAll = new MenuItem("关闭全部");
         menu.getItems().add(closeAll);
         closeAll.setOnAction(event -> tabPane.getTabs().removeIf(tab1 -> true));
+
+        FileTypeEnum fileType = FileTypeEnum.parseOfDesc(tab.getText());
+        MenuItem rename = new MenuItem("重命名");
+        menu.getItems().add(rename);
+        rename.setOnAction(event -> {
+            InputDialog dialog = new InputDialog(tab.getText());
+            dialog.setSuffix(fileType != null ? fileType.getSuffix() : null);
+            dialog.setTitle("重命名");
+            Optional<String> optional = dialog.showAndWait();
+            optional.ifPresent(tab::setText);
+        });
         return menu;
     }
 }
