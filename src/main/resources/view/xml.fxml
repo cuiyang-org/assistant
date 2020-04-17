@@ -10,11 +10,11 @@
             <padding>
                 <Insets right="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2">
+            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
-                <Button onMouseClicked="#xmlFormat" text="格式化"/>
+                <Label styleClass="menu-item" onMouseClicked="#xmlFormat" text="格式化"/>
             </HBox>
             <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="xmlTextArea"/>
         </VBox>
@@ -22,14 +22,14 @@
             <padding>
                 <Insets left="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="5">
+            <HBox alignment="CENTER_LEFT" spacing="5" styleClass="menu">
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
                 <TextField HBox.hgrow="ALWAYS" fx:id="xpathTextField" promptText="请输入XPath" onKeyReleased="#xpath"/>
-                <Button onMouseClicked="#xpath" text="查询"/>
+                <Label styleClass="menu-item" onMouseClicked="#xpath" text="查询"/>
                 <Separator orientation="VERTICAL"/>
-                <Button onMouseClicked="#openCssManual" text="手册"/>
+                <Label styleClass="menu-item" onMouseClicked="#openCssManual" text="手册"/>
             </HBox>
             <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="xpathTextArea"/>
         </VBox>

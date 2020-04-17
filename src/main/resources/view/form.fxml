@@ -10,13 +10,13 @@
             <padding>
                 <Insets right="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2">
+            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
-                <Button onMouseClicked="#format" text="格式化"/>
-                <Button onMouseClicked="#simple" text="去格式化"/>
-                <Button onMouseClicked="#genJava" text="生成Java代码"/>
+                <Label styleClass="menu-item" onMouseClicked="#format" text="格式化"/>
+                <Label styleClass="menu-item" onMouseClicked="#simple" text="去格式化"/>
+                <Label styleClass="menu-item" onMouseClicked="#genJava" text="生成Java代码"/>
             </HBox>
             <SearchCodeEditor fx:id="textArea" VBox.vgrow="ALWAYS"/>
         </VBox>
@@ -24,12 +24,12 @@
             <padding>
                 <Insets left="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2">
+            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
-                <Button onMouseClicked="#fold" text="折叠"/>
-                <Button onMouseClicked="#expanded" text="展开"/>
+                <Label styleClass="menu-item" onMouseClicked="#fold" text="折叠"/>
+                <Label styleClass="menu-item" onMouseClicked="#expanded" text="展开"/>
             </HBox>
             <TreeView fx:id="treeView" VBox.vgrow="ALWAYS">
                 <contextMenu>

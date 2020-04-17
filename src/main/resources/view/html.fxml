@@ -10,12 +10,12 @@
             <padding>
                 <Insets right="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2">
+            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
-                <Button onMouseClicked="#htmlFormat" text="格式化"/>
-                <Button onMouseClicked="#openBrowser" text="浏览器"/>
+                <Label styleClass="menu-item" onMouseClicked="#htmlFormat" text="格式化"/>
+                <Label styleClass="menu-item" onMouseClicked="#openBrowser" text="浏览器"/>
             </HBox>
             <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="htmlTextArea"/>
         </VBox>
@@ -23,14 +23,14 @@
             <padding>
                 <Insets left="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="5">
+            <HBox alignment="CENTER_LEFT" spacing="5" styleClass="menu">
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
                 <TextField HBox.hgrow="ALWAYS" fx:id="cssQueryTextField" promptText="请输入CSS选择器" onKeyReleased="#cssQuery"/>
-                <Button onMouseClicked="#cssQuery" text="查询"/>
+                <Label styleClass="menu-item" onMouseClicked="#cssQuery" text="查询"/>
                 <Separator orientation="VERTICAL"/>
-                <Button onMouseClicked="#openCssManual" text="手册"/>
+                <Label styleClass="menu-item" onMouseClicked="#openCssManual" text="手册"/>
             </HBox>
             <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="cssQueryTextArea"/>
         </VBox>

@@ -6,14 +6,14 @@
 <?import javafx.geometry.Insets?>
 <VBox xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.cuiyang.assistant.controller.IdController">
-    <HBox alignment="CENTER_LEFT" spacing="2">
+    <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
         <padding>
             <Insets top="2" bottom="5" right="5"/>
         </padding>
-        <Button onMouseClicked="#uuid" text="UUID"/>
-        <Button onMouseClicked="#uuid2" text="UUID2"/>
-        <Button onMouseClicked="#timestamp" text="时间戳"/>
-        <Button onMouseClicked="#datetime" text="日期"/>
+        <Label styleClass="menu-item" onMouseClicked="#uuid" text="UUID"/>
+        <Label styleClass="menu-item" onMouseClicked="#uuid2" text="UUID2"/>
+        <Label styleClass="menu-item" onMouseClicked="#timestamp" text="时间戳"/>
+        <Label styleClass="menu-item" onMouseClicked="#datetime" text="日期"/>
     </HBox>
     <TextArea fx:id="idOutput" wrapText="true" VBox.vgrow="ALWAYS" promptText="ID"/>
 </VBox>

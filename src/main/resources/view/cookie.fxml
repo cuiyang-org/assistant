@@ -10,12 +10,12 @@
             <padding>
                 <Insets right="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2">
+            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
-                <Button onMouseClicked="#cookieFormat" text="格式化"/>
-                <Button onMouseClicked="#cookieSimple" text="去格式化"/>
+                <Label styleClass="menu-item" onMouseClicked="#cookieFormat" text="格式化"/>
+                <Label styleClass="menu-item" onMouseClicked="#cookieSimple" text="去格式化"/>
             </HBox>
             <SearchCodeEditor fx:id="cookieTextArea" VBox.vgrow="ALWAYS"/>
         </VBox>
@@ -23,12 +23,12 @@
             <padding>
                 <Insets left="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2">
+            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
-                <Button onMouseClicked="#cookieFold" text="折叠"/>
-                <Button onMouseClicked="#cookieExpanded" text="展开"/>
+                <Label styleClass="menu-item" onMouseClicked="#cookieFold" text="折叠"/>
+                <Label styleClass="menu-item" onMouseClicked="#cookieExpanded" text="展开"/>
             </HBox>
             <TreeView fx:id="cookieTreeView" VBox.vgrow="ALWAYS">
                 <contextMenu>
