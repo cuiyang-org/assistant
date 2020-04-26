@@ -1,6 +1,6 @@
 package org.cuiyang.assistant.controller;
 
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -37,7 +37,7 @@ public class EncodeController {
      */
     public void encodeOrDecode(MouseEvent mouseEvent) {
         try {
-            Button source = (Button) mouseEvent.getSource();
+            Label source = (Label) mouseEvent.getSource();
             switch (source.getText()) {
                 case "URLEncode" :
                     encodeOutput.setText(URLEncoder.encode(encodeInput.getText(), "UTF-8"));
