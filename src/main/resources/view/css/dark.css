@@ -177,14 +177,14 @@
 }
 
 /* 菜单 */
-.menu .menu-item {
+.menu-item {
     -fx-cursor: hand;
     -fx-background-radius: 3px, 3px, 2px, 1px;
 }
-.menu .menu-item:hover {
+.menu-item:hover {
     -fx-background-color: #4B6EAF;
 }
-.menu .menu-item.selected {
+.menu-item.selected {
     -fx-background-color: #515658;
 }
 

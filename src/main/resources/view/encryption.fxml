@@ -5,13 +5,50 @@
 <?import javafx.scene.layout.VBox?>
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
 <VBox spacing="5" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.cuiyang.assistant.controller.EncryptionController">
-    <TextArea fx:id="encryptionInput" wrapText="true" VBox.vgrow="ALWAYS" promptText="请输入要加密/解码的内容" onKeyReleased="#encryptionAndDecryption"/>
+    <!-- 输入 -->
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <padding>
+            <Insets top="5"/>
+        </padding>
+        <HBox alignment="CENTER_LEFT" spacing="5">
+            <Label text="输入类型" textFill="gray"/>
+            <ComboBox fx:id="inputType" value="String" onAction="#inputOutputTypeAction">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="String" />
+                        <String fx:value="Base64" />
+                        <String fx:value="Hex" />
+                        <String fx:value="Binary" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="5">
+            <Label text="字符编码" textFill="gray"/>
+            <ComboBox fx:id="inputCharset" value="UTF-8" onAction="#run">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="UTF-8" />
+                        <String fx:value="GBK" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="5" visible="false">
+            <Label text="二进制文件" textFill="gray"/>
+            <Button fx:id="inputFileBtn" text="选择文件" onMouseClicked="#chooseInputFile"/>
+        </HBox>
+    </HBox>
+    <TextArea fx:id="input" wrapText="true" VBox.vgrow="ALWAYS" promptText="请输入要加密/解码的内容" onKeyReleased="#run"/>
+
+    <!-- 算法 -->
     <HBox alignment="CENTER_LEFT" spacing="10">
         <HBox alignment="CENTER_LEFT" spacing="5">
             <Label text="算法" textFill="gray"/>
-            <ComboBox fx:id="algorithmComboBox" value="MD5" onAction="#encryptionAndDecryption">
+            <ComboBox fx:id="algorithmComboBox" value="MD5" onAction="#algorithmAction">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="MD2" />
@@ -20,6 +57,10 @@
                         <String fx:value="SHA-256" />
                         <String fx:value="SHA-384" />
                         <String fx:value="SHA-512" />
+                        <String fx:value="To Hex" />
+                        <String fx:value="From Hex" />
+                        <String fx:value="To Base64" />
+                        <String fx:value="From Base64" />
                         <String fx:value="To DES" />
                         <String fx:value="From DES" />
                         <String fx:value="To AES" />
@@ -28,10 +69,10 @@
                 </items>
             </ComboBox>
         </HBox>
-        <HBox alignment="CENTER_LEFT" spacing="10" fx:id="desAndAesOptionHBox" visible="false">
+        <HBox alignment="CENTER_LEFT" spacing="10" fx:id="desAndAesOptionHBox" visible="false" managed="false">
             <HBox alignment="CENTER_LEFT" spacing="5">
                 <Label text="模式" textFill="gray" />
-                <ComboBox fx:id="modeComboBox" value="ECB" onAction="#encryptionAndDecryption">
+                <ComboBox fx:id="modeComboBox" value="ECB" onAction="#run">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="ECB" />
@@ -45,7 +86,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" spacing="5">
                 <Label text="填充" textFill="gray" />
-                <ComboBox fx:id="paddingComboBox" value="pkcs5padding" onAction="#encryptionAndDecryption">
+                <ComboBox fx:id="paddingComboBox" value="pkcs5padding" onAction="#run">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="pkcs5padding" />
@@ -57,20 +98,54 @@
                     </items>
                 </ComboBox>
             </HBox>
-            <TextField fx:id="keyTextField" HBox.hgrow="ALWAYS" promptText="密码" onKeyReleased="#encryptionAndDecryption"/>
-            <TextField fx:id="ivTextField" HBox.hgrow="ALWAYS" promptText="偏移量，ECB模式不用" onKeyReleased="#encryptionAndDecryption"/>
+            <TextField fx:id="keyTextField" HBox.hgrow="ALWAYS" promptText="密码" onKeyReleased="#run"/>
+            <TextField fx:id="ivTextField" HBox.hgrow="ALWAYS" promptText="偏移量，ECB模式不用" onKeyReleased="#run"/>
             <HBox alignment="CENTER_LEFT" spacing="5">
-                <Label text="输出" textFill="gray" />
-                <ComboBox fx:id="outputComboBox" value="base64" onAction="#encryptionAndDecryption">
+                <Label text="秘钥类型" textFill="gray" />
+                <ComboBox fx:id="keyTypeComboBox" value="base64" onAction="#run">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="base64" />
-                            <String fx:value="hex" />
+                            <String fx:value="String" />
+                            <String fx:value="Base64" />
+                            <String fx:value="Hex" />
                         </FXCollections>
                     </items>
                 </ComboBox>
             </HBox>
         </HBox>
+        <Label styleClass="menu-item" onMouseClicked="#run" text="运行"/>
     </HBox>
-    <TextArea fx:id="encryptionOutput" wrapText="true" VBox.vgrow="ALWAYS" promptText="加密/解码结果"/>
+
+    <!-- 输出 -->
+    <TextArea fx:id="output" wrapText="true" VBox.vgrow="ALWAYS" promptText="加密/解码结果"/>
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <HBox alignment="CENTER_LEFT" spacing="5">
+            <Label text="输出类型" textFill="gray"/>
+            <ComboBox fx:id="outputType" value="Hex" onAction="#inputOutputTypeAction">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="String" />
+                        <String fx:value="Base64" />
+                        <String fx:value="Hex" />
+                        <String fx:value="Binary" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="5" visible="false">
+            <Label text="字符编码" textFill="gray"/>
+            <ComboBox fx:id="outputCharset" value="UTF-8" onAction="#run">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="UTF-8" />
+                        <String fx:value="GBK" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="5" visible="false">
+            <Label text="二进制文件" textFill="gray"/>
+            <Button fx:id="outputFileBtn" text="选择文件" onMouseClicked="#chooseOutputFile"/>
+        </HBox>
+    </HBox>
 </VBox>

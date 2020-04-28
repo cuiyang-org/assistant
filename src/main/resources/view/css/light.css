@@ -31,15 +31,15 @@
 }
 
 /* 菜单 */
-.menu .menu-item {
+.menu-item {
     -fx-cursor: hand;
     -fx-background-radius: 3px, 3px, 2px, 1px;
 }
-.menu .menu-item:hover {
+.menu-item:hover {
     -fx-background-color: #3BC9FA;
     -fx-text-fill: white;
 }
-.menu .menu-item.selected {
+.menu-item.selected {
     -fx-background-color: #039ED3;
     -fx-text-fill: white;
 }
