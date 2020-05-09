@@ -76,18 +76,12 @@ public class EncryptionController {
             case "SHA-512" :
             case "To Hex" :
             case "From Hex" :
-                if (StringUtils.isEmpty(input.getText())) {
-                    inputType.setValue("String");
-                }
-                outputType.setValue("Hex");
-                visible(desAndAesOptionHBox, false);
-                break;
             case "To Base64" :
             case "From Base64" :
                 if (StringUtils.isEmpty(input.getText())) {
                     inputType.setValue("String");
                 }
-                outputType.setValue("Base64");
+                outputType.setValue("String");
                 visible(desAndAesOptionHBox, false);
                 break;
             case "To DES" :

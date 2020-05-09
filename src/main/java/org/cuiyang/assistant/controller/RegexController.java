@@ -30,8 +30,11 @@ public class RegexController {
      * 匹配
      */
     public void match() {
+        outputTextArea.setText(null);
+        if (StringUtils.isEmpty(inputTextArea.getText()) || StringUtils.isEmpty(regexTextField.getText())) {
+            return;
+        }
         try {
-            outputTextArea.setText("");
             Matcher matcher = matcher();
             StringBuilder sb = new StringBuilder();
             while (matcher.find()) {

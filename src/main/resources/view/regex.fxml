@@ -11,7 +11,7 @@
         <CheckBox fx:id="ignoreCaseCheckBox" text="忽略大小写" selected="true" onMouseClicked="#match"/>
         <Label styleClass="menu-item" onMouseClicked="#match" text="匹配"/>
         <Separator orientation="VERTICAL"/>
-        <TextField HBox.hgrow="ALWAYS" fx:id="replaceTextField" promptText="替换文本" onKeyReleased="#replace"/>
+        <TextField HBox.hgrow="ALWAYS" fx:id="replaceTextField" promptText="替换文本"/>
         <Label styleClass="menu-item" onMouseClicked="#replace" text="替换"/>
         <Separator orientation="VERTICAL"/>
         <Label styleClass="menu-item" onMouseClicked="#openRegexManual" text="手册"/>
