@@ -74,6 +74,12 @@ public class EncryptionController {
             case "SHA-256" :
             case "SHA-384" :
             case "SHA-512" :
+                if (StringUtils.isEmpty(input.getText())) {
+                    inputType.setValue("String");
+                }
+                outputType.setValue("Hex");
+                visible(desAndAesOptionHBox, false);
+                break;
             case "To Hex" :
             case "From Hex" :
             case "To Base64" :
@@ -268,6 +274,9 @@ public class EncryptionController {
      * 获取输出
      */
     private String getOutput(byte[] output) throws IOException {
+        if (output == null) {
+            return null;
+        }
         switch (outputType.getValue()) {
             case "String":
                 return new String(output, outputCharset.getValue());
@@ -302,7 +311,7 @@ public class EncryptionController {
      * 获取二进制
      */
     private byte[] getBytes(String type, String value) throws DecoderException {
-        if (value == null) {
+        if (StringUtils.isEmpty(value)) {
             return null;
         }
         switch (type) {

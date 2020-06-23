@@ -102,7 +102,7 @@
             <TextField fx:id="ivTextField" HBox.hgrow="ALWAYS" promptText="偏移量，ECB模式不用" onKeyReleased="#run"/>
             <HBox alignment="CENTER_LEFT" spacing="5">
                 <Label text="秘钥类型" textFill="gray" />
-                <ComboBox fx:id="keyTypeComboBox" value="base64" onAction="#run">
+                <ComboBox fx:id="keyTypeComboBox" value="String" onAction="#run">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="String" />

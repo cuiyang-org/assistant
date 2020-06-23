@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 <VBox spacing="5" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.cuiyang.assistant.controller.RegexController">
-    <TextArea fx:id="inputTextArea" promptText="待匹配的文本" VBox.vgrow="ALWAYS" onKeyReleased="#match"/>
+    <TextArea fx:id="inputTextArea" promptText="待匹配的文本" VBox.vgrow="ALWAYS" onKeyReleased="#match" wrapText="true"/>
     <HBox alignment="CENTER_LEFT" spacing="5">
         <TextField HBox.hgrow="ALWAYS" fx:id="regexTextField" promptText="正则表达式" onKeyReleased="#match"/>
         <CheckBox fx:id="ignoreCaseCheckBox" text="忽略大小写" selected="true" onMouseClicked="#match"/>
@@ -16,5 +16,5 @@
         <Separator orientation="VERTICAL"/>
         <Label styleClass="menu-item" onMouseClicked="#openRegexManual" text="手册"/>
     </HBox>
-    <TextArea fx:id="outputTextArea" promptText="匹配结果" VBox.vgrow="ALWAYS"/>
+    <TextArea fx:id="outputTextArea" promptText="匹配结果" VBox.vgrow="ALWAYS" wrapText="true"/>
 </VBox>
