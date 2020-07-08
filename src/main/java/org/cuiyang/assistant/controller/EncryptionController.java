@@ -1,10 +1,8 @@
 package org.cuiyang.assistant.controller;
 
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import org.apache.commons.codec.DecoderException;
@@ -62,11 +60,14 @@ public class EncryptionController {
     public ComboBox<String> outputCharset;
     /** 保存文件 */
     public Button outputFileBtn;
+    /** 格式化 */
+    public Label formatButton;
 
     /**
      * 算法切换
      */
     public void algorithmAction() {
+        visible(formatButton, false);
         switch (algorithmComboBox.getValue()) {
             case "MD2" :
             case "MD5" :
@@ -81,6 +82,7 @@ public class EncryptionController {
                 visible(desAndAesOptionHBox, false);
                 break;
             case "To Hex" :
+                visible(formatButton, true);
             case "From Hex" :
             case "To Base64" :
             case "From Base64" :
@@ -326,4 +328,27 @@ public class EncryptionController {
         }
     }
 
+    /**
+     * 格式化
+     */
+    public void format(MouseEvent mouseEvent) throws DecoderException {
+        this.run();
+        String text = output.getText().trim();
+        output.setText(" 0\t 1\t 2\t 3\t 4\t 5\t 6\t 7\t 8\t 9\t A\t B\t C\t D\t E\t F");
+        if (StringUtils.isEmpty(text)) {
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < text.length(); i += 2) {
+            if (i % 32 == 0) {
+                output.appendText(new String(Hex.decodeHex(sb.toString().toCharArray())));
+                sb = new StringBuilder();
+                output.appendText("\n");
+            }
+            String str = text.substring(i, i + 2);
+            sb.append(str);
+            output.appendText(str);
+            output.appendText("\t");
+        }
+    }
 }

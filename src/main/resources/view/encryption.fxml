@@ -114,6 +114,8 @@
             </HBox>
         </HBox>
         <Label styleClass="menu-item" onMouseClicked="#run" text="运行"/>
+        <Label fx:id="formatButton" styleClass="menu-item" onMouseClicked="#format"
+               text="格式化" visible="false" managed="false"/>
     </HBox>
 
     <!-- 输出 -->
