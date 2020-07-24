@@ -14,6 +14,7 @@
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
+                <Label styleClass="menu-item" onMouseClicked="#switchView" text="切换视图"/>
                 <Label styleClass="menu-item" onMouseClicked="#jsonFormat" text="格式化"/>
                 <Label styleClass="menu-item" onMouseClicked="#jsonSimple" text="去格式化"/>
             </HBox>
@@ -27,6 +28,7 @@
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
+                <Button styleClass="menu-item" onMouseClicked="#switchView" text="切换视图"/>
                 <Button styleClass="menu-item" onMouseClicked="#jsonFold" text="折叠"/>
                 <Button styleClass="menu-item" onMouseClicked="#jsonExpanded" text="展开"/>
             </HBox>

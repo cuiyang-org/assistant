@@ -39,6 +39,8 @@ public class JsonController extends BaseController implements Initializable {
     public Node splitLeft;
     /** right */
     public Node splitRight;
+    /** 视图类型 0左右 1 编辑 2 折叠 */
+    public int viewType = 0;
 
     /**
      * json格式化
@@ -130,6 +132,26 @@ public class JsonController extends BaseController implements Initializable {
         ClipBoardUtils.setSysClipboardText(treeItem.getKey());
     }
 
+    /**
+     * 切换视图
+     */
+    public void switchView() {
+        if (viewType == 0) {
+            splitPane.getItems().removeIf(item -> true);
+            splitPane.getItems().add(splitLeft);
+            viewType = 1;
+        } else if (viewType == 1) {
+            splitPane.getItems().removeIf(item -> true);
+            splitPane.getItems().add(splitRight);
+            viewType = 2;
+        } else {
+            splitPane.getItems().removeIf(item -> true);
+            splitPane.getItems().add(splitLeft);
+            splitPane.getItems().add(splitRight);
+            viewType = 0;
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.editor.setType(CodeEditor.Type.JSON);
@@ -149,35 +171,6 @@ public class JsonController extends BaseController implements Initializable {
                 jsonTreeView.setRoot(null);
             }
         });
-
-        // 视图切换
-        ContextMenu contextMenu = new ContextMenu();
-        MaterialDesignIconView icon1 = new MaterialDesignIconView(MaterialDesignIcon.BORDER_LEFT);
-        icon1.setStyleClass("context-icon");
-        MenuItem item1 = new MenuItem("编辑", icon1);
-        item1.setOnAction(event -> {
-            splitPane.getItems().removeIf(item -> true);
-            splitPane.getItems().add(splitLeft);
-        });
-        MaterialDesignIconView icon2 = new MaterialDesignIconView(MaterialDesignIcon.BORDER_RIGHT);
-        icon2.setStyleClass("context-icon");
-        MenuItem item2 = new MenuItem("折叠", icon2);
-        item2.setOnAction(event -> {
-            splitPane.getItems().removeIf(item -> true);
-            splitPane.getItems().add(splitRight);
-        });
-        MaterialDesignIconView icon3 = new MaterialDesignIconView(MaterialDesignIcon.BORDER_VERTICAL);
-        icon3.setStyleClass("context-icon");
-        MenuItem item3 = new MenuItem("左右", icon3);
-        item3.setOnAction(event -> {
-            splitPane.getItems().removeIf(item -> true);
-            splitPane.getItems().add(splitLeft);
-            splitPane.getItems().add(splitRight);
-        });
-        contextMenu.getItems().add(item1);
-        contextMenu.getItems().add(item2);
-        contextMenu.getItems().add(item3);
-        splitPane.setContextMenu(contextMenu);
     }
 
     /**
