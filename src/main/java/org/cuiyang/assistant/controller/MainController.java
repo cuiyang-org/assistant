@@ -17,7 +17,6 @@ import javafx.scene.layout.VBox;
 import lombok.SneakyThrows;
 import org.cuiyang.assistant.constant.FileTypeEnum;
 import org.cuiyang.assistant.control.InputDialog;
-import org.cuiyang.assistant.util.AlertUtils;
 import org.cuiyang.assistant.util.ConfigUtils;
 import org.cuiyang.assistant.util.ResourceUtils;
 
