@@ -1,9 +1,11 @@
 package org.cuiyang.assistant.controller;
 
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,6 +17,7 @@ import javafx.scene.layout.VBox;
 import lombok.SneakyThrows;
 import org.cuiyang.assistant.constant.FileTypeEnum;
 import org.cuiyang.assistant.control.InputDialog;
+import org.cuiyang.assistant.util.AlertUtils;
 import org.cuiyang.assistant.util.ConfigUtils;
 import org.cuiyang.assistant.util.ResourceUtils;
 
@@ -62,7 +65,7 @@ public class MainController extends BaseController implements Initializable {
         this.theme = getTheme();
         this.tabPane.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.W && (event.isControlDown() || event.isMetaDown())) {
-                this.tabPane.getTabs().remove(this.tabPane.getSelectionModel().getSelectedItem());
+                closeTab(this.tabPane.getSelectionModel().getSelectedItem());
             }
         });
         scene.getStylesheets().add(getThemeResource());
@@ -72,44 +75,44 @@ public class MainController extends BaseController implements Initializable {
      * 打开tab
      */
     public void openTab(MouseEvent mouseEvent) throws IOException {
-        URL resource;
+        String resource;
         Label source = (Label) mouseEvent.getSource();
         String text = source.getText();
         switch (text) {
             case "JSON":
-                resource = ResourceUtils.getResource("view/json.fxml");
+                resource = "view/json.fxml";
                 break;
             case "HTML":
-                resource = ResourceUtils.getResource("view/html.fxml");
+                resource = "view/html.fxml";
                 break;
             case "XML":
-                resource = ResourceUtils.getResource("view/xml.fxml");
+                resource = "view/xml.fxml";
                 break;
             case "Cookie":
-                resource = ResourceUtils.getResource("view/cookie.fxml");
+                resource = "view/cookie.fxml";
                 break;
             case "Form":
-                resource = ResourceUtils.getResource("view/form.fxml");
+                resource = "view/form.fxml";
                 break;
             case "正则":
-                resource = ResourceUtils.getResource("view/regex.fxml");
+                resource = "view/regex.fxml";
                 break;
             case "编码转换":
-                resource = ResourceUtils.getResource("view/encode.fxml");
+                resource = "view/encode.fxml";
                 break;
             case "加解密":
-                resource = ResourceUtils.getResource("view/encryption.fxml");
+                resource = "view/encryption.fxml";
                 break;
             case "ID生成器":
-                resource = ResourceUtils.getResource("view/id.fxml");
+                resource = "view/id.fxml";
                 break;
             case "逆向":
-                resource = ResourceUtils.getResource("view/reverse.fxml");
+                resource = "view/reverse.fxml";
                 break;
             default:
                 throw new RuntimeException(text);
         }
-        openTab(text, FXMLLoader.load(resource));
+        openTab(text, resource);
     }
 
     /**
@@ -161,15 +164,33 @@ public class MainController extends BaseController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mainController = this;
-        openTab("JSON", FXMLLoader.load(ResourceUtils.getResource("view/json.fxml")));
+        openTab("JSON", "view/json.fxml");
         showLogOut(Boolean.parseBoolean(ConfigUtils.get(SHOW_LOG_OUT, "false")));
     }
 
     /**
      * 打开tab
      */
-    private void openTab(String text, Node node) {
+    private void openTab(String text, String resource) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(ResourceUtils.getResource(resource));
+        Parent node = fxmlLoader.load();
+        BaseController controller = fxmlLoader.getController();
+
         Tab tab = new Tab();
+        controller.tab = tab;
+        tab.setOnCloseRequest(event -> {
+            if (!controller.isCloseable()) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("提示");
+                alert.setHeaderText("你确定要关闭吗？");
+                alert.showAndWait();
+                ButtonType result = alert.getResult();
+                if (result != ButtonType.OK) {
+                    event.consume();
+                }
+            }
+        });
         tab.setClosable(true);
         tab.setText(text);
         tab.setContent(node);
@@ -180,13 +201,28 @@ public class MainController extends BaseController implements Initializable {
     }
 
     /**
+     * 关闭tab
+     */
+    public void closeTab(Tab tab)  {
+        EventHandler<Event> eventHandler = tab.getOnCloseRequest();
+        if (eventHandler != null) {
+            Event event = new Event(Tab.CLOSED_EVENT);
+            eventHandler.handle(event);
+            if (event.isConsumed()) {
+                return;
+            }
+        }
+        this.tabPane.getTabs().remove(tab);
+    }
+
+    /**
      * tab 右键菜单
      */
     private ContextMenu tabContextMenu(Tab tab) {
         ContextMenu menu = new ContextMenu();
         MenuItem close = new MenuItem("关闭");
         menu.getItems().add(close);
-        close.setOnAction(event -> tabPane.getTabs().remove(tab));
+        close.setOnAction(event -> closeTab(tab));
 
         MenuItem closeOther = new MenuItem("关闭其它");
         menu.getItems().add(closeOther);
@@ -207,5 +243,10 @@ public class MainController extends BaseController implements Initializable {
             optional.ifPresent(tab::setText);
         });
         return menu;
+    }
+
+    @Override
+    public boolean isCloseable() {
+        return true;
     }
 }

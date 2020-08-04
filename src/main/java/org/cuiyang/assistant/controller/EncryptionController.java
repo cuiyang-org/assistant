@@ -28,7 +28,7 @@ import static org.cuiyang.assistant.util.CommonUtils.visible;
  *
  * @author cy48576
  */
-public class EncryptionController {
+public class EncryptionController extends BaseController {
 
     /** 输入 */
     public TextArea input;
@@ -350,5 +350,10 @@ public class EncryptionController {
             output.appendText(str);
             output.appendText("\t");
         }
+    }
+
+    @Override
+    public boolean isCloseable() {
+        return StringUtils.isBlank(input.getText());
     }
 }

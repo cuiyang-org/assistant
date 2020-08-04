@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  *
  * @author cy48576
  */
-public class RegexController {
+public class RegexController extends BaseController {
     /** 输入 */
     public TextArea inputTextArea;
     /** 输出 */
@@ -74,5 +74,10 @@ public class RegexController {
             pattern = Pattern.compile(regexTextField.getText());
         }
         return pattern.matcher(inputTextArea.getText());
+    }
+
+    @Override
+    public boolean isCloseable() {
+        return StringUtils.isBlank(inputTextArea.getText());
     }
 }

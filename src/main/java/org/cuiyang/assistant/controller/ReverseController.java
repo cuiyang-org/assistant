@@ -60,4 +60,9 @@ public class ReverseController extends BaseController {
             }
         });
     }
+
+    @Override
+    public boolean isCloseable() {
+        return false;
+    }
 }

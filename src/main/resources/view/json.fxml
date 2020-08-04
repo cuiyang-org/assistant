@@ -4,6 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.JsonController">
     <SplitPane fx:id="splitPane" dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
         <VBox fx:id="splitLeft">
@@ -14,9 +16,15 @@
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
-                <Label styleClass="menu-item" onMouseClicked="#switchView" text="切换视图"/>
-                <Label styleClass="menu-item" onMouseClicked="#jsonFormat" text="格式化"/>
-                <Label styleClass="menu-item" onMouseClicked="#jsonSimple" text="去格式化"/>
+                <Button styleClass="menu-item" onMouseClicked="#jsonFormat" text="格式化"/>
+                <Button styleClass="menu-item" onMouseClicked="#jsonSimple" text="去格式化"/>
+                <Button onMouseClicked="#switchEdit">
+                    <graphic>
+                        <ImageView fx:id="editZoomImageView">
+                            <Image url="/view/image/zoom-up.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
             </HBox>
             <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="editor"/>
         </VBox>
@@ -28,9 +36,17 @@
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
-                <Button styleClass="menu-item" onMouseClicked="#switchView" text="切换视图"/>
                 <Button styleClass="menu-item" onMouseClicked="#jsonFold" text="折叠"/>
                 <Button styleClass="menu-item" onMouseClicked="#jsonExpanded" text="展开"/>
+                <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                    <Button onMouseClicked="#switchPreview">
+                        <graphic>
+                            <ImageView fx:id="previewZoomImageView">
+                                <Image url="/view/image/zoom-up.png"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
             </HBox>
             <TreeView fx:id="jsonTreeView" VBox.vgrow="ALWAYS">
                 <contextMenu>

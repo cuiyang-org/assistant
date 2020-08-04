@@ -3,6 +3,7 @@ package org.cuiyang.assistant.controller;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.cuiyang.assistant.util.UnicodeUtils;
 
@@ -15,7 +16,7 @@ import java.util.Base64;
  *
  * @author cy48576
  */
-public class EncodeController {
+public class EncodeController extends BaseController {
 
     /** 编码输入 */
     public TextArea encodeInput;
@@ -64,4 +65,8 @@ public class EncodeController {
         }
     }
 
+    @Override
+    public boolean isCloseable() {
+        return StringUtils.isBlank(encodeInput.getText());
+    }
 }

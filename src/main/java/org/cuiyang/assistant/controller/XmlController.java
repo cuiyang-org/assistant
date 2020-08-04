@@ -17,7 +17,7 @@ import org.cuiyang.assistant.util.XmlUtils;
  *
  * @author cy48576
  */
-public class XmlController implements Initializable {
+public class XmlController extends BaseController implements Initializable {
 
     /** xml文本框 */
     public SearchCodeEditor xmlTextArea;
@@ -61,5 +61,10 @@ public class XmlController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.xmlTextArea.setType(CodeEditor.Type.XML);
         this.xpathTextArea.setType(CodeEditor.Type.XML);
+    }
+
+    @Override
+    public boolean isCloseable() {
+        return StringUtils.isBlank(xmlTextArea.getText());
     }
 }

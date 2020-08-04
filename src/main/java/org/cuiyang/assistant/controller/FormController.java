@@ -172,4 +172,9 @@ public class FormController extends BaseController implements Initializable {
         }
         log(sb.toString());
     }
+
+    @Override
+    public boolean isCloseable() {
+        return StringUtils.isBlank(textArea.getText());
+    }
 }

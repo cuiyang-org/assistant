@@ -4,11 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
@@ -41,6 +42,8 @@ public class JsonController extends BaseController implements Initializable {
     public Node splitRight;
     /** 视图类型 0左右 1 编辑 2 折叠 */
     public int viewType = 0;
+    public ImageView editZoomImageView;
+    public ImageView previewZoomImageView;
 
     /**
      * json格式化
@@ -135,19 +138,35 @@ public class JsonController extends BaseController implements Initializable {
     /**
      * 切换视图
      */
-    public void switchView() {
+    public void switchEdit() {
         if (viewType == 0) {
             splitPane.getItems().removeIf(item -> true);
             splitPane.getItems().add(splitLeft);
+            this.editZoomImageView.setImage(new Image("/view/image/zoom-down.png"));
             viewType = 1;
-        } else if (viewType == 1) {
+        } else {
+            splitPane.getItems().removeIf(item -> true);
+            splitPane.getItems().add(splitLeft);
+            splitPane.getItems().add(splitRight);
+            this.editZoomImageView.setImage(new Image("/view/image/zoom-up.png"));
+            viewType = 0;
+        }
+    }
+
+    /**
+     * 切换视图
+     */
+    public void switchPreview() {
+        if (viewType == 0) {
             splitPane.getItems().removeIf(item -> true);
             splitPane.getItems().add(splitRight);
+            this.previewZoomImageView.setImage(new Image("/view/image/zoom-down.png"));
             viewType = 2;
         } else {
             splitPane.getItems().removeIf(item -> true);
             splitPane.getItems().add(splitLeft);
             splitPane.getItems().add(splitRight);
+            this.previewZoomImageView.setImage(new Image("/view/image/zoom-up.png"));
             viewType = 0;
         }
     }
@@ -199,4 +218,8 @@ public class JsonController extends BaseController implements Initializable {
         }
     }
 
+    @Override
+    public boolean isCloseable() {
+        return StringUtils.isBlank(editor.getText());
+    }
 }

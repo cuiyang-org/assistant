@@ -1,6 +1,7 @@
 package org.cuiyang.assistant.controller;
 
 import javafx.scene.control.TextArea;
+import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.util.ClipBoardUtils;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.util.UUID;
  *
  * @author cy48576
  */
-public class IdController {
+public class IdController extends BaseController {
     public TextArea idOutput;
 
     /**
@@ -52,5 +53,10 @@ public class IdController {
     public void datetime() {
         idOutput.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")));
         copy();
+    }
+
+    @Override
+    public boolean isCloseable() {
+        return StringUtils.isBlank(idOutput.getText());
     }
 }

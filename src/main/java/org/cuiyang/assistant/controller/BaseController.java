@@ -1,5 +1,6 @@
 package org.cuiyang.assistant.controller;
 
+import javafx.scene.control.Tab;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  */
 public abstract class BaseController {
     public static MainController mainController;
+    public Tab tab;
 
     /**
      * 输出日志
@@ -44,4 +46,14 @@ public abstract class BaseController {
             log(t);
         }
     }
+
+    public void close() {
+        mainController.closeTab(tab);
+    }
+
+    /**
+     * 是否可关闭
+     */
+    public abstract boolean isCloseable();
+
 }

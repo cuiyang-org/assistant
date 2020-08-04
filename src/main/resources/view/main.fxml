@@ -29,8 +29,13 @@
     </top>
     <center>
         <SplitPane fx:id="splitPane" dividerPositions="0.8" orientation="VERTICAL">
-            <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
-            </TabPane>
+            <StackPane>
+                <VBox alignment="CENTER">
+                    <Label text="iToolBox" styleClass="home-title"/>
+                </VBox>
+                <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
+                </TabPane>
+            </StackPane>
             <VBox fx:id="logOutParent">
                 <padding>
                     <Insets bottom="5" left="5" right="5" top="5"/>
@@ -44,7 +49,7 @@
             <Separator/>
             <HBox>
                 <padding>
-                    <Insets bottom="5" left="5" right="5" top="5"/>
+                    <Insets bottom="5" left="10" right="5" top="5"/>
                 </padding>
                 <Label text="v${version}"/>
                 <HBox HBox.hgrow="ALWAYS" alignment="CENTER_RIGHT" spacing="2">

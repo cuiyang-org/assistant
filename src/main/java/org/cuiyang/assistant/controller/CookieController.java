@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  *
  * @author cy48576
  */
-public class CookieController implements Initializable {
+public class CookieController extends BaseController implements Initializable {
 
     /** cookie文本框 */
     public SearchCodeEditor cookieTextArea;
@@ -161,4 +161,8 @@ public class CookieController implements Initializable {
         }
     }
 
+    @Override
+    public boolean isCloseable() {
+        return StringUtils.isBlank(cookieTextArea.getText());
+    }
 }

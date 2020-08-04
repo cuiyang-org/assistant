@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * @author cy48576
  */
 @Slf4j
-public class HtmlController implements Initializable {
+public class HtmlController extends BaseController implements Initializable {
 
     /** html文本框 */
     public SearchCodeEditor htmlTextArea;
@@ -99,4 +99,8 @@ public class HtmlController implements Initializable {
         return Charset.defaultCharset();
     }
 
+    @Override
+    public boolean isCloseable() {
+        return StringUtils.isBlank(htmlTextArea.getText());
+    }
 }
