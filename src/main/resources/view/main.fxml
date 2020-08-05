@@ -31,7 +31,9 @@
         <SplitPane fx:id="splitPane" dividerPositions="0.8" orientation="VERTICAL">
             <StackPane>
                 <VBox alignment="CENTER">
-                    <Label text="iToolBox" styleClass="home-title"/>
+                    <ImageView>
+                        <Image url="/logo.png"/>
+                    </ImageView>
                 </VBox>
                 <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
                 </TabPane>

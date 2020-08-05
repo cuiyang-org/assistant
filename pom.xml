@@ -116,13 +116,15 @@
                     <deployDir>src/main/resources/</deployDir>
                     <!-- 运行文件名 -->
                     <appName>iToolBox</appName>
+                    <!-- 版本号 -->
+                    <nativeReleaseVersion>${project.version}</nativeReleaseVersion>
                     <!-- 公司名称 -->
                     <vendor>cuiyang</vendor>
                     <!-- 菜单 -->
                     <needMenu>true</needMenu>
                     <!-- 桌面图标 -->
                     <needShortcut>true</needShortcut>
-                    <bundler>dmg</bundler>
+                    <bundler>mac.app</bundler>
                     <bundleArguments>
                         <runtime/>
                         <identifier>babdf94d-3157-49f5-9249-38d2e6869639</identifier>
