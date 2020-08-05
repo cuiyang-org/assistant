@@ -145,7 +145,11 @@ public class JsonController extends BaseController implements Initializable {
      */
     public void copyJsonValue() {
         KeyValueTreeItem treeItem = (KeyValueTreeItem) jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
-        ClipBoardUtils.setSysClipboardText(JSON.toJSONString(treeItem.getValue2(), SerializerFeature.WriteMapNullValue));
+        if (treeItem.getValue2() instanceof JSON) {
+            ClipBoardUtils.setSysClipboardText(JSON.toJSONString(treeItem.getValue2(), SerializerFeature.WriteMapNullValue));
+        } else {
+            ClipBoardUtils.setSysClipboardText(String.valueOf(treeItem.getValue2()));
+        }
     }
 
     /**
