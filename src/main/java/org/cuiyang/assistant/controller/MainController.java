@@ -62,7 +62,7 @@ public class MainController extends BaseController implements Initializable {
         this.scene = scene;
         this.theme = getTheme();
         this.tabPane.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.W && (event.isControlDown() || event.isMetaDown())) {
+            if (event.getCode() == KeyCode.W && (event.isControlDown() || event.isMetaDown()) && this.tabPane.getTabs().size() > 0) {
                 closeTab(this.tabPane.getSelectionModel().getSelectedItem());
             }
         });
@@ -127,7 +127,7 @@ public class MainController extends BaseController implements Initializable {
     public void showLogOut(boolean show) {
         if (show && splitPane.getItems().size() == 1) {
             splitPane.getItems().add(logOutParent);
-            mainController.splitPane.setDividerPositions(0.8);
+            mainController.splitPane.setDividerPositions(0.5);
             logImageView.setImage(new Image("/view/image/log-open.png"));
             splitPane.getStyleClass().remove("no-divider");
         } else if (!show && splitPane.getItems().size() == 2) {
