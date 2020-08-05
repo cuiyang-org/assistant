@@ -55,7 +55,7 @@
                         <items><MenuItem text="复制" onAction="#copyJson"/></items>
                         <items><MenuItem text="复制值" onAction="#copyJsonValue"/></items>
                         <items><MenuItem text="复制名字" onAction="#copyJsonName"/></items>
-                        <items><MenuItem text="生成Pojo" onAction="#genSubPojo"/></items>
+                        <items><MenuItem text="生成POJO" onAction="#genSubPojo"/></items>
                     </ContextMenu>
                 </contextMenu>
             </TreeView>
