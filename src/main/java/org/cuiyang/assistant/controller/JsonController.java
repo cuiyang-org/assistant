@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -20,7 +19,6 @@ import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.util.ClipBoardUtils;
-import org.cuiyang.assistant.util.ResourceUtils;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -146,7 +144,7 @@ public class JsonController extends BaseController implements Initializable {
     public void copyJsonValue() {
         KeyValueTreeItem treeItem = (KeyValueTreeItem) jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
         if (treeItem.getValue2() instanceof JSON) {
-            ClipBoardUtils.setSysClipboardText(JSON.toJSONString(treeItem.getValue2(), SerializerFeature.WriteMapNullValue));
+            ClipBoardUtils.setSysClipboardText(JSON.toJSONString(treeItem.getValue2(), WriteMapNullValue));
         } else {
             ClipBoardUtils.setSysClipboardText(String.valueOf(treeItem.getValue2()));
         }
@@ -166,7 +164,9 @@ public class JsonController extends BaseController implements Initializable {
     public void genSubPojo() throws IOException, TemplateException {
         KeyValueTreeItem keyItem = (KeyValueTreeItem) jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
         KeyValueTreeItem valueItem = (KeyValueTreeItem) jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
-        genPojo(JSON.toJSONString(valueItem.getValue2(), SerializerFeature.WriteMapNullValue), keyItem.getKey());
+        if (valueItem.getValue2() instanceof JSON) {
+            genPojo(JSON.toJSONString(valueItem.getValue2(), WriteMapNullValue), keyItem.getKey());
+        }
     }
 
     /**
@@ -273,7 +273,7 @@ public class JsonController extends BaseController implements Initializable {
             return;
         }
         clearLog();
-        Object object = JSON.parse(text);
+        Object object = JSON.parse(text, Feature.OrderedField);
         if (object instanceof JSONObject) {
             genPojo((JSONObject) object, className);
         } else if (object instanceof JSONArray) {
