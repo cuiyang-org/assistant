@@ -59,7 +59,7 @@ public class JsonController extends BaseController implements Initializable {
     public JsonController() {
         try {
             Configuration config  = new Configuration(DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
-            config.setDirectoryForTemplateLoading(new File(ResourceUtils.getResource("templates").getFile()));
+            config.setClassForTemplateLoading(this.getClass(), "/templates");
             template = config.getTemplate("pojo.ftl", "UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
