@@ -25,7 +25,6 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static org.cuiyang.assistant.constant.ConfigConstant.SHOW_LOG_OUT;
 import static org.cuiyang.assistant.constant.ConfigConstant.THEME;
 import static org.cuiyang.assistant.util.ThemeUtils.*;
 
@@ -137,7 +136,6 @@ public class MainController extends BaseController implements Initializable {
             logImageView.setImage(new Image("/view/image/log-close.png"));
             splitPane.getStyleClass().add("no-divider");
         }
-        ConfigUtils.setAndSave(SHOW_LOG_OUT, String.valueOf(show));
     }
 
     /**
@@ -164,7 +162,7 @@ public class MainController extends BaseController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         mainController = this;
         openTab("JSON", "view/json.fxml");
-        showLogOut(Boolean.parseBoolean(ConfigUtils.get(SHOW_LOG_OUT, "false")));
+        showLogOut(false);
     }
 
     /**

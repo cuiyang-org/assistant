@@ -14,6 +14,13 @@ public abstract class BaseController {
     public Tab tab;
 
     /**
+     * 清除日志
+     */
+    public void clearLog() {
+        mainController.logOut.clear();
+    }
+
+    /**
      * 输出日志
      */
     public void log(String str) {

@@ -4,24 +4,34 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.util.ClipBoardUtils;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.math.BigDecimal;
 import java.net.URL;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static com.alibaba.fastjson.serializer.SerializerFeature.PrettyFormat;
 import static com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValue;
+import static freemarker.template.Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS;
+import static org.cuiyang.assistant.util.WordUtils.firstUpperCase;
 
 /**
  * Json 控制器
@@ -29,6 +39,9 @@ import static com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValu
  * @author cy48576
  */
 public class JsonController extends BaseController implements Initializable {
+
+    private Configuration config  = new Configuration(DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+    private Template template = config.getTemplate("src/main/resources/templates/pojo.ftl", "UTF-8");
 
     /** json文本框 */
     public SearchCodeEditor editor;
@@ -44,6 +57,9 @@ public class JsonController extends BaseController implements Initializable {
     public int viewType = 0;
     public ImageView editZoomImageView;
     public ImageView previewZoomImageView;
+
+    public JsonController() throws IOException {
+    }
 
     /**
      * json格式化
@@ -221,5 +237,77 @@ public class JsonController extends BaseController implements Initializable {
     @Override
     public boolean isCloseable() {
         return StringUtils.isBlank(editor.getText());
+    }
+
+    /**
+     * 生成pojo
+     */
+    public void genPojo() throws IOException, TemplateException {
+        String text = this.editor.getText();
+        if (StringUtils.isEmpty(text)) {
+            return;
+        }
+        clearLog();
+        Object object = JSON.parse(text);
+        if (object instanceof JSONObject) {
+            genPojo((JSONObject) object, "Pojo");
+        } else if (object instanceof JSONArray) {
+            JSONArray jsonArray = (JSONArray) object;
+            if (!jsonArray.isEmpty() && jsonArray.get(0) instanceof JSONObject) {
+                genPojo((JSONObject) jsonArray.get(0), "Pojo");
+            }
+        }
+    }
+
+    /**
+     * 生成pojo
+     */
+    private void genPojo(JSONObject jsonObject, String className) throws IOException, TemplateException {
+        List<Map<String, String>> fields = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : jsonObject.entrySet()) {
+            Map<String, String> field = new HashMap<>();
+            String fieldType = fieldType(entry.getKey(), entry.getValue());
+            field.put("fieldName", entry.getKey());
+            field.put("fieldType", fieldType);
+            fields.add(field);
+        }
+        Map<String, Object> dataModel = new HashMap<>();
+        dataModel.put("className", className);
+        dataModel.put("fields", fields);
+        StringWriter stringWriter = new StringWriter();
+        Writer out = new BufferedWriter(stringWriter);
+        template.process(dataModel, out);
+        out.flush();
+        out.close();
+        log(stringWriter.toString());
+    }
+
+    /**
+     * 获取字段类型
+     */
+    private String fieldType(String key, Object value) throws IOException, TemplateException {
+        if (key == null || value == null) {
+            return "String";
+        }
+        if (value instanceof Boolean) {
+            return "Boolean";
+        } else if (value instanceof Integer) {
+            return "Integer";
+        } else if (value instanceof BigDecimal) {
+            return "BigDecimal";
+        } else if (value instanceof JSONObject) {
+            String clazz = firstUpperCase(key);
+            genPojo((JSONObject) value, clazz);
+            return clazz;
+        } else if (value instanceof JSONArray) {
+            JSONArray jsonArray = (JSONArray) value;
+            if (jsonArray.isEmpty()) {
+                return "List<?>";
+            } else {
+                return "List<" + fieldType(key, jsonArray.get(0)) + ">";
+            }
+        } else {
+            return "String";
+        }
     }
 }

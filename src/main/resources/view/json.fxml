@@ -18,6 +18,7 @@
                 </padding>
                 <Button styleClass="menu-item" onMouseClicked="#jsonFormat" text="格式化"/>
                 <Button styleClass="menu-item" onMouseClicked="#jsonSimple" text="去格式化"/>
+                <Button styleClass="menu-item" onMouseClicked="#genPojo" text="生成POJO"/>
                 <Button onMouseClicked="#switchEdit">
                     <graphic>
                         <ImageView fx:id="editZoomImageView">
