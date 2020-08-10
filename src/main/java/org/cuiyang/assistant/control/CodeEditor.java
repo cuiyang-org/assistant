@@ -177,7 +177,7 @@ public class CodeEditor extends CodeArea {
                 // 复制当前行
                 int index = this.getCurrentParagraph();
                 this.insertText(index, this.getParagraphLength(index), "\n" + this.getParagraph(index).getText());
-            } else if (keyEvent.getCode() == KeyCode.X && (keyEvent.isControlDown() || keyEvent.isMetaDown())) {
+            } else if (keyEvent.getCode() == KeyCode.Y && (keyEvent.isControlDown() || keyEvent.isMetaDown())) {
                 // 剪贴当前行
                 int index = this.getCurrentParagraph();
                 String content = this.getParagraph(index).getText();

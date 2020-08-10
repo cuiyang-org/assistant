@@ -19,6 +19,7 @@
                 <Button styleClass="menu-item" onMouseClicked="#jsonFormat" text="格式化"/>
                 <Button styleClass="menu-item" onMouseClicked="#jsonSimple" text="去格式化"/>
                 <Button styleClass="menu-item" onMouseClicked="#genPojo" text="生成POJO"/>
+                <Button styleClass="menu-item" onMouseClicked="#genMap" text="生成Map"/>
                 <Button onMouseClicked="#switchEdit">
                     <graphic>
                         <ImageView fx:id="editZoomImageView">
@@ -56,6 +57,7 @@
                         <items><MenuItem text="复制值" onAction="#copyJsonValue"/></items>
                         <items><MenuItem text="复制名字" onAction="#copyJsonName"/></items>
                         <items><MenuItem text="生成POJO" onAction="#genSubPojo"/></items>
+                        <items><MenuItem text="生成Map" onAction="#genSubMap"/></items>
                     </ContextMenu>
                 </contextMenu>
             </TreeView>
