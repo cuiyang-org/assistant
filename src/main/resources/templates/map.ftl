@@ -1,4 +1,4 @@
-Map<String, Object> ${name} = new HashMap<>();
+Map<String, Object> ${mapName} = new HashMap<>();
 <#list data?keys as key>
-${name}.put("${key}", "${data["${key}"]}");
+${mapName}.put("${key}", "${data["${key}"]}");
 </#list>

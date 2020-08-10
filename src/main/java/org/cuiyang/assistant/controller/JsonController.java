@@ -396,7 +396,7 @@ public class JsonController extends BaseController implements Initializable {
         Writer out = new BufferedWriter(stringWriter);
         Map<String, Object> dataModel = new HashMap<>();
         dataModel.put("data", data);
-        dataModel.put("name", name);
+        dataModel.put("mapName", name);
         mapTemplate.process(dataModel, out);
         out.flush();
         out.close();
