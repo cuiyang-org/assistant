@@ -1,7 +1,5 @@
 package org.cuiyang.assistant.util;
 
-import static org.cuiyang.assistant.constant.ConfigConstant.THEME;
-
 /**
  * 主题工具类
  *
@@ -15,7 +13,7 @@ public class ThemeUtils {
     public static final String LIGHT = "light";
 
     public static String getTheme() {
-        return ConfigUtils.get(THEME, "dark");
+        return DARK;
     }
 
     public static String getThemeResource() {

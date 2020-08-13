@@ -1,6 +1,5 @@
 package org.cuiyang.assistant.controller;
 
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +16,6 @@ import javafx.scene.layout.VBox;
 import lombok.SneakyThrows;
 import org.cuiyang.assistant.constant.FileTypeEnum;
 import org.cuiyang.assistant.control.InputDialog;
-import org.cuiyang.assistant.util.ConfigUtils;
 import org.cuiyang.assistant.util.ResourceUtils;
 
 import java.io.IOException;
@@ -25,8 +23,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static org.cuiyang.assistant.constant.ConfigConstant.THEME;
-import static org.cuiyang.assistant.util.ThemeUtils.*;
+import static org.cuiyang.assistant.util.ThemeUtils.getThemeResource;
 
 /**
  * MainController
@@ -47,12 +44,8 @@ public class MainController extends BaseController implements Initializable {
     public SplitPane splitPane;
     /** 日志开关图标 */
     public ImageView logImageView;
-    /** 主题开关 */
-    public ImageView themeImageView;
     /** tab pan */
     public TabPane tabPane;
-    /** 主题 */
-    private String theme;
 
     /**
      * 初始化
@@ -60,7 +53,6 @@ public class MainController extends BaseController implements Initializable {
      */
     public void init(Scene scene) {
         this.scene = scene;
-        this.theme = getTheme();
         this.tabPane.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.W && (event.isControlDown() || event.isMetaDown()) && this.tabPane.getTabs().size() > 0) {
                 closeTab(this.tabPane.getSelectionModel().getSelectedItem());
@@ -136,25 +128,6 @@ public class MainController extends BaseController implements Initializable {
             logImageView.setImage(new Image("/view/image/log-close.png"));
             splitPane.getStyleClass().add("no-divider");
         }
-    }
-
-    /**
-     * 切换主题
-     */
-    public void switchTheme() {
-        ObservableList<String> stylesheets = scene.getStylesheets();
-        stylesheets.remove(getThemeResource());
-        if (theme.equals(DARK)) {
-            // 切换成亮色
-            themeImageView.setImage(new Image("/view/image/theme-light.png"));
-            theme = LIGHT;
-        } else {
-            // 切换成暗色
-            themeImageView.setImage(new Image("/view/image/theme-dark.png"));
-            theme = DARK;
-        }
-        stylesheets.add(getThemeResource(theme));
-        ConfigUtils.setAndSave(THEME, theme);
     }
 
     @SneakyThrows

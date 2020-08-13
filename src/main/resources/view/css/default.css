@@ -5,29 +5,3 @@
 .button {
     -fx-cursor: hand;
 }
-
-/* 编辑器 */
-.styled-text-area {
-    -fx-font-size: 13;
-}
-
-.code-area {
-    -fx-font-family: Consolas;
-}
-
-.styled-text-area {
-    -fx-cursor: text;
-}
-
-.styled-text-area .paragraph-box {
-    -fx-padding: -0.5 0 -0.5 0;
-}
-
-.styled-text-area .paragraph-box .paragraph-text {
-    -fx-line-spacing: 5px;
-}
-
-.styled-text-area .caret {
-    -rtfx-blink-rate: 500ms;
-    -fx-stroke-width: 1.0;
-}

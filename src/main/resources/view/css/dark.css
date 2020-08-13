@@ -5,6 +5,7 @@
     -fx-accent: #4B6EAF;
     -fx-focus-color: -fx-accent;
     -fx-cell-focus-inner-border: -fx-accent;
+    -fx-font-family: Menlo;
 }
 *:focused {
     -fx-background-insets: 0, 0 0 0 0;
@@ -39,9 +40,8 @@
 /* 文本域 */
 .text-area, .text-area .scroll-pane .content {
     -fx-background-color: -fx-control-inner-background;
-    -fx-font-size: 13;
+    -fx-font-size: 14px;
     -fx-prompt-text-fill: gray;
-    -fx-font-family: Consolas;
     -fx-text-fill: #BABABA;
 }
 .text-input, .text-input:focused {
@@ -79,8 +79,7 @@
 .tree-view, .tree-view:focused {
     -fx-background-color: -fx-control-inner-background;
     -fx-padding: 0;
-    -fx-font-size: 13;
-    -fx-font-family: Consolas;
+    -fx-font-size: 14px;
 }
 .tree-view:focused {
     -fx-background-color: -fx-control-inner-background;
@@ -197,9 +196,12 @@
 /* 文本框 */
 .styled-text-area {
     -fx-background-color: #2B2B2B;
+    -fx-cursor: text;
 }
 .styled-text-area .text {
     -fx-fill: #BABABA;
+    -fx-font-family: Menlo;
+    -fx-font-size: 14px;
 }
 .styled-text-area .text.keyword {
     -fx-fill: #f82671;
@@ -247,18 +249,23 @@
 .styled-text-area .text.avalue {
     -fx-fill: #CE9178;
 }
-/* 光标 */
-.caret {
-    -fx-stroke: #f8f8f2;
-}
 /* 当前行 */
-.paragraph-box:has-caret {
+.styled-text-area .paragraph-box {
+    -fx-padding: -0.5 0 -0.5 0;
+}
+.styled-text-area .paragraph-box:has-caret {
     -fx-background-color: #323232;
 }
-/* 选择的行 */
-.main-selection {
-    -fx-fill: #214283;
+.styled-text-area .paragraph-box .paragraph-text {
+    -fx-line-spacing: 5px;
 }
-.context-icon {
-    -fx-fill: white;
+/* 光标 */
+.styled-text-area .caret {
+    -rtfx-blink-rate: 500ms;
+    -fx-stroke-width: 1.0;
+    -fx-stroke: #f8f8f2;
+}
+/* 选择的行 */
+.styled-text-area .main-selection {
+    -fx-fill: #214283;
 }

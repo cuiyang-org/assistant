@@ -58,13 +58,6 @@
                 </padding>
                 <Label text="v${version}"/>
                 <HBox HBox.hgrow="ALWAYS" alignment="CENTER_RIGHT" spacing="2">
-                    <Button onMouseClicked="#switchTheme">
-                        <graphic>
-                            <ImageView fx:id="themeImageView">
-                                <Image url="/view/image/theme-dark.png"/>
-                            </ImageView>
-                        </graphic>
-                    </Button>
                     <Button onMouseClicked="#switchLogOut">
                         <graphic>
                             <ImageView fx:id="logImageView">

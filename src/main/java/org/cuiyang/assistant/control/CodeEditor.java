@@ -2,7 +2,9 @@ package org.cuiyang.assistant.control;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.IndexRange;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.cuiyang.assistant.util.ClipBoardUtils;
@@ -149,6 +151,7 @@ public class CodeEditor extends CodeArea {
         this.setWrapText(false);
         // 设置行号
         this.setParagraphGraphicFactory(LineNumberFactory.get(this));
+        this.setContextMenu(contextMenu());
         // 监听按键
         this.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
@@ -291,4 +294,14 @@ public class CodeEditor extends CodeArea {
         return spansBuilder.create();
     }
 
+    /**
+     * 右键菜单
+     */
+    private ContextMenu contextMenu() {
+        ContextMenu menu = new ContextMenu();
+        MenuItem close = new MenuItem("切换自动换行");
+        menu.getItems().add(close);
+        close.setOnAction(event -> this.setWrapText(!this.isWrapText()));
+        return menu;
+    }
 }
