@@ -44,6 +44,12 @@
     -fx-text-fill: white;
 }
 
+/* tab-pan */
+.tab-pane > .tab-content-area {
+    -fx-padding: 0 5 5 5;
+    -fx-background-color: -fx-background;
+}
+
 /* 编辑器 */
 .styled-text-area .text.keyword {
     -fx-fill: purple;

@@ -1,5 +1,6 @@
 package org.cuiyang.assistant.util;
 
+import javafx.application.Platform;
 import lombok.SneakyThrows;
 
 /**
@@ -11,7 +12,7 @@ public class ThreadUtils {
      * 异步执行
      */
     public static void run(Runnable runnable) {
-        new Thread(runnable, "Asyn").start();
+        new Thread(() -> Platform.runLater(runnable), "Asyn").start();
     }
 
     @SneakyThrows
