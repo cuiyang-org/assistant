@@ -50,7 +50,7 @@
                     </Button>
                 </HBox>
             </HBox>
-            <TreeView fx:id="jsonTreeView" VBox.vgrow="ALWAYS">
+            <TreeView fx:id="jsonTreeView" VBox.vgrow="ALWAYS" onMouseClicked="#link">
                 <contextMenu>
                     <ContextMenu>
                         <items><MenuItem text="复制" onAction="#copyJson"/></items>

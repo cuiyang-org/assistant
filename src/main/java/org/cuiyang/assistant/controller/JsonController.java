@@ -7,7 +7,6 @@ import com.alibaba.fastjson.parser.Feature;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
@@ -21,7 +20,10 @@ import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.util.ClipBoardUtils;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.*;
@@ -53,6 +55,8 @@ public class JsonController extends BaseController implements Initializable {
     public Node splitRight;
     /** 视图类型 0左右 1 编辑 2 折叠 */
     public int viewType = 0;
+    /** 联动行号 */
+    private int rowIndex = 0;
     public ImageView editZoomImageView;
     public ImageView previewZoomImageView;
 
@@ -230,6 +234,7 @@ public class JsonController extends BaseController implements Initializable {
             try {
                 Object jsonObject = JSON.parse(newValue, Feature.OrderedField);
                 KeyValueTreeItem root = new KeyValueTreeItem("Root", null);
+                this.rowIndex = 0;
                 buildJsonTreeItem("JSON", jsonObject, root);
                 jsonTreeView.setRoot(root);
                 jsonTreeView.setShowRoot(false);
@@ -246,22 +251,27 @@ public class JsonController extends BaseController implements Initializable {
     private void buildJsonTreeItem(String key, Object value, KeyValueTreeItem parent) {
         if (value instanceof JSONObject) {
             KeyValueTreeItem item = new KeyValueTreeItem(key, value);
+            item.setRow(this.rowIndex++);
             parent.getChildren().add(item);
 
             JSONObject jsonObject = (JSONObject) value;
             for (Map.Entry<String, Object> entry : jsonObject.entrySet()) {
                 buildJsonTreeItem(entry.getKey(), entry.getValue(), item);
             }
+            this.rowIndex++;
         } else if (value instanceof JSONArray) {
             KeyValueTreeItem item = new KeyValueTreeItem(key, value);
+            item.setRow(this.rowIndex++);
             parent.getChildren().add(item);
 
             JSONArray jsonArray = (JSONArray) value;
             for (int i = 0; i < jsonArray.size(); i++) {
                 buildJsonTreeItem("[" + i + "]", jsonArray.get(i), item);
             }
+            this.rowIndex++;
         } else {
             KeyValueTreeItem item = new KeyValueTreeItem(key, value);
+            item.setRow(this.rowIndex++);
             parent.getChildren().add(item);
         }
     }
@@ -401,5 +411,13 @@ public class JsonController extends BaseController implements Initializable {
         out.flush();
         out.close();
         log(stringWriter.toString());
+    }
+
+    /**
+     * 联动
+     */
+    public void link() {
+        KeyValueTreeItem treeItem = (KeyValueTreeItem) jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
+        this.editor.move(treeItem.getRow());
     }
 }

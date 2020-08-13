@@ -89,6 +89,11 @@ public class SearchCodeEditor extends VBox implements Initializable {
         codeEditor.setWrapText(value);
     }
 
+    public void move(int row) {
+        codeEditor.requestFollowCaret();
+        codeEditor.moveTo(row, 0);
+    }
+
     /**
      * 向下搜索
      */

@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 
 public class KeyValueTreeItem extends TreeItem<String> {
+    private int row;
     private String key;
     private Object value;
 
@@ -37,5 +38,13 @@ public class KeyValueTreeItem extends TreeItem<String> {
 
     public Object getValue2() {
         return value;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
     }
 }
