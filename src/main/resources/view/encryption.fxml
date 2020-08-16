@@ -69,7 +69,7 @@
                 </items>
             </ComboBox>
         </HBox>
-        <HBox alignment="CENTER_LEFT" spacing="10" fx:id="desAndAesOptionHBox" visible="false" managed="false">
+        <HBox alignment="CENTER_LEFT" spacing="10" fx:id="desAndAesOptionHBox" HBox.hgrow="ALWAYS" visible="false" managed="false">
             <HBox alignment="CENTER_LEFT" spacing="5">
                 <Label text="模式" textFill="gray" />
                 <ComboBox fx:id="modeComboBox" value="ECB" onAction="#run">
@@ -113,8 +113,8 @@
                 </ComboBox>
             </HBox>
         </HBox>
-        <Label styleClass="menu-item" onMouseClicked="#run" text="运行"/>
-        <Label fx:id="formatButton" styleClass="menu-item" onMouseClicked="#format"
+        <Label styleClass="menu-item" onMouseClicked="#run" text="运行" prefWidth="60" alignment="CENTER"/>
+        <Label fx:id="formatButton" styleClass="menu-item" onMouseClicked="#format" prefWidth="60" alignment="CENTER"
                text="格式化" visible="false" managed="false"/>
     </HBox>
 

@@ -19,6 +19,31 @@
     -fx-background-color: -fx-accent;
 }
 
+/** 提示工具 */
+.tooltip {
+    -fx-background-color: #4B4D4D;
+}
+
+/** 滚动面板 */
+.scroll-pane {
+    -fx-background-insets: 0;
+}
+.scroll-pane .scroll-bar > .increment-button,
+.scroll-pane .scroll-bar > .decrement-button,
+.scroll-pane .scroll-bar:horizontal,
+.scroll-pane .scroll-bar:vertical,
+.scroll-pane .scroll-bar:horizontal .track ,
+.scroll-pane .scroll-bar:vertical .track,
+.scroll-pane .scroll-bar:horizontal .thumb,
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: -fx-base;
+    -fx-font-size: 12;
+}
+.scroll-pane .scroll-bar:horizontal .thumb,
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #545454;
+    -fx-background-radius: 2px;
+}
 /** 滚动条 */
 .scroll-bar > .increment-button,
 .scroll-bar > .decrement-button,

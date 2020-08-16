@@ -418,6 +418,8 @@ public class JsonController extends BaseController implements Initializable {
      */
     public void link() {
         KeyValueTreeItem treeItem = (KeyValueTreeItem) jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
-        this.editor.move(treeItem.getRow());
+        if (treeItem != null) {
+            this.editor.move(treeItem.getRow());
+        }
     }
 }

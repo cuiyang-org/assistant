@@ -12,7 +12,7 @@
             <padding>
                 <Insets right="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
+            <HBox alignment="CENTER_LEFT" spacing="2">
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
@@ -22,7 +22,7 @@
                 <Button styleClass="menu-item" onMouseClicked="#genMap" text="生成Map"/>
                 <Button onMouseClicked="#switchEdit">
                     <graphic>
-                        <ImageView fx:id="editZoomImageView">
+                        <ImageView fx:id="editZoomImageView" fitWidth="16" fitHeight="16">
                             <Image url="/view/image/zoom-up.png"/>
                         </ImageView>
                     </graphic>
@@ -34,7 +34,7 @@
             <padding>
                 <Insets left="5"/>
             </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
+            <HBox alignment="CENTER_LEFT" spacing="2">
                 <padding>
                     <Insets top="2" bottom="5" right="5"/>
                 </padding>
@@ -43,7 +43,7 @@
                 <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                     <Button onMouseClicked="#switchPreview">
                         <graphic>
-                            <ImageView fx:id="previewZoomImageView">
+                            <ImageView fx:id="previewZoomImageView" fitWidth="16" fitHeight="16">
                                 <Image url="/view/image/zoom-up.png"/>
                             </ImageView>
                         </graphic>

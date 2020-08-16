@@ -96,6 +96,9 @@ public class MainController extends BaseController implements Initializable {
             case "ID生成器":
                 resource = "view/id.fxml";
                 break;
+            case "地址计算":
+                resource = "view/address.fxml";
+                break;
             case "逆向":
                 resource = "view/reverse.fxml";
                 break;
@@ -119,7 +122,7 @@ public class MainController extends BaseController implements Initializable {
     public void showLogOut(boolean show) {
         if (show && splitPane.getItems().size() == 1) {
             splitPane.getItems().add(logOutParent);
-            mainController.splitPane.setDividerPositions(0.5);
+            mainController.splitPane.setDividerPositions(0.8);
             logImageView.setImage(new Image("/view/image/log-open.png"));
             splitPane.getStyleClass().remove("no-divider");
         } else if (!show && splitPane.getItems().size() == 2) {
