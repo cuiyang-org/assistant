@@ -155,6 +155,7 @@ public class MainController extends BaseController implements Initializable {
         tab.setOnCloseRequest(event -> {
             if (!controller.isCloseable()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.getDialogPane().getStylesheets().add(getThemeResource());
                 alert.setTitle("提示");
                 alert.setHeaderText("你确定要关闭吗？");
                 alert.showAndWait();

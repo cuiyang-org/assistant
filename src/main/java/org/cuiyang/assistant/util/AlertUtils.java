@@ -9,6 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import static org.cuiyang.assistant.util.ThemeUtils.getThemeResource;
+
 /**
  * alert工具类
  *
@@ -40,6 +42,7 @@ public class AlertUtils {
     public static void alert(Alert.AlertType alertType, String title, String headerText, String contentText) {
         Platform.runLater(() -> {
             Alert alert = new Alert(alertType);
+            alert.getDialogPane().getStylesheets().add(getThemeResource());
             alert.setTitle(title);
             alert.setHeaderText(headerText);
             alert.setContentText(contentText);

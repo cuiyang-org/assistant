@@ -24,6 +24,27 @@
     -fx-background-color: #4B4D4D;
 }
 
+/** 对话框 */
+.dialog-pane .header-panel {
+    -fx-background-color: -fx-base;
+    /*-fx-border-width: 0 0 1 0;*/
+    /*-fx-border-color: red;*/
+    -fx-border-color: transparent transparent -fx-shadow-highlight-color transparent,
+    transparent transparent -fx-text-box-border transparent;
+    -fx-border-insets: 0, 0 0 1 0;
+}
+.dialog-pane > .content {
+    -fx-padding: 0;
+}
+.dialog-pane .button {
+    -fx-background-color: #4E5254;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+.dialog-pane .button:hover {
+    -fx-background-color: -fx-accent;
+}
+
 /** 滚动面板 */
 .scroll-pane {
     -fx-background-insets: 0;
