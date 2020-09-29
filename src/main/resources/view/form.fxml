@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
+<?import org.cuiyang.assistant.control.KeyValueTreeView?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.FormController">
     <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
         <VBox HBox.hgrow="ALWAYS">
@@ -31,15 +32,7 @@
                 <Label styleClass="menu-item" onMouseClicked="#fold" text="折叠"/>
                 <Label styleClass="menu-item" onMouseClicked="#expanded" text="展开"/>
             </HBox>
-            <TreeView fx:id="treeView" VBox.vgrow="ALWAYS">
-                <contextMenu>
-                    <ContextMenu>
-                        <items><MenuItem text="复制" onAction="#copy"/></items>
-                        <items><MenuItem text="复制值" onAction="#copyValue"/></items>
-                        <items><MenuItem text="复制名字" onAction="#copyName"/></items>
-                    </ContextMenu>
-                </contextMenu>
-            </TreeView>
+            <KeyValueTreeView fx:id="treeView" VBox.vgrow="ALWAYS"/>
         </VBox>
     </SplitPane>
 </AnchorPane>

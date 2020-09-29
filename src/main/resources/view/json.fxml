@@ -6,6 +6,7 @@
 <?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import org.cuiyang.assistant.control.KeyValueTreeView?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.JsonController">
     <SplitPane fx:id="splitPane" dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
         <VBox fx:id="splitLeft">
@@ -50,17 +51,14 @@
                     </Button>
                 </HBox>
             </HBox>
-            <TreeView fx:id="jsonTreeView" VBox.vgrow="ALWAYS" onMouseClicked="#link">
+            <KeyValueTreeView fx:id="jsonTreeView" VBox.vgrow="ALWAYS" onMouseClicked="#link">
                 <contextMenu>
                     <ContextMenu>
-                        <items><MenuItem text="复制" onAction="#copyJson"/></items>
-                        <items><MenuItem text="复制值" onAction="#copyJsonValue"/></items>
-                        <items><MenuItem text="复制名字" onAction="#copyJsonName"/></items>
                         <items><MenuItem text="生成POJO" onAction="#genSubPojo"/></items>
                         <items><MenuItem text="生成Map" onAction="#genSubMap"/></items>
                     </ContextMenu>
                 </contextMenu>
-            </TreeView>
+            </KeyValueTreeView>
         </VBox>
     </SplitPane>
 </AnchorPane>

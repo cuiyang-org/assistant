@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
+<?import org.cuiyang.assistant.control.KeyValueTreeView?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.CookieController">
     <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
         <VBox>
@@ -30,15 +31,7 @@
                 <Label styleClass="menu-item" onMouseClicked="#cookieFold" text="折叠"/>
                 <Label styleClass="menu-item" onMouseClicked="#cookieExpanded" text="展开"/>
             </HBox>
-            <TreeView fx:id="cookieTreeView" VBox.vgrow="ALWAYS">
-                <contextMenu>
-                    <ContextMenu>
-                        <items><MenuItem text="复制" onAction="#copyCookie"/></items>
-                        <items><MenuItem text="复制值" onAction="#copyCookieValue"/></items>
-                        <items><MenuItem text="复制名字" onAction="#copyCookieName"/></items>
-                    </ContextMenu>
-                </contextMenu>
-            </TreeView>
+            <KeyValueTreeView fx:id="cookieTreeView" VBox.vgrow="ALWAYS"/>
         </VBox>
     </SplitPane>
 </AnchorPane>

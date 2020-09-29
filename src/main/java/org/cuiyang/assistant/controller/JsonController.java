@@ -138,34 +138,6 @@ public class JsonController extends BaseController implements Initializable {
     }
 
     /**
-     * copyJson
-     */
-    public void copyJson() {
-        KeyValueTreeItem treeItem = (KeyValueTreeItem) jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
-        ClipBoardUtils.setSysClipboardText(treeItem.getKey() + ":" + treeItem.getValue2());
-    }
-
-    /**
-     * copyJsonValue
-     */
-    public void copyJsonValue() {
-        KeyValueTreeItem treeItem = (KeyValueTreeItem) jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
-        if (treeItem.getValue2() instanceof JSON) {
-            ClipBoardUtils.setSysClipboardText(JSON.toJSONString(treeItem.getValue2(), WriteMapNullValue));
-        } else {
-            ClipBoardUtils.setSysClipboardText(String.valueOf(treeItem.getValue2()));
-        }
-    }
-
-    /**
-     * copyJsonName
-     */
-    public void copyJsonName() {
-        KeyValueTreeItem treeItem = (KeyValueTreeItem) jsonTreeView.getTreeItem(jsonTreeView.getSelectionModel().getSelectedIndex());
-        ClipBoardUtils.setSysClipboardText(treeItem.getKey());
-    }
-
-    /**
      * 子节点生成pojo
      */
     public void genSubPojo() throws IOException, TemplateException {

@@ -11,8 +11,8 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import org.apache.commons.lang3.StringUtils;
+import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
-import org.cuiyang.assistant.util.ClipBoardUtils;
 
 /**
  * 表单 控制器
@@ -93,36 +93,6 @@ public class FormController extends BaseController implements Initializable {
         }
     }
 
-    /**
-     * copy
-     */
-    public void copy() {
-        TreeItem<String> treeItem = treeView.getTreeItem(treeView.getSelectionModel().getSelectedIndex());
-        ClipBoardUtils.setSysClipboardText(treeItem.getValue());
-    }
-
-    /**
-     * copy value
-     */
-    public void copyValue() {
-        TreeItem<String> treeItem = treeView.getTreeItem(treeView.getSelectionModel().getSelectedIndex());
-        String value;
-        if (treeItem.getChildren().size() <= 0) {
-            value = treeItem.getValue().split("=")[1];
-        } else {
-            value = treeItem.getValue();
-        }
-        ClipBoardUtils.setSysClipboardText(value.trim());
-    }
-
-    /**
-     * copy name
-     */
-    public void copyName() {
-        TreeItem<String> treeItem = treeView.getTreeItem(treeView.getSelectionModel().getSelectedIndex());
-        ClipBoardUtils.setSysClipboardText(treeItem.getValue().split("=")[0].trim());
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.textArea.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -131,7 +101,7 @@ public class FormController extends BaseController implements Initializable {
                 return;
             }
             try {
-                TreeItem<String> root = new TreeItem<>("Form");
+                KeyValueTreeItem root = new KeyValueTreeItem("Form", null);
                 buildTreeItem(newValue, root);
                 treeView.setRoot(root);
                 treeView.setShowRoot(false);
@@ -144,10 +114,10 @@ public class FormController extends BaseController implements Initializable {
     /**
      * 构建cookie树
      */
-    private void buildTreeItem(String cookies, TreeItem<String> parent) {
+    private void buildTreeItem(String cookies, KeyValueTreeItem parent) {
         for (String cookie : cookies.split("[&\\n]")) {
             String[] kv = cookie.split("=");
-            TreeItem<String> item = new TreeItem<>(kv[0].trim() + "=" + (kv.length >= 2 ? kv[1].trim() : ""));
+            KeyValueTreeItem item = new KeyValueTreeItem(kv[0].trim(), (kv.length >= 2 ? kv[1].trim() : ""));
             item.setExpanded(true);
             parent.getChildren().add(item);
         }
