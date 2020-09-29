@@ -2,9 +2,12 @@ package org.cuiyang.assistant.control;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.IndexRange;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.InputMethodRequests;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.cuiyang.assistant.util.ClipBoardUtils;
@@ -16,6 +19,7 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -148,6 +152,14 @@ public class CodeEditor extends CodeArea {
     }
 
     private void init() {
+        // 解决中文输入问题
+        this.setInputMethodRequests(new InputMethodRequestsObject(this));
+        this.setOnInputMethodTextChanged(e -> {
+            if (!e.getCommitted().equals("")) {
+                IndexRange selection = this.getSelection();
+                this.replaceText(selection, e.getCommitted());
+            }
+        });
         this.setWrapText(false);
         // 设置行号
         this.setParagraphGraphicFactory(LineNumberFactory.get(this));
@@ -303,5 +315,39 @@ public class CodeEditor extends CodeArea {
         menu.getItems().add(close);
         close.setOnAction(event -> this.setWrapText(!this.isWrapText()));
         return menu;
+    }
+
+    private static class InputMethodRequestsObject implements InputMethodRequests {
+
+        private CodeArea area;
+
+        public InputMethodRequestsObject(CodeArea area) {
+            this.area = area;
+        }
+
+        @Override
+        public Point2D getTextLocation(int offset) {
+            Optional<Bounds> caretPositionBounds = area.getCaretBounds();
+            if (caretPositionBounds.isPresent()) {
+                Bounds bounds = caretPositionBounds.get();
+                return new Point2D(bounds.getMaxX() - 5, bounds.getMaxY());
+            }
+            throw new NullPointerException();
+        }
+
+        @Override
+        public int getLocationOffset(int x, int y) {
+            return 0;
+        }
+
+        @Override
+        public void cancelLatestCommittedText() {
+
+        }
+
+        @Override
+        public String getSelectedText() {
+            return "";
+        }
     }
 }
