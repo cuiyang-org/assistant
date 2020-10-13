@@ -61,9 +61,9 @@ public class CodeEditor extends CodeArea {
     /** 评论 */
     private static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
     /** json key */
-    private static final String KEY_PATTERN = "\"([^\"\\\\]|\\\\.)*\" *:";
+    private static final String KEY_PATTERN = "\"[^\"]*\" *:";
     /** json value */
-    private static final String VALUE_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
+    private static final String VALUE_PATTERN = "\"[^\"]*\"";
 
     /** 代码高亮正则 */
     private static final Pattern CODE_PATTERN = Pattern.compile(
@@ -219,43 +219,51 @@ public class CodeEditor extends CodeArea {
 
     private StyleSpans<Collection<String>> codeComputeHighlighting(String text) {
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
-        int lastKwEnd = 0;
-        Matcher matcher = CODE_PATTERN.matcher(text);
-        while(matcher.find()) {
-            String styleClass =
-                    matcher.group("KEYWORD") != null ? "keyword" :
-                            matcher.group("PAREN") != null ? "paren" :
-                                    matcher.group("BRACE") != null ? "brace" :
-                                            matcher.group("BRACKET") != null ? "bracket" :
-                                                    matcher.group("SEMICOLON") != null ? "semicolon" :
-                                                            matcher.group("STRING") != null ? "string" :
-                                                                    matcher.group("COMMENT") != null ? "comment" :
-                                                                            null; /* never happens */ assert styleClass != null;
-            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
-            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
-            lastKwEnd = matcher.end();
+        try {
+            int lastKwEnd = 0;
+            Matcher matcher = CODE_PATTERN.matcher(text);
+            while(matcher.find()) {
+                String styleClass =
+                        matcher.group("KEYWORD") != null ? "keyword" :
+                                matcher.group("PAREN") != null ? "paren" :
+                                        matcher.group("BRACE") != null ? "brace" :
+                                                matcher.group("BRACKET") != null ? "bracket" :
+                                                        matcher.group("SEMICOLON") != null ? "semicolon" :
+                                                                matcher.group("STRING") != null ? "string" :
+                                                                        matcher.group("COMMENT") != null ? "comment" :
+                                                                                null; /* never happens */ assert styleClass != null;
+                spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
+                spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
+                lastKwEnd = matcher.end();
+            }
+            spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
-        spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
         return spansBuilder.create();
     }
 
     private StyleSpans<Collection<String>> jsonComputeHighlighting(String text) {
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
-        int lastKwEnd = 0;
-        Matcher matcher = JSON_PATTERN.matcher(text);
-        while(matcher.find()) {
-            String styleClass =
-                    matcher.group("BRACE") != null ? "brace" :
-                            matcher.group("BRACKET") != null ? "bracket" :
-                                    matcher.group("KEY") != null ? "key" :
-                                            matcher.group("VALUE") != null ? "value" :
-                                                    matcher.group("COMMENT") != null ? "comment" :
-                                                            null; /* never happens */ assert styleClass != null;
-            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
-            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
-            lastKwEnd = matcher.end();
+        try {
+            int lastKwEnd = 0;
+            Matcher matcher = JSON_PATTERN.matcher(text);
+            while(matcher.find()) {
+                String styleClass =
+                        matcher.group("BRACE") != null ? "brace" :
+                                matcher.group("BRACKET") != null ? "bracket" :
+                                        matcher.group("KEY") != null ? "key" :
+                                                matcher.group("VALUE") != null ? "value" :
+                                                        matcher.group("COMMENT") != null ? "comment" :
+                                                                null; /* never happens */ assert styleClass != null;
+                spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
+                spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
+                lastKwEnd = matcher.end();
+            }
+            spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
-        spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
         return spansBuilder.create();
     }
 
@@ -263,46 +271,50 @@ public class CodeEditor extends CodeArea {
      * 代码高亮
      */
     private StyleSpans<Collection<String>> xmlComputeHighlighting(String text) {
-        Matcher matcher = XML_TAG.matcher(text);
-        int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
-        while(matcher.find()) {
+        try {
+            Matcher matcher = XML_TAG.matcher(text);
+            int lastKwEnd = 0;
+            while(matcher.find()) {
 
-            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
-            if(matcher.group("COMMENT") != null) {
-                spansBuilder.add(Collections.singleton("comment"), matcher.end() - matcher.start());
-            }
-            else {
-                if(matcher.group("ELEMENT") != null) {
-                    String attributesText = matcher.group(GROUP_ATTRIBUTES_SECTION);
-
-                    spansBuilder.add(Collections.singleton("tagmark"), matcher.end(GROUP_OPEN_BRACKET) - matcher.start(GROUP_OPEN_BRACKET));
-                    spansBuilder.add(Collections.singleton("anytag"), matcher.end(GROUP_ELEMENT_NAME) - matcher.end(GROUP_OPEN_BRACKET));
-
-                    if(!attributesText.isEmpty()) {
-
-                        lastKwEnd = 0;
-
-                        Matcher amatcher = ATTRIBUTES.matcher(attributesText);
-                        while(amatcher.find()) {
-                            spansBuilder.add(Collections.emptyList(), amatcher.start() - lastKwEnd);
-                            spansBuilder.add(Collections.singleton("attribute"), amatcher.end(GROUP_ATTRIBUTE_NAME) - amatcher.start(GROUP_ATTRIBUTE_NAME));
-                            spansBuilder.add(Collections.singleton("tagmark"), amatcher.end(GROUP_EQUAL_SYMBOL) - amatcher.end(GROUP_ATTRIBUTE_NAME));
-                            spansBuilder.add(Collections.singleton("avalue"), amatcher.end(GROUP_ATTRIBUTE_VALUE) - amatcher.end(GROUP_EQUAL_SYMBOL));
-                            lastKwEnd = amatcher.end();
-                        }
-                        if(attributesText.length() > lastKwEnd)
-                            spansBuilder.add(Collections.emptyList(), attributesText.length() - lastKwEnd);
-                    }
-
-                    lastKwEnd = matcher.end(GROUP_ATTRIBUTES_SECTION);
-
-                    spansBuilder.add(Collections.singleton("tagmark"), matcher.end(GROUP_CLOSE_BRACKET) - lastKwEnd);
+                spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
+                if(matcher.group("COMMENT") != null) {
+                    spansBuilder.add(Collections.singleton("comment"), matcher.end() - matcher.start());
                 }
+                else {
+                    if(matcher.group("ELEMENT") != null) {
+                        String attributesText = matcher.group(GROUP_ATTRIBUTES_SECTION);
+
+                        spansBuilder.add(Collections.singleton("tagmark"), matcher.end(GROUP_OPEN_BRACKET) - matcher.start(GROUP_OPEN_BRACKET));
+                        spansBuilder.add(Collections.singleton("anytag"), matcher.end(GROUP_ELEMENT_NAME) - matcher.end(GROUP_OPEN_BRACKET));
+
+                        if(!attributesText.isEmpty()) {
+
+                            lastKwEnd = 0;
+
+                            Matcher amatcher = ATTRIBUTES.matcher(attributesText);
+                            while(amatcher.find()) {
+                                spansBuilder.add(Collections.emptyList(), amatcher.start() - lastKwEnd);
+                                spansBuilder.add(Collections.singleton("attribute"), amatcher.end(GROUP_ATTRIBUTE_NAME) - amatcher.start(GROUP_ATTRIBUTE_NAME));
+                                spansBuilder.add(Collections.singleton("tagmark"), amatcher.end(GROUP_EQUAL_SYMBOL) - amatcher.end(GROUP_ATTRIBUTE_NAME));
+                                spansBuilder.add(Collections.singleton("avalue"), amatcher.end(GROUP_ATTRIBUTE_VALUE) - amatcher.end(GROUP_EQUAL_SYMBOL));
+                                lastKwEnd = amatcher.end();
+                            }
+                            if(attributesText.length() > lastKwEnd)
+                                spansBuilder.add(Collections.emptyList(), attributesText.length() - lastKwEnd);
+                        }
+
+                        lastKwEnd = matcher.end(GROUP_ATTRIBUTES_SECTION);
+
+                        spansBuilder.add(Collections.singleton("tagmark"), matcher.end(GROUP_CLOSE_BRACKET) - lastKwEnd);
+                    }
+                }
+                lastKwEnd = matcher.end();
             }
-            lastKwEnd = matcher.end();
+            spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
-        spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
         return spansBuilder.create();
     }
 

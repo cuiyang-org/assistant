@@ -18,7 +18,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
-import org.cuiyang.assistant.util.ClipBoardUtils;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
