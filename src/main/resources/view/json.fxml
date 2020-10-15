@@ -51,7 +51,7 @@
                     </Button>
                 </HBox>
             </HBox>
-            <KeyValueTreeView fx:id="jsonTreeView" VBox.vgrow="ALWAYS" onMouseClicked="#link">
+            <KeyValueTreeView fx:id="jsonTreeView" VBox.vgrow="ALWAYS">
                 <contextMenu>
                     <ContextMenu>
                         <items><MenuItem text="生成POJO" onAction="#genSubPojo"/></items>

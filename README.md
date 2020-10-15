@@ -1,15 +1,16 @@
-# 开发工具箱
+## iToolBox
+> 一款开发人员工具箱。提供Json格式化、Html格式化、Xml格式化、Form格式化、Cookie格式化、加解密、正则匹配等功能。
 
----
+**下载地址**：https://github.com/zzncbc/iToolBox/releases
 
-1. Json格式化
-2. HTML格式化
-3. XML格式化
-4. Cookie格式化
-5. 表单格式化
-6. 正则匹配
-7. 编码转换
-8. 加解密
-9. ID生成器
+#### JSON格式化 
+![Image](doc/json.png)
 
-![Image](doc/1.png)
+#### HTML格式化
+![Image](doc/html.png)
+
+#### 正则
+![Image](doc/regex.png)
+
+#### 加解密
+![Image](doc/cipher.png)
