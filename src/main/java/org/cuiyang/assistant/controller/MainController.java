@@ -56,6 +56,8 @@ public class MainController extends BaseController implements Initializable {
         this.tabPane.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.W && (event.isControlDown() || event.isMetaDown()) && this.tabPane.getTabs().size() > 0) {
                 closeTab(this.tabPane.getSelectionModel().getSelectedItem());
+            } else if (event.getCode() == KeyCode.ESCAPE) {
+                showLogOut(false);
             }
         });
         scene.getStylesheets().add(getThemeResource());
