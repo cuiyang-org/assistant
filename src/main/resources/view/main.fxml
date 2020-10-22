@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
 <BorderPane stylesheets="@css/default.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.cuiyang.assistant.controller.MainController">
     <top>
@@ -46,7 +47,7 @@
                 <padding>
                     <Insets bottom="5" left="5" right="5" top="5"/>
                 </padding>
-                <TextArea fx:id="logOut" VBox.vgrow="ALWAYS" promptText="日志输出"/>
+                <SearchCodeEditor fx:id="logOut" VBox.vgrow="ALWAYS"/>
             </VBox>
         </SplitPane>
     </center>

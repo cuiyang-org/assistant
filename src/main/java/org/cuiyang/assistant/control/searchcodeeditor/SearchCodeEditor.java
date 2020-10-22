@@ -69,6 +69,14 @@ public class SearchCodeEditor extends VBox implements Initializable {
         }
     }
 
+    public void appendText(String text) {
+        codeEditor.appendText(text);
+    }
+
+    public void clear() {
+        codeEditor.clear();
+    }
+
     public void setText(String text) {
         codeEditor.setText(text);
     }

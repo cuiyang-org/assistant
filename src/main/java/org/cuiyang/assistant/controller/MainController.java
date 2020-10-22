@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import lombok.SneakyThrows;
 import org.cuiyang.assistant.constant.FileTypeEnum;
 import org.cuiyang.assistant.control.InputDialog;
+import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.util.ResourceUtils;
 
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class MainController extends BaseController implements Initializable {
     /** 按钮容器 */
     public Pane menuContainer;
     /** 日志输出 */
-    public TextArea logOut;
+    public SearchCodeEditor logOut;
     public VBox logOutParent;
     /** 分割面板 */
     public SplitPane splitPane;
