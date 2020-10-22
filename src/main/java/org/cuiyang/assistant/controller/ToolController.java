@@ -1,5 +1,6 @@
 package org.cuiyang.assistant.controller;
 
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.apache.commons.collections.CollectionUtils;
@@ -10,8 +11,14 @@ import org.cuiyang.assistant.util.ConfigUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -19,15 +26,81 @@ import static org.cuiyang.assistant.constant.ConfigConstant.LAST_DEX_DIRECTORY;
 import static org.cuiyang.assistant.util.ThreadUtils.run;
 
 /**
- * 逆向控制器
+ * ToolController
  *
- * @author cuiyang
+ * @author cy48576
  */
-public class ReverseController extends BaseController {
-
+public class ToolController extends BaseController {
     public VBox rootPane;
+    public TextField timestampTextField;
+    public TextField datetimeTextField;
+    public TextField dateFormatterTextField;
 
-    public void merge() throws IOException {
+    public void timestamp2datetime() {
+        if (timestampTextField.getText().isEmpty()) {
+            return;
+        }
+        try {
+            datetimeTextField.setText(LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(timestampTextField.getText())), ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern(dateFormatterTextField.getText())));
+        } catch (Exception ignore) {
+            datetimeTextField.setText("");
+        }
+    }
+
+    public void datetime2timestamp() {
+        if (datetimeTextField.getText().isEmpty()) {
+            return;
+        }
+        try {
+            timestampTextField.setText(String.valueOf(Date.from(LocalDateTime.parse(datetimeTextField.getText(), DateTimeFormatter.ofPattern(dateFormatterTextField.getText())).toInstant(ZoneOffset.ofHours(8))).getTime()));
+        } catch (Exception ignore) {
+            timestampTextField.setText("");
+        }
+    }
+
+    /**
+     * uuid
+     */
+    public void uuid() {
+        log(UUID.randomUUID().toString());
+    }
+
+    /**
+     * uuid2
+     */
+    public void uuid2() {
+        log(UUID.randomUUID().toString().replaceAll("-", ""));
+    }
+
+    /**
+     * uuid
+     */
+    public void uuidUpper() {
+        log(UUID.randomUUID().toString().toUpperCase());
+    }
+
+    /**
+     * uuid2
+     */
+    public void uuid2Upper() {
+        log(UUID.randomUUID().toString().replaceAll("-", "").toUpperCase());
+    }
+
+    /**
+     * 时间戳
+     */
+    public void timestamp() {
+        log(String.valueOf(System.currentTimeMillis()));
+    }
+
+    /**
+     * 日期
+     */
+    public void datetime() {
+        log(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")));
+    }
+
+    public void merge() {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("选择要合并的DEX");
         if (StringUtils.isNotEmpty(ConfigUtils.get(LAST_DEX_DIRECTORY))) {
@@ -63,6 +136,6 @@ public class ReverseController extends BaseController {
 
     @Override
     public boolean isCloseable() {
-        return false;
+        return true;
     }
 }

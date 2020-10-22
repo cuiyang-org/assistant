@@ -99,6 +99,9 @@
 .text-field {
     -fx-prompt-text-fill: gray;
 }
+.text-field:focused {
+    -fx-background-radius: 3;
+}
 
 /* 复选框 */
 .check-box {

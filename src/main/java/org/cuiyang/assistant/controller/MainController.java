@@ -96,8 +96,8 @@ public class MainController extends BaseController implements Initializable {
             case "加解密":
                 resource = "view/encryption.fxml";
                 break;
-            case "ID生成器":
-                resource = "view/id.fxml";
+            case "工具箱":
+                resource = "view/tool.fxml";
                 break;
             case "地址计算":
                 resource = "view/address.fxml";

@@ -22,7 +22,7 @@
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="正则"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="编码转换"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="加解密"/>
-                <Label styleClass="menu-item" onMouseClicked="#openTab" text="ID生成器"/>
+                <Label styleClass="menu-item" onMouseClicked="#openTab" text="工具箱"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="地址计算"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="逆向"/>
             </HBox>

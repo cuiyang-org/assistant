@@ -71,6 +71,7 @@ public class SearchCodeEditor extends VBox implements Initializable {
 
     public void appendText(String text) {
         codeEditor.appendText(text);
+        codeEditor.requestFollowCaret();
     }
 
     public void clear() {

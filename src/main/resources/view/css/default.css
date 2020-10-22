@@ -5,3 +5,15 @@
 .button {
     -fx-cursor: hand;
 }
+.box {
+    /*-fx-border-color: -fx-shadow-highlight-color -fx-shadow-highlight-color -fx-shadow-highlight-color -fx-shadow-highlight-color,*/
+    /*-fx-text-box-border -fx-text-box-border -fx-text-box-border -fx-text-box-border;*/
+    /*-fx-border-width: 3, 1;*/
+    /*-fx-border-insets: 0, 0 0 0 1;*/
+    /*-fx-border-color: transparent transparent -fx-shadow-highlight-color transparent,*/
+    /*transparent transparent -fx-text-box-border transparent;*/
+    /*-fx-border-insets: -5;*/
+    -fx-border-style: segments(0.166667em, 0.166667em);
+    -fx-border-color:  gray;
+    -fx-border-width: 0.083333em; /* 1 */
+}
