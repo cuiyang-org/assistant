@@ -102,9 +102,6 @@ public class MainController extends BaseController implements Initializable {
             case "地址计算":
                 resource = "view/address.fxml";
                 break;
-            case "逆向":
-                resource = "view/reverse.fxml";
-                break;
             default:
                 throw new RuntimeException(text);
         }
