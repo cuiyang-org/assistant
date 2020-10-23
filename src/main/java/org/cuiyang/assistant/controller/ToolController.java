@@ -1,5 +1,6 @@
 package org.cuiyang.assistant.controller;
 
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -14,7 +15,6 @@ import java.io.FileOutputStream;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
@@ -35,13 +35,14 @@ public class ToolController extends BaseController {
     public TextField timestampTextField;
     public TextField datetimeTextField;
     public TextField dateFormatterTextField;
+    public ComboBox<String> timezoneComboBox;
 
     public void timestamp2datetime() {
         if (timestampTextField.getText().isEmpty()) {
             return;
         }
         try {
-            datetimeTextField.setText(LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(timestampTextField.getText())), ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern(dateFormatterTextField.getText())));
+            datetimeTextField.setText(LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(timestampTextField.getText())), ZoneId.of(timezoneComboBox.getValue())).format(DateTimeFormatter.ofPattern(dateFormatterTextField.getText())));
         } catch (Exception ignore) {
             datetimeTextField.setText("");
         }
@@ -52,7 +53,7 @@ public class ToolController extends BaseController {
             return;
         }
         try {
-            timestampTextField.setText(String.valueOf(Date.from(LocalDateTime.parse(datetimeTextField.getText(), DateTimeFormatter.ofPattern(dateFormatterTextField.getText())).toInstant(ZoneOffset.ofHours(8))).getTime()));
+            timestampTextField.setText(String.valueOf(Date.from(LocalDateTime.parse(datetimeTextField.getText(), DateTimeFormatter.ofPattern(dateFormatterTextField.getText())).atZone(ZoneId.of(timezoneComboBox.getValue())).toInstant()).getTime()));
         } catch (Exception ignore) {
             timestampTextField.setText("");
         }

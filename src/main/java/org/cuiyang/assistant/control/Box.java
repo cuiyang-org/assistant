@@ -49,9 +49,9 @@ public class Box extends AnchorPane {
         AnchorPane.setTopAnchor(titleLabel, -10d);
         AnchorPane.setLeftAnchor(titleLabel, 10d);
         super.getChildren().add(titleLabel);
-        this.setStyle("-fx-border-style: segments(0.166667em, 0.166667em);\n" +
-                "    -fx-border-color:  gray;\n" +
-                "    -fx-border-width: 0.083333em;");
+        this.setStyle("-fx-border-color: -fx-text-box-border -fx-text-box-border -fx-shadow-highlight-color -fx-shadow-highlight-color," +
+                "-fx-shadow-highlight-color -fx-shadow-highlight-color -fx-text-box-border -fx-text-box-border;" +
+                "-fx-border-insets: 0, 1 1 1 1;");
     }
 
     public final void setTitle(String value) {

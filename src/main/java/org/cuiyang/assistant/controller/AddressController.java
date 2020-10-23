@@ -25,7 +25,7 @@ public class AddressController extends BaseController implements Initializable {
 
     @Override
     public boolean isCloseable() {
-        return false;
+        return baseTextField.getText().isEmpty();
     }
 
     @Override

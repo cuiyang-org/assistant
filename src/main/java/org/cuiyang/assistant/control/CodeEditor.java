@@ -10,6 +10,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.InputMethodRequests;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.util.ClipBoardUtils;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
@@ -123,7 +124,7 @@ public class CodeEditor extends CodeArea {
 
     public void setText(String text) {
         this.clear();
-        this.replaceText(text);
+        this.replaceText(StringUtils.defaultString(text));
         this.requestFollowCaret();
         this.moveTo(0, 0);
     }
