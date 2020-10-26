@@ -4,6 +4,9 @@ import javafx.scene.control.Tab;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+import java.io.File;
+
+import static org.cuiyang.assistant.AssistantApplication.primaryStage;
 import static org.cuiyang.assistant.constant.SystemConstant.APP_NAME;
 
 /**
@@ -56,18 +59,12 @@ public abstract class BaseController {
         }
     }
 
-    public void close() {
-        mainController.closeTab(tab);
-    }
-
-    public void setTitle(String title) {
-        if (mainController.primaryStage == null) {
-            return;
-        }
-        if (StringUtils.isEmpty(title)) {
-            mainController.primaryStage.setTitle(APP_NAME);
+    public void setTitle(File file) {
+        if (file == null) {
+            primaryStage().setTitle(APP_NAME);
         } else {
-            mainController.primaryStage.setTitle(APP_NAME + " - " + title);
+            primaryStage().setTitle(APP_NAME + " - " + file.getPath());
+            tab.setText(file.getName());
         }
     }
 
@@ -75,9 +72,4 @@ public abstract class BaseController {
      * 是否可关闭
      */
     public abstract boolean isCloseable();
-
-    public String title() {
-        return "";
-    }
-
 }

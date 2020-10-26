@@ -16,9 +16,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
+import org.cuiyang.assistant.file.FileOperation;
 import org.cuiyang.assistant.util.ResourceUtils;
 
-import java.io.IOException;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -71,10 +72,51 @@ public class MainController extends BaseController implements Initializable {
     /**
      * 打开tab
      */
-    public void openTab(MouseEvent mouseEvent) throws IOException {
-        String resource;
+    public void openTab(MouseEvent mouseEvent) {
         Label source = (Label) mouseEvent.getSource();
         String text = source.getText();
+        openTab(text, null);
+    }
+
+    /**
+     * 切换日志显示
+     */
+    public void switchLogOut() {
+        boolean show = splitPane.getItems().size() == 1;
+        showLogOut(show);
+    }
+
+    /**
+     * 隐藏日志输出
+     */
+    public void showLogOut(boolean show) {
+        if (show && splitPane.getItems().size() == 1) {
+            splitPane.getItems().add(logOutParent);
+            mainController.splitPane.setDividerPositions(0.8);
+            logImageView.setImage(new Image("/view/image/log-open.png"));
+            splitPane.getStyleClass().remove("no-divider");
+        } else if (!show && splitPane.getItems().size() == 2) {
+            splitPane.getItems().remove(logOutParent);
+            mainController.splitPane.setDividerPositions(1);
+            logImageView.setImage(new Image("/view/image/log-close.png"));
+            splitPane.getStyleClass().add("no-divider");
+        }
+    }
+
+    @SneakyThrows
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        mainController = this;
+        openTab("JSON", null);
+        showLogOut(false);
+    }
+
+    /**
+     * 打开tab
+     */
+    @SneakyThrows
+    public void openTab(String text, File file) {
+        String resource;
         switch (text) {
             case "JSON":
                 resource = "view/json.fxml";
@@ -109,54 +151,14 @@ public class MainController extends BaseController implements Initializable {
             default:
                 throw new RuntimeException(text);
         }
-        openTab(text, resource);
-    }
 
-    /**
-     * 切换日志显示
-     */
-    public void switchLogOut() {
-        boolean show = splitPane.getItems().size() == 1;
-        showLogOut(show);
-    }
-
-    /**
-     * 隐藏日志输出
-     */
-    public void showLogOut(boolean show) {
-        if (show && splitPane.getItems().size() == 1) {
-            splitPane.getItems().add(logOutParent);
-            mainController.splitPane.setDividerPositions(0.8);
-            logImageView.setImage(new Image("/view/image/log-open.png"));
-            splitPane.getStyleClass().remove("no-divider");
-        } else if (!show && splitPane.getItems().size() == 2) {
-            splitPane.getItems().remove(logOutParent);
-            mainController.splitPane.setDividerPositions(1);
-            logImageView.setImage(new Image("/view/image/log-close.png"));
-            splitPane.getStyleClass().add("no-divider");
-        }
-    }
-
-    @SneakyThrows
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        mainController = this;
-        openTab("JSON", "view/json.fxml");
-        showLogOut(false);
-    }
-
-    /**
-     * 打开tab
-     */
-    private void openTab(String text, String resource) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(ResourceUtils.getResource(resource));
         Parent node = fxmlLoader.load();
         BaseController controller = fxmlLoader.getController();
-
         Tab tab = new Tab();
         controller.tab = tab;
-        tab.setOnSelectionChanged(event -> controller.setTitle(controller.title()));
+        tab.setOnSelectionChanged(event -> controller.setTitle(null));
         tab.setOnCloseRequest(event -> {
             if (!controller.isCloseable()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -171,9 +173,17 @@ public class MainController extends BaseController implements Initializable {
             }
         });
         tab.setClosable(true);
-        tab.setText(text);
         tab.setContent(node);
-        tab.setContextMenu(tabContextMenu(tab));
+        tab.setText(text);
+        // 判断是否需要打开文件
+        FileOperation fileOperation = null;
+        if (controller instanceof FileOperation) {
+            fileOperation = (FileOperation) controller;
+            if (file != null) {
+                fileOperation.openFile(file);
+            }
+        }
+        tab.setContextMenu(tabContextMenu(tab, fileOperation));
 
         tabPane.getTabs().add(tab);
         tabPane.getSelectionModel().selectLast();
@@ -197,7 +207,7 @@ public class MainController extends BaseController implements Initializable {
     /**
      * tab 右键菜单
      */
-    private ContextMenu tabContextMenu(Tab tab) {
+    private ContextMenu tabContextMenu(Tab tab, FileOperation fileOperation) {
         ContextMenu menu = new ContextMenu();
         MenuItem close = new MenuItem("关闭");
         menu.getItems().add(close);
@@ -210,6 +220,16 @@ public class MainController extends BaseController implements Initializable {
         MenuItem closeAll = new MenuItem("关闭全部");
         menu.getItems().add(closeAll);
         closeAll.setOnAction(event -> tabPane.getTabs().removeIf(tab1 -> true));
+
+        if (fileOperation != null) {
+            MenuItem open = new MenuItem("打开");
+            menu.getItems().add(open);
+            open.setOnAction(event -> fileOperation.openFile());
+
+            MenuItem saveAs = new MenuItem("另存为");
+            menu.getItems().add(saveAs);
+            saveAs.setOnAction(event -> fileOperation.saveAs());
+        }
         return menu;
     }
 

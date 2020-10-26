@@ -19,7 +19,7 @@
                 <Label styleClass="menu-item" onMouseClicked="#simple" text="去格式化"/>
                 <Label styleClass="menu-item" onMouseClicked="#genJava" text="生成Java代码"/>
             </HBox>
-            <SearchCodeEditor fx:id="textArea" VBox.vgrow="ALWAYS"/>
+            <SearchCodeEditor fx:id="editor" VBox.vgrow="ALWAYS"/>
         </VBox>
         <VBox HBox.hgrow="ALWAYS">
             <padding>

@@ -7,6 +7,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
+import org.cuiyang.assistant.file.EditorFileOperation;
 import org.cuiyang.assistant.util.BrowseUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,10 +26,10 @@ import static org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor.FI
  * @author cy48576
  */
 @Slf4j
-public class HtmlController extends BaseController implements Initializable {
+public class HtmlController extends BaseController implements Initializable, EditorFileOperation {
 
     /** html文本框 */
-    public SearchCodeEditor htmlTextArea;
+    public SearchCodeEditor editor;
     /** css选择器 */
     public TextField cssQueryTextField;
     /** css选择器 */
@@ -39,7 +40,7 @@ public class HtmlController extends BaseController implements Initializable {
      */
     public void htmlFormat() {
         try {
-            this.htmlTextArea.setText(Jsoup.parse(this.htmlTextArea.getText()).toString());
+            this.editor.setText(Jsoup.parse(this.editor.getText()).toString());
         } catch (Exception ignore) {
         }
     }
@@ -52,7 +53,7 @@ public class HtmlController extends BaseController implements Initializable {
             if (StringUtils.isEmpty(this.cssQueryTextField.getText())) {
                 this.cssQueryTextArea.setText("");
             } else {
-                this.cssQueryTextArea.setText(Jsoup.parse(this.htmlTextArea.getText()).select(this.cssQueryTextField.getText()).toString());
+                this.cssQueryTextArea.setText(Jsoup.parse(this.editor.getText()).select(this.cssQueryTextField.getText()).toString());
             }
         } catch (Exception ignore) {
         }
@@ -70,28 +71,18 @@ public class HtmlController extends BaseController implements Initializable {
      */
     public void openBrowser() throws IOException {
         File file = new File("temp.html");
-        Document document = Jsoup.parse(this.htmlTextArea.getText());
-        FileUtils.writeStringToFile(file, this.htmlTextArea.getText(), charset(document));
+        Document document = Jsoup.parse(this.editor.getText());
+        FileUtils.writeStringToFile(file, this.editor.getText(), charset(document));
         BrowseUtils.open(file.toURI());
     }
 
     @Override
-    public String title() {
-        if (this.htmlTextArea.getFile() == null) {
-            return "";
-        } else {
-            return this.htmlTextArea.getFile().getPath();
-        }
-    }
-
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.htmlTextArea.setType(CodeEditor.Type.XML);
-        this.htmlTextArea.setSupportSave(true);
-        this.htmlTextArea.addEventHandler(FILE_EVENT, event -> {
-            File file = this.htmlTextArea.getFile();
-            this.tab.setText(file.getName());
-            this.setTitle(file.getPath());
+        this.editor.setType(CodeEditor.Type.XML);
+        this.editor.setSupportSave(true);
+        this.editor.addEventHandler(FILE_EVENT, event -> {
+            File file = this.editor.getFile();
+            this.setTitle(file);
         });
         this.cssQueryTextArea.setType(CodeEditor.Type.XML);
     }
@@ -118,6 +109,6 @@ public class HtmlController extends BaseController implements Initializable {
 
     @Override
     public boolean isCloseable() {
-        return StringUtils.isBlank(htmlTextArea.getText());
+        return StringUtils.isBlank(editor.getText());
     }
 }

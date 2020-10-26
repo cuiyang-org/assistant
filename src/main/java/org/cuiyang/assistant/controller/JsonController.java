@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
+import org.cuiyang.assistant.file.EditorFileOperation;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -35,7 +36,7 @@ import static org.cuiyang.assistant.util.WordUtils.firstUpperCase;
  *
  * @author cy48576
  */
-public class JsonController extends BaseController implements Initializable {
+public class JsonController extends BaseController implements Initializable, EditorFileOperation {
 
     private Template pojoTemplate;
     private Template mapTemplate;
@@ -193,22 +194,12 @@ public class JsonController extends BaseController implements Initializable {
     }
 
     @Override
-    public String title() {
-        if (this.editor.getFile() == null) {
-            return "";
-        } else {
-            return this.editor.getFile().getPath();
-        }
-    }
-
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.editor.setType(CodeEditor.Type.JSON);
         this.editor.setSupportSave(true);
         this.editor.addEventHandler(FILE_EVENT, event -> {
             File file = this.editor.getFile();
-            this.tab.setText(file.getName());
-            this.setTitle(file.getPath());
+            this.setTitle(file);
         });
         this.editor.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {

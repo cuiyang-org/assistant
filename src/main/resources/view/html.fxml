@@ -17,7 +17,7 @@
                 <Label styleClass="menu-item" onMouseClicked="#htmlFormat" text="格式化"/>
                 <Label styleClass="menu-item" onMouseClicked="#openBrowser" text="浏览器"/>
             </HBox>
-            <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="htmlTextArea"/>
+            <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="editor"/>
         </VBox>
         <VBox>
             <padding>

@@ -6,6 +6,7 @@ import javafx.scene.control.TreeView;
 import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
+import org.cuiyang.assistant.file.EditorFileOperation;
 
 import java.io.File;
 import java.net.URL;
@@ -18,10 +19,10 @@ import static org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor.FI
  *
  * @author cy48576
  */
-public class CookieController extends BaseController implements Initializable {
+public class CookieController extends BaseController implements Initializable, EditorFileOperation {
 
     /** cookie文本框 */
-    public SearchCodeEditor cookieTextArea;
+    public SearchCodeEditor editor;
     /** cookie树 */
     public TreeView<String> cookieTreeView;
 
@@ -30,10 +31,10 @@ public class CookieController extends BaseController implements Initializable {
      */
     public void cookieFormat() {
         try {
-            this.cookieTextArea.setWrapText(false);
-            String text = this.cookieTextArea.getText();
+            this.editor.setWrapText(false);
+            String text = this.editor.getText();
             text = text.replaceAll(";\\s*", ";\n");
-            this.cookieTextArea.setText(text);
+            this.editor.setText(text);
         } catch (Exception ignore) {
         }
     }
@@ -43,10 +44,10 @@ public class CookieController extends BaseController implements Initializable {
      */
     public void cookieSimple() {
         try {
-            this.cookieTextArea.setWrapText(true);
-            String text = this.cookieTextArea.getText();
+            this.editor.setWrapText(true);
+            String text = this.editor.getText();
             text = text.replaceAll(";\\s*", "; ");
-            this.cookieTextArea.setText(text);
+            this.editor.setText(text);
         } catch (Exception ignore) {
         }
     }
@@ -87,17 +88,8 @@ public class CookieController extends BaseController implements Initializable {
     }
 
     @Override
-    public String title() {
-        if (this.cookieTextArea.getFile() == null) {
-            return "";
-        } else {
-            return this.cookieTextArea.getFile().getPath();
-        }
-    }
-
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.cookieTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
+        this.editor.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {
                 cookieTreeView.setRoot(null);
                 return;
@@ -111,11 +103,10 @@ public class CookieController extends BaseController implements Initializable {
                 cookieTreeView.setRoot(null);
             }
         });
-        this.cookieTextArea.setSupportSave(true);
-        this.cookieTextArea.addEventHandler(FILE_EVENT, event -> {
-            File file = this.cookieTextArea.getFile();
-            this.tab.setText(file.getName());
-            this.setTitle(file.getPath());
+        this.editor.setSupportSave(true);
+        this.editor.addEventHandler(FILE_EVENT, event -> {
+            File file = this.editor.getFile();
+            this.setTitle(file);
         });
     }
 
@@ -151,6 +142,6 @@ public class CookieController extends BaseController implements Initializable {
 
     @Override
     public boolean isCloseable() {
-        return StringUtils.isBlank(cookieTextArea.getText());
+        return StringUtils.isBlank(editor.getText());
     }
 }

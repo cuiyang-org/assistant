@@ -16,7 +16,7 @@
                 </padding>
                 <Label styleClass="menu-item" onMouseClicked="#xmlFormat" text="格式化"/>
             </HBox>
-            <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="xmlTextArea"/>
+            <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="editor"/>
         </VBox>
         <VBox>
             <padding>

@@ -14,6 +14,7 @@ import javafx.scene.control.TreeView;
 import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
+import org.cuiyang.assistant.file.EditorFileOperation;
 
 import static org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor.FILE_EVENT;
 
@@ -22,10 +23,10 @@ import static org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor.FI
  *
  * @author cy48576
  */
-public class FormController extends BaseController implements Initializable {
+public class FormController extends BaseController implements Initializable, EditorFileOperation {
 
     /** 文本框 */
-    public SearchCodeEditor textArea;
+    public SearchCodeEditor editor;
     /** 树 */
     public TreeView<String> treeView;
 
@@ -34,10 +35,10 @@ public class FormController extends BaseController implements Initializable {
      */
     public void format() {
         try {
-            this.textArea.setWrapText(false);
-            String text = URLDecoder.decode(this.textArea.getText(), "UTF-8");
+            this.editor.setWrapText(false);
+            String text = URLDecoder.decode(this.editor.getText(), "UTF-8");
             text = text.replaceAll("&", "\n");
-            this.textArea.setText(text);
+            this.editor.setText(text);
         } catch (Exception ignore) {
         }
     }
@@ -47,8 +48,8 @@ public class FormController extends BaseController implements Initializable {
      */
     public void simple() {
         try {
-            this.textArea.setWrapText(true);
-            String text = URLDecoder.decode(this.textArea.getText(), "UTF-8");
+            this.editor.setWrapText(true);
+            String text = URLDecoder.decode(this.editor.getText(), "UTF-8");
             StringBuilder sb = new StringBuilder();
             String[] split = text.split("[&\\n]");
             for (String line : split) {
@@ -56,7 +57,7 @@ public class FormController extends BaseController implements Initializable {
                 sb.append(split2[0]).append("=").append(split2.length >= 2 ? URLEncoder.encode(split2[1], "UTF-8") : "").append("&");
             }
             sb.deleteCharAt(sb.length() - 1);
-            this.textArea.setText(sb.toString());
+            this.editor.setText(sb.toString());
         } catch (Exception ignore) {
         }
     }
@@ -97,17 +98,8 @@ public class FormController extends BaseController implements Initializable {
     }
 
     @Override
-    public String title() {
-        if (this.textArea.getFile() == null) {
-            return "";
-        } else {
-            return this.textArea.getFile().getPath();
-        }
-    }
-
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+        this.editor.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {
                 treeView.setRoot(null);
                 return;
@@ -121,11 +113,10 @@ public class FormController extends BaseController implements Initializable {
                 treeView.setRoot(null);
             }
         });
-        this.textArea.setSupportSave(true);
-        this.textArea.addEventHandler(FILE_EVENT, event -> {
-            File file = this.textArea.getFile();
-            this.tab.setText(file.getName());
-            this.setTitle(file.getPath());
+        this.editor.setSupportSave(true);
+        this.editor.addEventHandler(FILE_EVENT, event -> {
+            File file = this.editor.getFile();
+            this.setTitle(file);
         });
     }
 
@@ -145,7 +136,7 @@ public class FormController extends BaseController implements Initializable {
      * 生成Java代码
      */
     public void genJava() throws UnsupportedEncodingException {
-        String text = this.textArea.getText();
+        String text = this.editor.getText();
         if (StringUtils.isEmpty(text)) {
             log("表单内容为空");
             return;
@@ -163,6 +154,6 @@ public class FormController extends BaseController implements Initializable {
 
     @Override
     public boolean isCloseable() {
-        return StringUtils.isBlank(textArea.getText());
+        return StringUtils.isBlank(editor.getText());
     }
 }
