@@ -1,5 +1,6 @@
 package org.cuiyang.assistant.control;
 
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -30,6 +31,7 @@ public class AddressItem extends HBox {
     private Button copyButton = this.addButton("", "/view/image/copy.png");
     private Button addButton = this.addButton("", "/view/image/add.png");
     private Button subButton = this.addButton("", "/view/image/sub.png");
+    private EventHandler<Event> changeEventHandler;
 
     public AddressItem() {
         init();
@@ -45,8 +47,13 @@ public class AddressItem extends HBox {
 
     private void init() {
         setSpacing(20);
-        this.offsetTextField.setOnKeyReleased(event -> calc(true));
-        this.realTextField.setOnKeyReleased(event -> calc(false));
+        this.offsetTextField.setOnKeyReleased(event -> calc(true, true));
+        this.realTextField.setOnKeyReleased(event -> calc(false, true));
+        this.remarkTextField.setOnKeyReleased(event -> {
+            if (this.changeEventHandler != null) {
+                this.changeEventHandler.handle(null);
+            }
+        });
         copyButton.setOnMouseClicked(event -> ClipBoardUtils.setSysClipboardText(realTextField.getText()));
         copyButton.setTooltip(new Tooltip("复制真实地址"));
         addButton.setTooltip(new Tooltip("添加"));
@@ -61,7 +68,7 @@ public class AddressItem extends HBox {
     /**
      * 计算
      */
-    public void calc(boolean byOffset) {
+    public void calc(boolean byOffset, boolean event) {
         try {
             if (byOffset && StringUtils.isNotEmpty(this.offsetTextField.getText())) {
                 // 计算真实地址
@@ -73,6 +80,9 @@ public class AddressItem extends HBox {
                 long realValue = Long.parseLong(this.realTextField.getText(), radix);
                 long offsetValue = realValue - baseValue;
                 this.offsetTextField.setText(Long.toString(offsetValue, radix).toUpperCase());
+            }
+            if (event && this.changeEventHandler != null) {
+                this.changeEventHandler.handle(null);
             }
         } catch (Exception ignore) {
         }
@@ -103,5 +113,26 @@ public class AddressItem extends HBox {
         Button button = new Button(text, imageView);
         this.getChildren().add(button);
         return button;
+    }
+
+    public void setOnChangeEvent(EventHandler<Event> handler) {
+        this.changeEventHandler = handler;
+    }
+
+    public void setOffset(String val) {
+        this.offsetTextField.setText(val);
+        this.calc(true, false);
+    }
+
+    public String getOffset() {
+        return this.offsetTextField.getText();
+    }
+
+    public void setRemark(String val) {
+        this.remarkTextField.setText(val);
+    }
+
+    public String getRemark() {
+        return this.remarkTextField.getText();
     }
 }

@@ -12,7 +12,8 @@ public enum FileTypeEnum {
     HTML(".html", "HTML"),
     XML(".xml", "XML"),
     COOKIE(".cookie", "Cookie"),
-    FORM(".form", "Form");
+    FORM(".form", "Form"),
+    ADDR(".addr", "地址计算");
 
     private String suffix;
     private String desc;
