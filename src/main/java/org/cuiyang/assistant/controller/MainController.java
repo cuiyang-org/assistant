@@ -13,17 +13,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import lombok.SneakyThrows;
-import org.cuiyang.assistant.constant.FileTypeEnum;
-import org.cuiyang.assistant.control.InputDialog;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.util.ResourceUtils;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
+import static org.cuiyang.assistant.util.KeyEventUtils.ctrl;
 import static org.cuiyang.assistant.util.ThemeUtils.getThemeResource;
 
 /**
@@ -35,6 +34,8 @@ public class MainController extends BaseController implements Initializable {
 
     /** 场景 */
     public Scene scene;
+    /** Stage */
+    public Stage primaryStage;
 
     /** 按钮容器 */
     public Pane menuContainer;
@@ -52,12 +53,15 @@ public class MainController extends BaseController implements Initializable {
      * 初始化
      * @param scene 场景
      */
-    public void init(Scene scene) {
+    public void init(Stage primaryStage, Scene scene) {
+        this.primaryStage = primaryStage;
         this.scene = scene;
         this.tabPane.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.W && (event.isControlDown() || event.isMetaDown()) && this.tabPane.getTabs().size() > 0) {
+            if (ctrl(event, KeyCode.W) && this.tabPane.getTabs().size() > 0) {
+                // 关闭tab页
                 closeTab(this.tabPane.getSelectionModel().getSelectedItem());
             } else if (event.getCode() == KeyCode.ESCAPE) {
+                // 隐藏log输出
                 showLogOut(false);
             }
         });
@@ -152,6 +156,7 @@ public class MainController extends BaseController implements Initializable {
 
         Tab tab = new Tab();
         controller.tab = tab;
+        tab.setOnSelectionChanged(event -> controller.setTitle(controller.title()));
         tab.setOnCloseRequest(event -> {
             if (!controller.isCloseable()) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -205,17 +210,6 @@ public class MainController extends BaseController implements Initializable {
         MenuItem closeAll = new MenuItem("关闭全部");
         menu.getItems().add(closeAll);
         closeAll.setOnAction(event -> tabPane.getTabs().removeIf(tab1 -> true));
-
-        FileTypeEnum fileType = FileTypeEnum.parseOfDesc(tab.getText());
-        MenuItem rename = new MenuItem("重命名");
-        menu.getItems().add(rename);
-        rename.setOnAction(event -> {
-            InputDialog dialog = new InputDialog(tab.getText());
-            dialog.setSuffix(fileType != null ? fileType.getSuffix() : null);
-            dialog.setTitle("重命名");
-            Optional<String> optional = dialog.showAndWait();
-            optional.ifPresent(tab::setText);
-        });
         return menu;
     }
 

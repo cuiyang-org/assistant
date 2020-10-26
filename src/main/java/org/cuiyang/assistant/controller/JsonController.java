@@ -19,10 +19,7 @@ import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.*;
@@ -30,6 +27,7 @@ import java.util.*;
 import static com.alibaba.fastjson.serializer.SerializerFeature.PrettyFormat;
 import static com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValue;
 import static freemarker.template.Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS;
+import static org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor.FILE_EVENT;
 import static org.cuiyang.assistant.util.WordUtils.firstUpperCase;
 
 /**
@@ -195,8 +193,23 @@ public class JsonController extends BaseController implements Initializable {
     }
 
     @Override
+    public String title() {
+        if (this.editor.getFile() == null) {
+            return "";
+        } else {
+            return this.editor.getFile().getPath();
+        }
+    }
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.editor.setType(CodeEditor.Type.JSON);
+        this.editor.setSupportSave(true);
+        this.editor.addEventHandler(FILE_EVENT, event -> {
+            File file = this.editor.getFile();
+            this.tab.setText(file.getName());
+            this.setTitle(file.getPath());
+        });
         this.editor.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {
                 jsonTreeView.setRoot(null);

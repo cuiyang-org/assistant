@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import org.cuiyang.assistant.controller.MainController;
 import org.cuiyang.assistant.util.ResourceUtils;
 
+import static org.cuiyang.assistant.constant.SystemConstant.APP_NAME;
+
 /**
  * 开发助手
  *
@@ -23,9 +25,9 @@ public class AssistantApplication extends Application {
         Parent root = fxmlLoader.load();
         MainController controller = fxmlLoader.getController();
         Scene scene = new Scene(root);
-        controller.init(scene);
+        controller.init(primaryStage, scene);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("iToolBox");
+        primaryStage.setTitle(APP_NAME);
         primaryStage.getIcons().add(new Image(ResourceUtils.getResourceAsStream("logo.png")));
         primaryStage.setWidth(1200);
         primaryStage.setHeight(800);

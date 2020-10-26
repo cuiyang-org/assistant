@@ -4,6 +4,8 @@ import javafx.scene.control.Tab;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+import static org.cuiyang.assistant.constant.SystemConstant.APP_NAME;
+
 /**
  * 控制器基类
  *
@@ -58,9 +60,24 @@ public abstract class BaseController {
         mainController.closeTab(tab);
     }
 
+    public void setTitle(String title) {
+        if (mainController.primaryStage == null) {
+            return;
+        }
+        if (StringUtils.isEmpty(title)) {
+            mainController.primaryStage.setTitle(APP_NAME);
+        } else {
+            mainController.primaryStage.setTitle(APP_NAME + " - " + title);
+        }
+    }
+
     /**
      * 是否可关闭
      */
     public abstract boolean isCloseable();
+
+    public String title() {
+        return "";
+    }
 
 }

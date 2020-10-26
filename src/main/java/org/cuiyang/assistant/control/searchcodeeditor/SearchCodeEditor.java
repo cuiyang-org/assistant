@@ -1,6 +1,8 @@
 package org.cuiyang.assistant.control.searchcodeeditor;
 
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,18 +12,29 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.cuiyang.assistant.control.CodeEditor;
+import org.cuiyang.assistant.util.AlertUtils;
 import org.cuiyang.assistant.util.CommonUtils;
+import org.cuiyang.assistant.util.ConfigUtils;
 import org.fxmisc.richtext.Selection;
 import org.fxmisc.richtext.SelectionImpl;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static org.cuiyang.assistant.constant.ConfigConstant.LAST_DIRECTORY;
+import static org.cuiyang.assistant.util.KeyEventUtils.ctrl;
 
 /**
  * 可搜索的代码编辑器
@@ -29,6 +42,8 @@ import java.util.ResourceBundle;
  * @author cy48576
  */
 public class SearchCodeEditor extends VBox implements Initializable {
+
+    public static final EventType<Event> FILE_EVENT = new EventType<>("file");
 
     /** 文本域 */
     @FXML
@@ -51,6 +66,12 @@ public class SearchCodeEditor extends VBox implements Initializable {
     private List<Integer> indexList;
     /** 选择 */
     private Selection<Collection<String>, String, Collection<String>> selection;
+    @Setter
+    @Getter
+    private boolean supportSave;
+    @Setter
+    @Getter
+    private File file;
 
     public SearchCodeEditor() {
         loadFxml();
@@ -186,6 +207,42 @@ public class SearchCodeEditor extends VBox implements Initializable {
             index = -1;
             searchNext();
         });
+        // 保存
+        this.setOnKeyPressed(event -> {
+            if (!this.supportSave) {
+                // 不支持保存
+                return;
+            }
+            if (file == null) {
+                if (ctrl(event, KeyCode.S)) {
+                    FileChooser chooser = new FileChooser();
+                    chooser.setTitle("选择要保存的文件");
+                    if (StringUtils.isNotEmpty(ConfigUtils.get(LAST_DIRECTORY))) {
+                        chooser.setInitialDirectory(new File(ConfigUtils.get(LAST_DIRECTORY)));
+                    }
+                    chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("全部", "*.*"));
+                    file = chooser.showSaveDialog(this.getScene().getWindow());
+                    if (file != null) {
+                        ConfigUtils.setAndSave(LAST_DIRECTORY, file.getParent());
+                        this.save();
+                        this.fireEvent(new Event(FILE_EVENT));
+                    }
+                }
+            } else {
+                this.save();
+            }
+        });
+    }
+
+    /**
+     * 保存
+     */
+    public void save() {
+        try {
+            FileUtils.writeStringToFile(file, this.getText(), "utf-8");
+        } catch (Exception e) {
+            AlertUtils.error(ExceptionUtils.getStackTrace(e));
+        }
     }
 
     /**

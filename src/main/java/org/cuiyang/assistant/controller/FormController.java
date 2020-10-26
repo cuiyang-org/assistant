@@ -1,5 +1,6 @@
 package org.cuiyang.assistant.controller;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -13,6 +14,8 @@ import javafx.scene.control.TreeView;
 import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
+
+import static org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor.FILE_EVENT;
 
 /**
  * 表单 控制器
@@ -94,6 +97,15 @@ public class FormController extends BaseController implements Initializable {
     }
 
     @Override
+    public String title() {
+        if (this.textArea.getFile() == null) {
+            return "";
+        } else {
+            return this.textArea.getFile().getPath();
+        }
+    }
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.textArea.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {
@@ -108,6 +120,12 @@ public class FormController extends BaseController implements Initializable {
             } catch (Exception e) {
                 treeView.setRoot(null);
             }
+        });
+        this.textArea.setSupportSave(true);
+        this.textArea.addEventHandler(FILE_EVENT, event -> {
+            File file = this.textArea.getFile();
+            this.tab.setText(file.getName());
+            this.setTitle(file.getPath());
         });
     }
 

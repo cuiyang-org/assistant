@@ -17,6 +17,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ResourceBundle;
 
+import static org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor.FILE_EVENT;
+
 /**
  * Html 控制器
  *
@@ -74,8 +76,23 @@ public class HtmlController extends BaseController implements Initializable {
     }
 
     @Override
+    public String title() {
+        if (this.htmlTextArea.getFile() == null) {
+            return "";
+        } else {
+            return this.htmlTextArea.getFile().getPath();
+        }
+    }
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.htmlTextArea.setType(CodeEditor.Type.XML);
+        this.htmlTextArea.setSupportSave(true);
+        this.htmlTextArea.addEventHandler(FILE_EVENT, event -> {
+            File file = this.htmlTextArea.getFile();
+            this.tab.setText(file.getName());
+            this.setTitle(file.getPath());
+        });
         this.cssQueryTextArea.setType(CodeEditor.Type.XML);
     }
 

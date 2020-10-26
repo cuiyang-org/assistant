@@ -1,5 +1,6 @@
 package org.cuiyang.assistant.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -11,6 +12,8 @@ import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.util.BrowseUtils;
 import org.cuiyang.assistant.util.XmlUtils;
+
+import static org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor.FILE_EVENT;
 
 /**
  * Xml 控制器
@@ -58,8 +61,23 @@ public class XmlController extends BaseController implements Initializable {
     }
 
     @Override
+    public String title() {
+        if (this.xmlTextArea.getFile() == null) {
+            return "";
+        } else {
+            return this.xmlTextArea.getFile().getPath();
+        }
+    }
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.xmlTextArea.setType(CodeEditor.Type.XML);
+        this.xmlTextArea.setSupportSave(true);
+        this.xmlTextArea.addEventHandler(FILE_EVENT, event -> {
+            File file = this.xmlTextArea.getFile();
+            this.tab.setText(file.getName());
+            this.setTitle(file.getPath());
+        });
         this.xpathTextArea.setType(CodeEditor.Type.XML);
     }
 

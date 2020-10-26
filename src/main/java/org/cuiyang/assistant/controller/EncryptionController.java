@@ -20,6 +20,7 @@ import java.util.Base64;
 import java.util.List;
 
 import static org.cuiyang.assistant.constant.ConfigConstant.LAST_DEX_DIRECTORY;
+import static org.cuiyang.assistant.constant.ConfigConstant.LAST_DIRECTORY;
 import static org.cuiyang.assistant.util.CommonUtils.parentVisible;
 import static org.cuiyang.assistant.util.CommonUtils.visible;
 
@@ -224,12 +225,12 @@ public class EncryptionController extends BaseController {
     public void chooseInputFile() {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("选择要输入文件");
-        if (StringUtils.isNotEmpty(ConfigUtils.get(LAST_DEX_DIRECTORY))) {
-            chooser.setInitialDirectory(new File(ConfigUtils.get(LAST_DEX_DIRECTORY)));
+        if (StringUtils.isNotEmpty(ConfigUtils.get(LAST_DIRECTORY))) {
+            chooser.setInitialDirectory(new File(ConfigUtils.get(LAST_DIRECTORY)));
         }
         List<File> files = chooser.showOpenMultipleDialog(input.getScene().getWindow());
         if (CollectionUtils.isNotEmpty(files)) {
-            ConfigUtils.setAndSave(LAST_DEX_DIRECTORY, files.get(0).getParent());
+            ConfigUtils.setAndSave(LAST_DIRECTORY, files.get(0).getParent());
             input.setText(files.get(0).getAbsolutePath());
         }
     }
@@ -240,12 +241,12 @@ public class EncryptionController extends BaseController {
     public void chooseOutputFile() {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("选择要输出的文件");
-        if (StringUtils.isNotEmpty(ConfigUtils.get(LAST_DEX_DIRECTORY))) {
-            chooser.setInitialDirectory(new File(ConfigUtils.get(LAST_DEX_DIRECTORY)));
+        if (StringUtils.isNotEmpty(ConfigUtils.get(LAST_DIRECTORY))) {
+            chooser.setInitialDirectory(new File(ConfigUtils.get(LAST_DIRECTORY)));
         }
         File file = chooser.showSaveDialog(input.getScene().getWindow());
         if (file != null) {
-            ConfigUtils.setAndSave(LAST_DEX_DIRECTORY, file.getParent());
+            ConfigUtils.setAndSave(LAST_DIRECTORY, file.getParent());
             output.setText(file.getAbsolutePath());
         }
     }

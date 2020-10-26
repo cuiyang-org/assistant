@@ -7,8 +7,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor.FILE_EVENT;
 
 /**
  * Cookie 控制器
@@ -84,6 +87,15 @@ public class CookieController extends BaseController implements Initializable {
     }
 
     @Override
+    public String title() {
+        if (this.cookieTextArea.getFile() == null) {
+            return "";
+        } else {
+            return this.cookieTextArea.getFile().getPath();
+        }
+    }
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.cookieTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {
@@ -98,6 +110,12 @@ public class CookieController extends BaseController implements Initializable {
             } catch (Exception e) {
                 cookieTreeView.setRoot(null);
             }
+        });
+        this.cookieTextArea.setSupportSave(true);
+        this.cookieTextArea.addEventHandler(FILE_EVENT, event -> {
+            File file = this.cookieTextArea.getFile();
+            this.tab.setText(file.getName());
+            this.setTitle(file.getPath());
         });
     }
 
