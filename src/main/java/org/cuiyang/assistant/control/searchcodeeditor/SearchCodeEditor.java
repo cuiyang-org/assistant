@@ -188,6 +188,21 @@ public class SearchCodeEditor extends VBox implements Initializable {
                 codeEditor.requestFocus();
                 selection.deselect();
             }
+            if (!this.supportSave) {
+                // 不支持保存
+                return;
+            }
+            if (file == null) {
+                if (ctrl(event, KeyCode.S)) {
+                    this.file = chooserSaveFile(this.fileType);
+                    if (this.file != null) {
+                        this.save();
+                        this.fireEvent(new Event(FILE_EVENT));
+                    }
+                }
+            } else {
+                this.save();
+            }
         });
         // 回车查找下一个
         this.keyTextField.setOnKeyReleased(event -> {
@@ -217,24 +232,6 @@ public class SearchCodeEditor extends VBox implements Initializable {
             indexList = CommonUtils.indexOf(newValue, keyTextField.getText());
             index = -1;
             searchNext();
-        });
-        // 保存
-        this.setOnKeyPressed(event -> {
-            if (!this.supportSave) {
-                // 不支持保存
-                return;
-            }
-            if (file == null) {
-                if (ctrl(event, KeyCode.S)) {
-                    this.file = chooserSaveFile(this.fileType);
-                    if (this.file != null) {
-                        this.save();
-                        this.fireEvent(new Event(FILE_EVENT));
-                    }
-                }
-            } else {
-                this.save();
-            }
         });
     }
 

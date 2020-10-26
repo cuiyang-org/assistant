@@ -53,7 +53,7 @@ public class FileUtils {
      */
     public static File chooserSaveFile(FileTypeEnum fileType) {
         File file = fileChooser(CHOOSER_SAVE_FILE_TITLE, true);
-        if (fileType != null && !file.getPath().endsWith(fileType.getSuffix())) {
+        if (file != null && fileType != null && !file.getPath().endsWith(fileType.getSuffix())) {
             return new File(file.getPath() + fileType.getSuffix());
         }
         return file;
