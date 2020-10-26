@@ -222,6 +222,7 @@ public class MainController extends BaseController implements Initializable {
         closeAll.setOnAction(event -> tabPane.getTabs().removeIf(tab1 -> true));
 
         if (fileOperation != null) {
+            menu.getItems().add(new SeparatorMenuItem());
             MenuItem open = new MenuItem("打开");
             menu.getItems().add(open);
             open.setOnAction(event -> fileOperation.openFile());
