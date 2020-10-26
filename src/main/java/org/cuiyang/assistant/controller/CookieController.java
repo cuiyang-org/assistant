@@ -4,6 +4,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import org.apache.commons.lang3.StringUtils;
+import org.cuiyang.assistant.constant.FileTypeEnum;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.file.EditorFileOperation;
@@ -89,6 +90,7 @@ public class CookieController extends BaseController implements Initializable, E
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.editor.setFileType(fileType());
         this.editor.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {
                 cookieTreeView.setRoot(null);
@@ -143,5 +145,10 @@ public class CookieController extends BaseController implements Initializable, E
     @Override
     public boolean isCloseable() {
         return StringUtils.isBlank(editor.getText());
+    }
+
+    @Override
+    public FileTypeEnum fileType() {
+        return FileTypeEnum.COOKIE;
     }
 }

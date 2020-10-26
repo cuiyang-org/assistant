@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.cuiyang.assistant.constant.FileTypeEnum;
 import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.file.EditorFileOperation;
@@ -79,6 +80,7 @@ public class HtmlController extends BaseController implements Initializable, Edi
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.editor.setType(CodeEditor.Type.XML);
+        this.editor.setFileType(fileType());
         this.editor.setSupportSave(true);
         this.editor.addEventHandler(FILE_EVENT, event -> {
             File file = this.editor.getFile();
@@ -110,5 +112,10 @@ public class HtmlController extends BaseController implements Initializable, Edi
     @Override
     public boolean isCloseable() {
         return StringUtils.isBlank(editor.getText());
+    }
+
+    @Override
+    public FileTypeEnum fileType() {
+        return FileTypeEnum.HTML;
     }
 }

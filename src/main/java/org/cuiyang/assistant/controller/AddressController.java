@@ -2,22 +2,27 @@ package org.cuiyang.assistant.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
+import org.cuiyang.assistant.constant.FileTypeEnum;
 import org.cuiyang.assistant.control.AddressItem;
 import org.cuiyang.assistant.file.FileOperation;
 
 import java.io.File;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+
+import static org.cuiyang.assistant.util.KeyEventUtils.ctrl;
 
 /**
  * 地址计算控制器
@@ -26,6 +31,8 @@ import java.util.stream.Collectors;
  */
 public class AddressController extends BaseController implements Initializable, FileOperation {
 
+    /** 根节点 */
+    public VBox root;
     /** 基址地址 */
     public TextField baseTextField;
     /** 进制 */
@@ -43,6 +50,13 @@ public class AddressController extends BaseController implements Initializable, 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.addAddressItem(0);
+        // 获取焦点，否则保存快捷键不生效
+        root.setOnMouseClicked(event -> root.requestFocus());
+        root.setOnKeyReleased(event -> {
+            if (ctrl(event, KeyCode.S)) {
+                saveAs();
+            }
+        });
     }
 
     /**
@@ -118,6 +132,11 @@ public class AddressController extends BaseController implements Initializable, 
         }
     }
 
+    @Override
+    public FileTypeEnum fileType() {
+        return FileTypeEnum.ADDR;
+    }
+
     @SneakyThrows
     @Override
     public void openFile(File file) {
@@ -134,18 +153,21 @@ public class AddressController extends BaseController implements Initializable, 
     @SneakyThrows
     @Override
     public void saveAs(File file) {
+        if (file == null) {
+            return;
+        }
         this.file = file;
         List<Map<String, Object>> offsets = this.addressParent.getChildren().stream().map(item -> serialize((AddressItem) item)).collect(Collectors.toList());
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new LinkedHashMap<>();
         result.put("base", baseTextField.getText());
         result.put("radix", radixComboBox.getValue());
         result.put("offsets", offsets);
-        FileUtils.writeStringToFile(file, JSON.toJSONString(result), "utf-8");
+        FileUtils.writeStringToFile(file, JSON.toJSONString(result, SerializerFeature.PrettyFormat), "utf-8");
         setTitle(file);
     }
 
     public Map<String, Object> serialize(AddressItem addressItem) {
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new LinkedHashMap<>();
         result.put("offset", addressItem.getOffset());
         result.put("remark", addressItem.getRemark());
         return result;

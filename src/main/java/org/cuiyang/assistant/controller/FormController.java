@@ -12,6 +12,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import org.apache.commons.lang3.StringUtils;
+import org.cuiyang.assistant.constant.FileTypeEnum;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.file.EditorFileOperation;
@@ -99,6 +100,7 @@ public class FormController extends BaseController implements Initializable, Edi
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.editor.setFileType(fileType());
         this.editor.textProperty().addListener((observable, oldValue, newValue) -> {
             if (StringUtils.isBlank(newValue)) {
                 treeView.setRoot(null);
@@ -155,5 +157,10 @@ public class FormController extends BaseController implements Initializable, Edi
     @Override
     public boolean isCloseable() {
         return StringUtils.isBlank(editor.getText());
+    }
+
+    @Override
+    public FileTypeEnum fileType() {
+        return FileTypeEnum.FORM;
     }
 }

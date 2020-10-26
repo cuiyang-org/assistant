@@ -15,6 +15,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.apache.commons.lang3.StringUtils;
+import org.cuiyang.assistant.constant.FileTypeEnum;
 import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
@@ -196,6 +197,7 @@ public class JsonController extends BaseController implements Initializable, Edi
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.editor.setType(CodeEditor.Type.JSON);
+        this.editor.setFileType(fileType());
         this.editor.setSupportSave(true);
         this.editor.addEventHandler(FILE_EVENT, event -> {
             File file = this.editor.getFile();
@@ -396,5 +398,10 @@ public class JsonController extends BaseController implements Initializable, Edi
         if (treeItem != null) {
             this.editor.move(treeItem.getRow());
         }
+    }
+
+    @Override
+    public FileTypeEnum fileType() {
+        return FileTypeEnum.JSON;
     }
 }
