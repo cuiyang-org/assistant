@@ -52,10 +52,10 @@ public class FileUtils {
      * @return 选择的文件
      */
     public static File chooserSaveFile(FileTypeEnum fileType) {
-        File file = fileChooser(CHOOSER_SAVE_FILE_TITLE, true);
-        if (file != null && fileType != null && !file.getPath().endsWith(fileType.getSuffix())) {
-            return new File(file.getPath() + fileType.getSuffix());
+        if (fileType != null) {
+            return fileChooser(CHOOSER_SAVE_FILE_TITLE, true, new FileChooser.ExtensionFilter(fileType.getDesc(), "*" + fileType.getSuffix()));
+        } else {
+            return fileChooser(CHOOSER_SAVE_FILE_TITLE, true);
         }
-        return file;
     }
 }
