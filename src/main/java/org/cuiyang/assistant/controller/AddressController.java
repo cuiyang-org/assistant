@@ -6,7 +6,6 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
@@ -21,8 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
-import static org.cuiyang.assistant.util.KeyEventUtils.ctrl;
 
 /**
  * 地址计算控制器
@@ -50,13 +47,6 @@ public class AddressController extends BaseController implements Initializable, 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.addAddressItem(0);
-        // 获取焦点，否则保存快捷键不生效
-        root.setOnMouseClicked(event -> root.requestFocus());
-        root.setOnKeyReleased(event -> {
-            if (ctrl(event, KeyCode.S)) {
-                saveAs();
-            }
-        });
     }
 
     /**
@@ -164,6 +154,20 @@ public class AddressController extends BaseController implements Initializable, 
         result.put("offsets", offsets);
         FileUtils.writeStringToFile(file, JSON.toJSONString(result, SerializerFeature.PrettyFormat), "utf-8");
         setTitle(file);
+    }
+
+    @Override
+    public void save() {
+        if (file() == null) {
+            saveAs();
+        } else {
+            this.saveAs(file);
+        }
+    }
+
+    @Override
+    public File file() {
+        return file;
     }
 
     public Map<String, Object> serialize(AddressItem addressItem) {

@@ -38,4 +38,15 @@ public interface FileOperation {
      * 另存为
      */
     void saveAs(File file);
+
+    /**
+     * 保存
+     */
+    void save();
+
+    /**
+     * 操作的文件
+     * @return 操作的文件
+     */
+    File file();
 }

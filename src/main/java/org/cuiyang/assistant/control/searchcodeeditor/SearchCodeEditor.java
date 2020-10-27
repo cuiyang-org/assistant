@@ -33,9 +33,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static org.cuiyang.assistant.util.FileUtils.chooserSaveFile;
-import static org.cuiyang.assistant.util.KeyEventUtils.ctrl;
-
 /**
  * 可搜索的代码编辑器
  *
@@ -188,19 +185,9 @@ public class SearchCodeEditor extends VBox implements Initializable {
                 codeEditor.requestFocus();
                 selection.deselect();
             }
-            if (!this.supportSave) {
-                // 不支持保存
-                return;
-            }
-            if (file == null) {
-                if (ctrl(event, KeyCode.S)) {
-                    this.file = chooserSaveFile(this.fileType);
-                    if (this.file != null) {
-                        this.save();
-                        this.fireEvent(new Event(FILE_EVENT));
-                    }
-                }
-            } else {
+        });
+        this.codeEditor.setOnKeyReleased(event -> {
+            if (this.supportSave && file != null) {
                 this.save();
             }
         });

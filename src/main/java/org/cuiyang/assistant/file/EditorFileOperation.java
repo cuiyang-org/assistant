@@ -35,4 +35,18 @@ public interface EditorFileOperation extends FileOperation {
         setTitle(file);
         FileUtils.writeStringToFile(file, editor().getText(), "utf-8");
     }
+
+    @Override
+    default void save() {
+        if (file() == null) {
+            saveAs();
+        } else {
+            editor().save();
+        }
+    }
+
+    @Override
+    default File file() {
+        return editor().getFile();
+    }
 }

@@ -1,11 +1,10 @@
 package org.cuiyang.assistant.controller;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,17 +12,19 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.file.FileOperation;
+import org.cuiyang.assistant.util.AlertUtils;
 import org.cuiyang.assistant.util.ResourceUtils;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static org.cuiyang.assistant.util.KeyEventUtils.ctrl;
+import static org.cuiyang.assistant.util.ShortcutKeyUtils.*;
 import static org.cuiyang.assistant.util.ThemeUtils.getThemeResource;
 
 /**
@@ -32,11 +33,6 @@ import static org.cuiyang.assistant.util.ThemeUtils.getThemeResource;
  * @author cy48576
  */
 public class MainController extends BaseController implements Initializable {
-
-    /** 场景 */
-    public Scene scene;
-    /** Stage */
-    public Stage primaryStage;
 
     /** 按钮容器 */
     public Pane menuContainer;
@@ -49,25 +45,10 @@ public class MainController extends BaseController implements Initializable {
     public ImageView logImageView;
     /** tab pan */
     public TabPane tabPane;
-
-    /**
-     * 初始化
-     * @param scene 场景
-     */
-    public void init(Stage primaryStage, Scene scene) {
-        this.primaryStage = primaryStage;
-        this.scene = scene;
-        this.tabPane.setOnKeyPressed(event -> {
-            if (ctrl(event, KeyCode.W) && this.tabPane.getTabs().size() > 0) {
-                // 关闭tab页
-                closeTab(this.tabPane.getSelectionModel().getSelectedItem());
-            } else if (event.getCode() == KeyCode.ESCAPE) {
-                // 隐藏log输出
-                showLogOut(false);
-            }
-        });
-        scene.getStylesheets().add(getThemeResource());
-    }
+    /** tab右键菜单 */
+    private ContextMenu tabContextMenu;
+    /** file tab右键菜单 */
+    private ContextMenu fileTabContextMenu;
 
     /**
      * 打开tab
@@ -92,12 +73,12 @@ public class MainController extends BaseController implements Initializable {
     public void showLogOut(boolean show) {
         if (show && splitPane.getItems().size() == 1) {
             splitPane.getItems().add(logOutParent);
-            mainController.splitPane.setDividerPositions(0.8);
+            splitPane.setDividerPositions(0.8);
             logImageView.setImage(new Image("/view/image/log-open.png"));
             splitPane.getStyleClass().remove("no-divider");
         } else if (!show && splitPane.getItems().size() == 2) {
             splitPane.getItems().remove(logOutParent);
-            mainController.splitPane.setDividerPositions(1);
+            splitPane.setDividerPositions(1);
             logImageView.setImage(new Image("/view/image/log-close.png"));
             splitPane.getStyleClass().add("no-divider");
         }
@@ -106,7 +87,8 @@ public class MainController extends BaseController implements Initializable {
     @SneakyThrows
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainController = this;
+        this.tabContextMenu = tabContextMenu(false);
+        this.fileTabContextMenu = tabContextMenu(true);
         openTab("JSON", null);
         showLogOut(false);
     }
@@ -157,79 +139,119 @@ public class MainController extends BaseController implements Initializable {
         Parent node = fxmlLoader.load();
         BaseController controller = fxmlLoader.getController();
         Tab tab = new Tab();
+        tab.setUserData(controller);
         controller.tab = tab;
-        tab.setOnSelectionChanged(event -> controller.setTitle(null));
-        tab.setOnCloseRequest(event -> {
-            if (!controller.isCloseable()) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.getDialogPane().getStylesheets().add(getThemeResource());
-                alert.setTitle("提示");
-                alert.setHeaderText("你确定要关闭吗？");
-                alert.showAndWait();
-                ButtonType result = alert.getResult();
-                if (result != ButtonType.OK) {
-                    event.consume();
-                }
+        tab.setOnSelectionChanged(event -> {
+            if (controller instanceof FileOperation) {
+                controller.setTitle(((FileOperation) controller).file());
+            } else {
+                controller.setTitle(null);
             }
         });
         tab.setClosable(true);
         tab.setContent(node);
         tab.setText(text);
         // 判断是否需要打开文件
-        FileOperation fileOperation = null;
+        FileOperation fileOperation;
         if (controller instanceof FileOperation) {
             fileOperation = (FileOperation) controller;
             if (file != null) {
                 fileOperation.openFile(file);
             }
+            tab.setContextMenu(fileTabContextMenu);
+        } else {
+            tab.setContextMenu(tabContextMenu);
         }
-        tab.setContextMenu(tabContextMenu(tab, fileOperation));
 
         tabPane.getTabs().add(tab);
         tabPane.getSelectionModel().selectLast();
     }
 
     /**
-     * 关闭tab
-     */
-    public void closeTab(Tab tab)  {
-        EventHandler<Event> eventHandler = tab.getOnCloseRequest();
-        if (eventHandler != null) {
-            Event event = new Event(Tab.CLOSED_EVENT);
-            eventHandler.handle(event);
-            if (event.isConsumed()) {
-                return;
-            }
-        }
-        this.tabPane.getTabs().remove(tab);
-    }
-
-    /**
      * tab 右键菜单
      */
-    private ContextMenu tabContextMenu(Tab tab, FileOperation fileOperation) {
+    private ContextMenu tabContextMenu(boolean isFile) {
         ContextMenu menu = new ContextMenu();
         MenuItem close = new MenuItem("关闭");
+        close.setAccelerator(ctrl(KeyCode.W));
         menu.getItems().add(close);
-        close.setOnAction(event -> closeTab(tab));
+        close.setOnAction(event -> {
+            if (tabPane.getTabs().size() > 0 && !((BaseController) tabPane.getSelectionModel().getSelectedItem().getUserData()).isCloseable()) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.getDialogPane().getStylesheets().add(getThemeResource());
+                alert.setTitle("提示");
+                alert.setHeaderText("你确定要关闭吗？");
+                alert.showAndWait();
+                ButtonType result = alert.getResult();
+                if (result == ButtonType.OK) {
+                    tabPane.getTabs().remove(tabPane.getSelectionModel().getSelectedItem());
+                }
+            } else {
+                tabPane.getTabs().remove(tabPane.getSelectionModel().getSelectedItem());
+            }
+        });
 
         MenuItem closeOther = new MenuItem("关闭其它");
         menu.getItems().add(closeOther);
-        closeOther.setOnAction(event -> tabPane.getTabs().removeIf(tab1 -> !tab1.equals(tab)));
+        closeOther.setOnAction(event -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.getDialogPane().getStylesheets().add(getThemeResource());
+            alert.setTitle("提示");
+            alert.setHeaderText("你确定要关闭其它标签页吗？");
+            alert.showAndWait();
+            ButtonType result = alert.getResult();
+            if (result == ButtonType.OK) {
+                tabPane.getTabs().removeIf(tab1 -> !tab1.equals(tabPane.getSelectionModel().getSelectedItem()));
+            }
+        });
 
         MenuItem closeAll = new MenuItem("关闭全部");
         menu.getItems().add(closeAll);
-        closeAll.setOnAction(event -> tabPane.getTabs().removeIf(tab1 -> true));
+        closeAll.setOnAction(event -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.getDialogPane().getStylesheets().add(getThemeResource());
+            alert.setTitle("提示");
+            alert.setHeaderText("你确定要关闭全部标签页吗？");
+            alert.showAndWait();
+            ButtonType result = alert.getResult();
+            if (result == ButtonType.OK) {
+                tabPane.getTabs().removeIf(tab1 -> true);
+            }
+        });
 
-        if (fileOperation != null) {
+        if (isFile) {
             menu.getItems().add(new SeparatorMenuItem());
             MenuItem open = new MenuItem("打开");
+            open.setAccelerator(ctrlShift(KeyCode.O));
             menu.getItems().add(open);
-            open.setOnAction(event -> fileOperation.openFile());
+            open.setOnAction(event -> ((FileOperation) tabPane.getSelectionModel().getSelectedItem().getUserData()).openFile());
+
+            MenuItem save = new MenuItem("保存");
+            save.setAccelerator(ctrl(KeyCode.S));
+            menu.getItems().add(save);
+            save.setOnAction(event -> ((FileOperation) tabPane.getSelectionModel().getSelectedItem().getUserData()).save());
 
             MenuItem saveAs = new MenuItem("另存为");
+            saveAs.setAccelerator(ctrlShift(KeyCode.S));
             menu.getItems().add(saveAs);
-            saveAs.setOnAction(event -> fileOperation.saveAs());
+            saveAs.setOnAction(event -> ((FileOperation) tabPane.getSelectionModel().getSelectedItem().getUserData()).saveAs());
+
+            menu.getItems().add(new SeparatorMenuItem());
+            MenuItem openInDir = new MenuItem("打开文件所在目录");
+            openInDir.setAccelerator(ctrlAltShift(KeyCode.Z));
+            openInDir.setOnAction(event -> {
+                try {
+                    File file = ((FileOperation) tabPane.getSelectionModel().getSelectedItem().getUserData()).file();
+                    if (file != null) {
+                        Desktop.getDesktop().open(file.getParentFile());
+                    } else {
+                        AlertUtils.info("文件未保存");
+                    }
+                } catch (IOException e) {
+                    AlertUtils.exception(e);
+                }
+            });
+            menu.getItems().add(openInDir);
         }
         return menu;
     }

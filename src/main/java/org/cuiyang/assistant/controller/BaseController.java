@@ -6,6 +6,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.io.File;
 
+import static org.cuiyang.assistant.AssistantApplication.mainController;
 import static org.cuiyang.assistant.AssistantApplication.primaryStage;
 import static org.cuiyang.assistant.constant.SystemConstant.APP_NAME;
 
@@ -15,36 +16,35 @@ import static org.cuiyang.assistant.constant.SystemConstant.APP_NAME;
  * @author cuiyang
  */
 public abstract class BaseController {
-    public static MainController mainController;
     public Tab tab;
 
     /**
      * 清除日志
      */
     public void clearLog() {
-        mainController.logOut.clear();
+        mainController().logOut.clear();
     }
 
     /**
      * 输出日志
      */
     public void log(String str) {
-        if (mainController.splitPane.getItems().size() == 1) {
-            mainController.showLogOut(true);
+        if (mainController().splitPane.getItems().size() == 1) {
+            mainController().showLogOut(true);
         }
-        mainController.logOut.appendText(str);
-        mainController.logOut.appendText("\r\n");
+        mainController().logOut.appendText(str);
+        mainController().logOut.appendText("\r\n");
     }
 
     /**
      * 输出异常日志
      */
     public void log(Throwable t) {
-        if (mainController.splitPane.getItems().size() == 1) {
-            mainController.showLogOut(true);
+        if (mainController().splitPane.getItems().size() == 1) {
+            mainController().showLogOut(true);
         }
-        mainController.logOut.appendText(ExceptionUtils.getStackTrace(t));
-        mainController.logOut.appendText("\r\n");
+        mainController().logOut.appendText(ExceptionUtils.getStackTrace(t));
+        mainController().logOut.appendText("\r\n");
     }
 
     /**

@@ -6,6 +6,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import static org.cuiyang.assistant.util.ThemeUtils.getThemeResource;
 
@@ -14,6 +16,7 @@ import static org.cuiyang.assistant.util.ThemeUtils.getThemeResource;
  *
  * @author cuiyang
  */
+@Slf4j
 public class AlertUtils {
 
     public static void input(String title) {
@@ -68,9 +71,10 @@ public class AlertUtils {
         alert(Alert.AlertType.ERROR, "提示", content, null);
     }
 
-    public static void exception(String title, String content) {
+    public static void exception(Throwable throwable) {
+        log.error("运行异常", throwable);
         Platform.runLater(() -> {
-            ScrollPane scrollPane = new ScrollPane(new Label(content));
+            ScrollPane scrollPane = new ScrollPane(new Label(ExceptionUtils.getStackTrace(throwable)));
             scrollPane.setMaxHeight(800);
 
             DialogPane dialogPane = new DialogPane();
@@ -80,7 +84,7 @@ public class AlertUtils {
             dialogPane.getButtonTypes().add(ButtonType.OK);
 
             Alert alert = new Alert(Alert.AlertType.NONE);
-            alert.setTitle(title);
+            alert.setTitle("运行异常");
             alert.setDialogPane(dialogPane);
             alert.showAndWait();
             alert.close();
