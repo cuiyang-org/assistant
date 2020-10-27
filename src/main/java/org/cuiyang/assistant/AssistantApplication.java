@@ -8,8 +8,11 @@ import javafx.scene.image.Image;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.cuiyang.assistant.constant.FileTypeEnum;
 import org.cuiyang.assistant.controller.MainController;
+import org.cuiyang.assistant.util.AlertUtils;
 import org.cuiyang.assistant.util.ResourceUtils;
 
 import java.io.File;
@@ -21,12 +24,18 @@ import static org.cuiyang.assistant.constant.SystemConstant.APP_NAME;
  *
  * @author cy48576
  */
+@Slf4j
 public class AssistantApplication extends Application {
 
     private static Stage PRIMARY_STAGE;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
+            log.error("运行异常", throwable);
+            AlertUtils.exception("运行异常", ExceptionUtils.getStackTrace(throwable));
+        });
+
         PRIMARY_STAGE = primaryStage;
 
         FXMLLoader fxmlLoader = new FXMLLoader();

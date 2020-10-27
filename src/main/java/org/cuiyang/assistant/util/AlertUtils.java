@@ -1,11 +1,9 @@
 package org.cuiyang.assistant.util;
 
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -68,5 +66,24 @@ public class AlertUtils {
 
     public static void error(String content) {
         alert(Alert.AlertType.ERROR, "提示", content, null);
+    }
+
+    public static void exception(String title, String content) {
+        Platform.runLater(() -> {
+            ScrollPane scrollPane = new ScrollPane(new Label(content));
+            scrollPane.setMaxHeight(800);
+
+            DialogPane dialogPane = new DialogPane();
+            dialogPane.setPadding(new Insets(10));
+            dialogPane.setContent(new VBox(scrollPane));
+            dialogPane.getStylesheets().add(getThemeResource());
+            dialogPane.getButtonTypes().add(ButtonType.OK);
+
+            Alert alert = new Alert(Alert.AlertType.NONE);
+            alert.setTitle(title);
+            alert.setDialogPane(dialogPane);
+            alert.showAndWait();
+            alert.close();
+        });
     }
 }
