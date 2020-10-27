@@ -219,6 +219,32 @@ public class MainController extends BaseController implements Initializable {
             }
         });
 
+        menu.getItems().add(new SeparatorMenuItem());
+        MenuItem moveLeft = new MenuItem("左移");
+        moveLeft.setAccelerator(ctrlAlt(KeyCode.LEFT));
+        moveLeft.setOnAction(event -> {
+            int index = tabPane.getSelectionModel().getSelectedIndex();
+            if (index > 0) {
+                Tab tab = tabPane.getTabs().remove(index);
+                tabPane.getTabs().add(index - 1, tab);
+                tabPane.getSelectionModel().select(tab);
+                tabPane.requestFocus();
+            }
+        });
+        menu.getItems().add(moveLeft);
+        MenuItem moveRight = new MenuItem("右移");
+        moveRight.setAccelerator(ctrlAlt(KeyCode.RIGHT));
+        moveRight.setOnAction(event -> {
+            int index = tabPane.getSelectionModel().getSelectedIndex();
+            if (index < tabPane.getTabs().size() - 1) {
+                Tab tab = tabPane.getTabs().remove(index);
+                tabPane.getTabs().add(index + 1, tab);
+                tabPane.getSelectionModel().select(tab);
+                tabPane.requestFocus();
+            }
+        });
+        menu.getItems().add(moveRight);
+
         if (isFile) {
             menu.getItems().add(new SeparatorMenuItem());
             MenuItem open = new MenuItem("打开");

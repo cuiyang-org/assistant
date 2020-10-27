@@ -18,6 +18,7 @@ import org.cuiyang.assistant.util.ResourceUtils;
 import java.io.File;
 
 import static org.cuiyang.assistant.constant.SystemConstant.APP_NAME;
+import static org.cuiyang.assistant.util.ShortcutKeyUtils.alt;
 import static org.cuiyang.assistant.util.ThemeUtils.getThemeResource;
 
 /**
@@ -85,6 +86,9 @@ public class AssistantApplication extends Application {
     private void setShortcutKey(Scene scene, MainController controller) {
         // 切换日志输出框
         scene.getAccelerators().put(new KeyCodeCombination(KeyCode.ESCAPE), controller::switchLogOut);
+        // tab切换
+        scene.getAccelerators().put(alt(KeyCode.LEFT), () -> controller.tabPane.getSelectionModel().selectPrevious());
+        scene.getAccelerators().put(alt(KeyCode.RIGHT), () -> controller.tabPane.getSelectionModel().selectNext());
     }
 
     /**

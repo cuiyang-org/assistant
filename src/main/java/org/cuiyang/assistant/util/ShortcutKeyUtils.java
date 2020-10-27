@@ -15,8 +15,12 @@ public class ShortcutKeyUtils {
         return new KeyCodeCombination(code, ctrl());
     }
 
+    public static KeyCodeCombination alt(KeyCode code) {
+        return new KeyCodeCombination(code, ALT_DOWN);
+    }
+
     public static KeyCodeCombination ctrlAlt(KeyCode code) {
-        return new KeyCodeCombination(code, ctrl(), SHIFT_DOWN, ALT_DOWN);
+        return new KeyCodeCombination(code, ctrl(), ALT_DOWN);
     }
 
     public static KeyCodeCombination ctrlShift(KeyCode code) {
