@@ -74,7 +74,6 @@ public class JsonController extends BaseController implements Initializable, Edi
      * json格式化
      */
     public void jsonFormat() {
-        System.out.println(1/0);
         String text = this.editor.getText();
         if (StringUtils.isEmpty(text)) {
             return;
