@@ -26,8 +26,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.*;
 
-import static com.alibaba.fastjson.serializer.SerializerFeature.PrettyFormat;
-import static com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValue;
+import static com.alibaba.fastjson.serializer.SerializerFeature.*;
 import static freemarker.template.Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS;
 import static org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor.FILE_EVENT;
 import static org.cuiyang.assistant.util.WordUtils.firstUpperCase;
@@ -98,6 +97,23 @@ public class JsonController extends BaseController implements Initializable, Edi
         try {
             this.editor.setText(JSON.toJSONString(JSON.parse(text, Feature.OrderedField), WriteMapNullValue));
         } catch (Exception ignore) {
+        }
+    }
+
+    /**
+     * 排序
+     */
+    public void sort() {
+        String text = this.editor.getText();
+        if (StringUtils.isEmpty(text)) {
+            return;
+        }
+        try {
+            String jsonStr = JSON.toJSONString(JSON.parse(text), WriteMapNullValue, PrettyFormat, MapSortField);
+            jsonStr = jsonStr.replaceAll("\t", "    ");
+            this.editor.setText(jsonStr);
+        } catch (Exception e) {
+            log(e.getMessage());
         }
     }
 
