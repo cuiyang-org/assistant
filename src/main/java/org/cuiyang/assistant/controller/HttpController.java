@@ -47,7 +47,7 @@ public class HttpController extends BaseController implements Initializable, Edi
             if (split2.length != 2) {
                 continue;
             }
-            sb.append(String.format("form.put(\"%s\", \"%s\");", split2[0].trim(), split2[1].trim())).append("\r\n");
+            sb.append(String.format("headers.put(\"%s\", \"%s\");", split2[0].trim(), split2[1].trim())).append("\r\n");
         }
         log(sb.toString());
     }
