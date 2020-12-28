@@ -19,6 +19,7 @@
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="XML"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="Cookie"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="Form"/>
+                <Label styleClass="menu-item" onMouseClicked="#openTab" text="Http"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="正则"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="编码转换"/>
                 <Label styleClass="menu-item" onMouseClicked="#openTab" text="加解密"/>

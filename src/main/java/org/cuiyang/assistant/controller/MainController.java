@@ -115,6 +115,9 @@ public class MainController extends BaseController implements Initializable {
             case "Form":
                 resource = "view/form.fxml";
                 break;
+            case "Http":
+                resource = "view/http.fxml";
+                break;
             case "正则":
                 resource = "view/regex.fxml";
                 break;

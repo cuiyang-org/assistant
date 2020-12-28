@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
+<?import org.cuiyang.assistant.control.KeyValueTreeView?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.HttpController">
+    <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
+        <VBox HBox.hgrow="ALWAYS">
+            <padding>
+                <Insets right="5"/>
+            </padding>
+            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
+                <padding>
+                    <Insets top="2" bottom="5" right="5"/>
+                </padding>
+                <Label styleClass="menu-item" onMouseClicked="#genHeader" text="生成请求头"/>
+            </HBox>
+            <SearchCodeEditor fx:id="editor" VBox.vgrow="ALWAYS"/>
+        </VBox>
+        <VBox HBox.hgrow="ALWAYS">
+            <padding>
+                <Insets left="5"/>
+            </padding>
+            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
+                <padding>
+                    <Insets top="2" bottom="5" right="5"/>
+                </padding>
+                <Label styleClass="menu-item" onMouseClicked="#fold" text="折叠"/>
+                <Label styleClass="menu-item" onMouseClicked="#expanded" text="展开"/>
+            </HBox>
+            <KeyValueTreeView fx:id="treeView" VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </SplitPane>
+</AnchorPane>
