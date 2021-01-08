@@ -1,5 +1,7 @@
 package org.cuiyang.assistant.controller;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -146,6 +148,10 @@ public class MainController extends BaseController implements Initializable {
             } else {
                 controller.setTitle(null);
             }
+        });
+        tab.setOnCloseRequest(event -> {
+            this.closeTab(tab);
+            event.consume();
         });
         tab.setClosable(true);
         tab.setContent(node);

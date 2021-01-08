@@ -37,6 +37,7 @@ public class AssistantApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
             AlertUtils.exception(throwable);
+            throwable.printStackTrace();
         });
 
         PRIMARY_STAGE = primaryStage;
