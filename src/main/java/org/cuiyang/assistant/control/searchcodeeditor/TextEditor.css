@@ -8,3 +8,6 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
 }
+.search-num, .close {
+    -fx-text-fill: #B9B9B9
+}

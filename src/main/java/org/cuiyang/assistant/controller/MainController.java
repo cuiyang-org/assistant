@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import lombok.SneakyThrows;
+import org.cuiyang.assistant.control.InputDialog;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.file.FileOperation;
 import org.cuiyang.assistant.util.AlertUtils;
@@ -22,6 +23,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static org.cuiyang.assistant.util.ShortcutKeyUtils.*;
@@ -45,10 +47,6 @@ public class MainController extends BaseController implements Initializable {
     public ImageView logImageView;
     /** tab pan */
     public TabPane tabPane;
-    /** tab右键菜单 */
-    private ContextMenu tabContextMenu;
-    /** file tab右键菜单 */
-    private ContextMenu fileTabContextMenu;
 
     /**
      * 打开tab
@@ -87,8 +85,6 @@ public class MainController extends BaseController implements Initializable {
     @SneakyThrows
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.tabContextMenu = tabContextMenu(false);
-        this.fileTabContextMenu = tabContextMenu(true);
         openTab("JSON", null);
         showLogOut(false);
     }
@@ -161,9 +157,9 @@ public class MainController extends BaseController implements Initializable {
             if (file != null) {
                 fileOperation.openFile(file);
             }
-            tab.setContextMenu(fileTabContextMenu);
+            tab.setContextMenu(tabContextMenu(tab, true));
         } else {
-            tab.setContextMenu(tabContextMenu);
+            tab.setContextMenu(tabContextMenu(tab, false));
         }
 
         tabPane.getTabs().add(tab);
@@ -173,116 +169,222 @@ public class MainController extends BaseController implements Initializable {
     /**
      * tab 右键菜单
      */
-    private ContextMenu tabContextMenu(boolean isFile) {
+    private ContextMenu tabContextMenu(Tab tab, boolean isFile) {
         ContextMenu menu = new ContextMenu();
+
+        MenuItem rename = new MenuItem("重命名");
+        menu.getItems().add(rename);
+        rename.setOnAction(event -> this.rename(tab));
+
         MenuItem close = new MenuItem("关闭");
-        close.setAccelerator(ctrl(KeyCode.W));
+        close.setAccelerator(invalidCtrl(KeyCode.W));
         menu.getItems().add(close);
-        close.setOnAction(event -> {
-            if (tabPane.getTabs().size() > 0 && !((BaseController) tabPane.getSelectionModel().getSelectedItem().getUserData()).isCloseable()) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.getDialogPane().getStylesheets().add(getThemeResource());
-                alert.setTitle("提示");
-                alert.setHeaderText("你确定要关闭吗？");
-                alert.showAndWait();
-                ButtonType result = alert.getResult();
-                if (result == ButtonType.OK) {
-                    tabPane.getTabs().remove(tabPane.getSelectionModel().getSelectedItem());
-                }
-            } else {
-                tabPane.getTabs().remove(tabPane.getSelectionModel().getSelectedItem());
-            }
-        });
+        close.setOnAction(event -> this.closeTab(tab));
 
         MenuItem closeOther = new MenuItem("关闭其它");
         menu.getItems().add(closeOther);
-        closeOther.setOnAction(event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.getDialogPane().getStylesheets().add(getThemeResource());
-            alert.setTitle("提示");
-            alert.setHeaderText("你确定要关闭其它标签页吗？");
-            alert.showAndWait();
-            ButtonType result = alert.getResult();
-            if (result == ButtonType.OK) {
-                tabPane.getTabs().removeIf(tab1 -> !tab1.equals(tabPane.getSelectionModel().getSelectedItem()));
-            }
-        });
+        closeOther.setOnAction(event -> this.closeOtherTab(tab));
 
         MenuItem closeAll = new MenuItem("关闭全部");
         menu.getItems().add(closeAll);
-        closeAll.setOnAction(event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.getDialogPane().getStylesheets().add(getThemeResource());
-            alert.setTitle("提示");
-            alert.setHeaderText("你确定要关闭全部标签页吗？");
-            alert.showAndWait();
-            ButtonType result = alert.getResult();
-            if (result == ButtonType.OK) {
-                tabPane.getTabs().removeIf(tab1 -> true);
-            }
-        });
+        closeAll.setOnAction(event -> this.closeAllTab());
 
         menu.getItems().add(new SeparatorMenuItem());
         MenuItem moveLeft = new MenuItem("左移");
-        moveLeft.setAccelerator(ctrlAlt(KeyCode.LEFT));
-        moveLeft.setOnAction(event -> {
-            int index = tabPane.getSelectionModel().getSelectedIndex();
-            if (index > 0) {
-                Tab tab = tabPane.getTabs().remove(index);
-                tabPane.getTabs().add(index - 1, tab);
-                tabPane.getSelectionModel().select(tab);
-                tabPane.requestFocus();
-            }
-        });
+        moveLeft.setAccelerator(invalidCtrlAlt(KeyCode.LEFT));
+        moveLeft.setOnAction(event -> this.moveLeftTab(tab));
         menu.getItems().add(moveLeft);
         MenuItem moveRight = new MenuItem("右移");
-        moveRight.setAccelerator(ctrlAlt(KeyCode.RIGHT));
-        moveRight.setOnAction(event -> {
-            int index = tabPane.getSelectionModel().getSelectedIndex();
-            if (index < tabPane.getTabs().size() - 1) {
-                Tab tab = tabPane.getTabs().remove(index);
-                tabPane.getTabs().add(index + 1, tab);
-                tabPane.getSelectionModel().select(tab);
-                tabPane.requestFocus();
-            }
-        });
+        moveRight.setAccelerator(invalidCtrlAlt(KeyCode.RIGHT));
+        moveRight.setOnAction(event -> this.moveRightTab(tab));
         menu.getItems().add(moveRight);
 
         if (isFile) {
             menu.getItems().add(new SeparatorMenuItem());
             MenuItem open = new MenuItem("打开");
-            open.setAccelerator(ctrlShift(KeyCode.O));
+            open.setAccelerator(invalidCtrlShift(KeyCode.O));
             menu.getItems().add(open);
-            open.setOnAction(event -> ((FileOperation) tabPane.getSelectionModel().getSelectedItem().getUserData()).openFile());
+            open.setOnAction(event -> this.openFile(tab));
 
             MenuItem save = new MenuItem("保存");
-            save.setAccelerator(ctrl(KeyCode.S));
+            save.setAccelerator(invalidCtrl(KeyCode.S));
             menu.getItems().add(save);
-            save.setOnAction(event -> ((FileOperation) tabPane.getSelectionModel().getSelectedItem().getUserData()).save());
+            save.setOnAction(event -> this.saveFile(tab));
 
             MenuItem saveAs = new MenuItem("另存为");
-            saveAs.setAccelerator(ctrlShift(KeyCode.S));
+            saveAs.setAccelerator(invalidCtrlShift(KeyCode.S));
             menu.getItems().add(saveAs);
-            saveAs.setOnAction(event -> ((FileOperation) tabPane.getSelectionModel().getSelectedItem().getUserData()).saveAs());
+            saveAs.setOnAction(event -> this.saveAsFile(tab));
 
             menu.getItems().add(new SeparatorMenuItem());
             MenuItem openInDir = new MenuItem("打开文件所在目录");
-            openInDir.setAccelerator(ctrlAltShift(KeyCode.Z));
-            openInDir.setOnAction(event -> {
-                try {
-                    File file = ((FileOperation) tabPane.getSelectionModel().getSelectedItem().getUserData()).file();
-                    if (file != null) {
-                        Desktop.getDesktop().open(file.getParentFile());
-                    } else {
-                        AlertUtils.info("文件未保存");
-                    }
-                } catch (IOException e) {
-                    AlertUtils.exception(e);
-                }
-            });
+            openInDir.setAccelerator(invalidCtrlAltShift(KeyCode.Z));
+            openInDir.setOnAction(event -> this.openFileLocation(tab));
             menu.getItems().add(openInDir);
         }
         return menu;
+    }
+
+    /**
+     * 重命名
+     */
+    public void rename(Tab tab) {
+        if (tab == null && (tab = tabPane.getSelectionModel().getSelectedItem()) == null) {
+            return;
+        }
+        if (tab.getUserData() instanceof FileOperation && ((FileOperation) tab.getUserData()).file() != null) {
+            AlertUtils.info("已保存的文件不支持重命名");
+            return;
+        }
+        InputDialog dialog = new InputDialog(tab.getText());
+        dialog.setTitle("重命名");
+        Optional<String> optional = dialog.showAndWait();
+        optional.ifPresent(tab::setText);
+    }
+
+    /**
+     * 关闭tab
+     */
+    public void closeTab(Tab tab) {
+        if (tab == null && (tab = tabPane.getSelectionModel().getSelectedItem()) == null) {
+            return;
+        }
+        if (!((BaseController) tab.getUserData()).isCloseable()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.getDialogPane().getStylesheets().add(getThemeResource());
+            alert.setTitle("提示");
+            alert.setHeaderText("你确定要关闭吗？");
+            alert.showAndWait();
+            ButtonType result = alert.getResult();
+            if (result == ButtonType.OK) {
+                tabPane.getTabs().remove(tab);
+            }
+        } else {
+            tabPane.getTabs().remove(tab);
+        }
+    }
+
+    /**
+     * 关闭所有tab
+     */
+    public void closeAllTab() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.getDialogPane().getStylesheets().add(getThemeResource());
+        alert.setTitle("提示");
+        alert.setHeaderText("你确定要关闭全部标签页吗？");
+        alert.showAndWait();
+        ButtonType result = alert.getResult();
+        if (result == ButtonType.OK) {
+            tabPane.getTabs().removeIf(tab1 -> true);
+        }
+    }
+
+    /**
+     * 关闭其他tab
+     */
+    public void closeOtherTab(Tab tab) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.getDialogPane().getStylesheets().add(getThemeResource());
+        alert.setTitle("提示");
+        alert.setHeaderText("你确定要关闭其它标签页吗？");
+        alert.showAndWait();
+        ButtonType result = alert.getResult();
+        if (result == ButtonType.OK) {
+            tabPane.getTabs().removeIf(tab1 -> !tab1.equals(tab));
+        }
+    }
+
+    /**
+     * 左移tab
+     */
+    public void moveLeftTab(Tab tab) {
+        if (tab == null && (tab = tabPane.getSelectionModel().getSelectedItem()) == null) {
+            return;
+        }
+        int index = tabPane.getTabs().indexOf(tab);
+        if (index > 0) {
+            tabPane.getTabs().remove(tab);
+            tabPane.getTabs().add(index - 1, tab);
+            tabPane.getSelectionModel().select(tab);
+            tabPane.requestFocus();
+        }
+    }
+
+    /**
+     * 右移tab
+     */
+    public void moveRightTab(Tab tab) {
+        if (tab == null && (tab = tabPane.getSelectionModel().getSelectedItem()) == null) {
+            return;
+        }
+        int index = tabPane.getTabs().indexOf(tab);
+        if (index < tabPane.getTabs().size() - 1) {
+            tabPane.getTabs().remove(tab);
+            tabPane.getTabs().add(index + 1, tab);
+            tabPane.getSelectionModel().select(tab);
+            tabPane.requestFocus();
+        }
+    }
+
+    /**
+     * 打开文件
+     */
+    public void openFile(Tab tab) {
+        if (tab == null && (tab = tabPane.getSelectionModel().getSelectedItem()) == null) {
+            return;
+        }
+        if (!(tab.getUserData() instanceof FileOperation)) {
+            return;
+        }
+        ((FileOperation) tab.getUserData()).openFile();
+    }
+
+    /**
+     * 保存文件
+     */
+    public void saveFile(Tab tab) {
+        if (tab == null && (tab = tabPane.getSelectionModel().getSelectedItem()) == null) {
+            return;
+        }
+        if (!(tab.getUserData() instanceof FileOperation)) {
+            return;
+        }
+        ((FileOperation) tab.getUserData()).save();
+    }
+
+    /**
+     * 另存为
+     */
+    public void saveAsFile(Tab tab) {
+        if (tab == null && (tab = tabPane.getSelectionModel().getSelectedItem()) == null) {
+            return;
+        }
+        if (!(tab.getUserData() instanceof FileOperation)) {
+            return;
+        }
+        ((FileOperation) tab.getUserData()).saveAs();
+    }
+
+    /**
+     * 打开文件位置
+     */
+    public void openFileLocation(Tab tab) {
+        if (tab == null && (tab = tabPane.getSelectionModel().getSelectedItem()) == null) {
+            return;
+        }
+        if (!(tab.getUserData() instanceof FileOperation)) {
+            return;
+        }
+        try {
+            File file = ((FileOperation) tab.getUserData()).file();
+            if (file != null) {
+                Desktop.getDesktop().open(file.getParentFile());
+            } else {
+                AlertUtils.info("文件未保存");
+            }
+        } catch (IOException e) {
+            AlertUtils.exception(e);
+        }
     }
 
     @Override

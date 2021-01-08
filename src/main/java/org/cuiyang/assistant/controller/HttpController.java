@@ -37,7 +37,7 @@ public class HttpController extends BaseController implements Initializable, Edi
             return;
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("Map<String, Object> headers = new HashMap<>();").append("\r\n");
+        sb.append("Map<String, String> headers = new HashMap<>();").append("\r\n");
         String[] split = text.split("\\n");
         for (String line : split) {
             if (StringUtils.isEmpty(line)) {

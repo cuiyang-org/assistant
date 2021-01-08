@@ -18,7 +18,7 @@ import org.cuiyang.assistant.util.ResourceUtils;
 import java.io.File;
 
 import static org.cuiyang.assistant.constant.SystemConstant.APP_NAME;
-import static org.cuiyang.assistant.util.ShortcutKeyUtils.alt;
+import static org.cuiyang.assistant.util.ShortcutKeyUtils.*;
 import static org.cuiyang.assistant.util.ThemeUtils.getThemeResource;
 
 /**
@@ -85,10 +85,17 @@ public class AssistantApplication extends Application {
      */
     private void setShortcutKey(Scene scene, MainController controller) {
         // 切换日志输出框
-        scene.getAccelerators().put(new KeyCodeCombination(KeyCode.ESCAPE), controller::switchLogOut);
-        // tab切换
+        scene.getAccelerators().put(new KeyCodeCombination(KeyCode.ESCAPE), () -> controller.showLogOut(false));
+        // tab
         scene.getAccelerators().put(alt(KeyCode.LEFT), () -> controller.tabPane.getSelectionModel().selectPrevious());
         scene.getAccelerators().put(alt(KeyCode.RIGHT), () -> controller.tabPane.getSelectionModel().selectNext());
+        scene.getAccelerators().put(ctrl(KeyCode.W), () -> controller.closeTab(null));
+        scene.getAccelerators().put(ctrlAlt(KeyCode.LEFT), () -> controller.moveLeftTab(null));
+        scene.getAccelerators().put(ctrlAlt(KeyCode.RIGHT), () -> controller.moveRightTab(null));
+        scene.getAccelerators().put(ctrlShift(KeyCode.O), () -> controller.openFile(null));
+        scene.getAccelerators().put(ctrl(KeyCode.S), () -> controller.saveFile(null));
+        scene.getAccelerators().put(ctrlShift(KeyCode.S), () -> controller.saveAsFile(null));
+        scene.getAccelerators().put(ctrlAltShift(KeyCode.Z), () -> controller.openFileLocation(null));
     }
 
     /**

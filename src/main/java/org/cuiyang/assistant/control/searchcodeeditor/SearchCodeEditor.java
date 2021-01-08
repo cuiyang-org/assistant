@@ -166,6 +166,16 @@ public class SearchCodeEditor extends VBox implements Initializable {
         select(index);
     }
 
+    /**
+     * 关闭
+     */
+    public void close() {
+        search.setManaged(false);
+        search.setVisible(false);
+        codeEditor.requestFocus();
+        selection.deselect();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // 打开搜索框
@@ -180,10 +190,7 @@ public class SearchCodeEditor extends VBox implements Initializable {
                 keyTextField.requestFocus();
                 select(index);
             } else if (event.getCode().equals(KeyCode.ESCAPE)) {
-                search.setManaged(false);
-                search.setVisible(false);
-                codeEditor.requestFocus();
-                selection.deselect();
+                close();
             }
         });
         this.codeEditor.setOnKeyReleased(event -> {

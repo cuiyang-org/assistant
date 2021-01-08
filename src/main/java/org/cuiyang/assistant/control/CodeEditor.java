@@ -324,6 +324,9 @@ public class CodeEditor extends CodeArea {
      */
     private ContextMenu contextMenu() {
         ContextMenu menu = new ContextMenu();
+        MenuItem clear = new MenuItem("清空");
+        menu.getItems().add(clear);
+        clear.setOnAction(event -> this.setText(""));
         MenuItem close = new MenuItem("切换自动换行");
         menu.getItems().add(close);
         close.setOnAction(event -> this.setWrapText(!this.isWrapText()));
