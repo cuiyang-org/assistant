@@ -28,8 +28,6 @@ import java.util.stream.Collectors;
  */
 public class AddressController extends BaseController implements Initializable, FileOperation {
 
-    /** 根节点 */
-    public VBox root;
     /** 基址地址 */
     public TextField baseTextField;
     /** 进制 */

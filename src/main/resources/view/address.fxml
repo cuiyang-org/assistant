@@ -5,38 +5,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.String?>
-<VBox xmlns:fx="http://javafx.com/fxml/1"
-      xmlns="http://javafx.com/javafx/10.0.2-internal"
-      fx:id="root"
-      fx:controller="org.cuiyang.assistant.controller.AddressController">
-    <HBox spacing="20">
-        <padding>
-            <Insets topRightBottomLeft="10"/>
-        </padding>
-        <HBox alignment="CENTER_LEFT" spacing="5">
-            <Label text="选择进制" textFill="gray"/>
-            <ComboBox value="十六进制" prefWidth="200" fx:id="radixComboBox" onAction="#calc">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="二进制" />
-                        <String fx:value="八进制" />
-                        <String fx:value="十进制" />
-                        <String fx:value="十六进制" />
-                    </FXCollections>
-                </items>
-            </ComboBox>
-        </HBox>
-        <HBox alignment="CENTER_LEFT" spacing="5">
-            <Label text="基址地址" textFill="gray"/>
-            <TextField promptText="基址地址" prefWidth="200" fx:id="baseTextField" onKeyReleased="#calc"/>
-        </HBox>
-    </HBox>
-    <Separator/>
-    <ScrollPane>
-        <VBox spacing="10" fx:id="addressParent">
+<?import org.cuiyang.assistant.control.LogOutPane?>
+<LogOutPane xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/10.0.2-internal"
+            fx:id="logOut"
+            fx:controller="org.cuiyang.assistant.controller.AddressController">
+    <VBox>
+        <HBox spacing="20">
             <padding>
                 <Insets topRightBottomLeft="10"/>
             </padding>
-        </VBox>
-    </ScrollPane>
-</VBox>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <Label text="选择进制" textFill="gray"/>
+                <ComboBox value="十六进制" prefWidth="200" fx:id="radixComboBox" onAction="#calc">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="二进制" />
+                            <String fx:value="八进制" />
+                            <String fx:value="十进制" />
+                            <String fx:value="十六进制" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <Label text="基址地址" textFill="gray"/>
+                <TextField promptText="基址地址" prefWidth="200" fx:id="baseTextField" onKeyReleased="#calc"/>
+            </HBox>
+        </HBox>
+        <Separator/>
+        <ScrollPane>
+            <VBox spacing="10" fx:id="addressParent">
+                <padding>
+                    <Insets topRightBottomLeft="10"/>
+                </padding>
+            </VBox>
+        </ScrollPane>
+    </VBox>
+</LogOutPane>

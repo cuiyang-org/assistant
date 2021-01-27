@@ -4,35 +4,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.HtmlController">
-    <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
-        <VBox>
-            <padding>
-                <Insets right="5"/>
-            </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
+
+<?import org.cuiyang.assistant.control.LogOutPane?>
+<LogOutPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="logOut"
+            fx:controller="org.cuiyang.assistant.controller.HtmlController">
+    <AnchorPane xmlns:fx="http://javafx.com/fxml/1">
+        <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
+            <VBox>
                 <padding>
-                    <Insets top="2" bottom="5" right="5"/>
+                    <Insets right="5"/>
                 </padding>
-                <Label styleClass="menu-item" onMouseClicked="#htmlFormat" text="格式化"/>
-                <Label styleClass="menu-item" onMouseClicked="#openBrowser" text="浏览器"/>
-            </HBox>
-            <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="editor"/>
-        </VBox>
-        <VBox>
-            <padding>
-                <Insets left="5"/>
-            </padding>
-            <HBox alignment="CENTER_LEFT" spacing="5" styleClass="menu">
+                <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
+                    <padding>
+                        <Insets top="2" bottom="5" right="5"/>
+                    </padding>
+                    <Label styleClass="menu-item" onMouseClicked="#htmlFormat" text="格式化"/>
+                    <Label styleClass="menu-item" onMouseClicked="#openBrowser" text="浏览器"/>
+                </HBox>
+                <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="editor"/>
+            </VBox>
+            <VBox>
                 <padding>
-                    <Insets top="2" bottom="5" right="5"/>
+                    <Insets left="5"/>
                 </padding>
-                <TextField HBox.hgrow="ALWAYS" fx:id="cssQueryTextField" promptText="请输入CSS选择器" onKeyReleased="#cssQuery"/>
-                <Label styleClass="menu-item" onMouseClicked="#cssQuery" text="查询"/>
-                <Separator orientation="VERTICAL"/>
-                <Label styleClass="menu-item" onMouseClicked="#openCssManual" text="手册"/>
-            </HBox>
-            <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="cssQueryTextArea"/>
-        </VBox>
-    </SplitPane>
-</AnchorPane>
+                <HBox alignment="CENTER_LEFT" spacing="5" styleClass="menu">
+                    <padding>
+                        <Insets top="2" bottom="5" right="5"/>
+                    </padding>
+                    <TextField HBox.hgrow="ALWAYS" fx:id="cssQueryTextField" promptText="请输入CSS选择器" onKeyReleased="#cssQuery"/>
+                    <Label styleClass="menu-item" onMouseClicked="#cssQuery" text="查询"/>
+                    <Separator orientation="VERTICAL"/>
+                    <Label styleClass="menu-item" onMouseClicked="#openCssManual" text="手册"/>
+                </HBox>
+                <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="cssQueryTextArea"/>
+            </VBox>
+        </SplitPane>
+    </AnchorPane>
+</LogOutPane>

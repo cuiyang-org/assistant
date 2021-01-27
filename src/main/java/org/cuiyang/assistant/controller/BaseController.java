@@ -3,10 +3,10 @@ package org.cuiyang.assistant.controller;
 import javafx.scene.control.Tab;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.cuiyang.assistant.control.LogOutPane;
 
 import java.io.File;
 
-import static org.cuiyang.assistant.AssistantApplication.mainController;
 import static org.cuiyang.assistant.AssistantApplication.primaryStage;
 import static org.cuiyang.assistant.constant.SystemConstant.APP_NAME;
 
@@ -17,34 +17,35 @@ import static org.cuiyang.assistant.constant.SystemConstant.APP_NAME;
  */
 public abstract class BaseController {
     public Tab tab;
+    public LogOutPane logOut;
 
     /**
      * 清除日志
      */
     public void clearLog() {
-        mainController().logOut.clear();
+        logOut.clear();
     }
 
     /**
      * 输出日志
      */
     public void log(String str) {
-        if (mainController().splitPane.getItems().size() == 1) {
-            mainController().showLogOut(true);
+        if (!logOut.isShowLogOut()) {
+            logOut.showLogOut(true);
         }
-        mainController().logOut.appendText(str);
-        mainController().logOut.appendText("\r\n");
+        logOut.appendText(str);
+        logOut.appendText("\r\n");
     }
 
     /**
      * 输出异常日志
      */
     public void log(Throwable t) {
-        if (mainController().splitPane.getItems().size() == 1) {
-            mainController().showLogOut(true);
+        if (!logOut.isShowLogOut()) {
+            logOut.showLogOut(true);
         }
-        mainController().logOut.appendText(ExceptionUtils.getStackTrace(t));
-        mainController().logOut.appendText("\r\n");
+        logOut.appendText(ExceptionUtils.getStackTrace(t));
+        logOut.appendText("\r\n");
     }
 
     /**

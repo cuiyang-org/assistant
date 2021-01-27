@@ -4,34 +4,39 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.XmlController">
-    <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
-        <VBox>
-            <padding>
-                <Insets right="5"/>
-            </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
+<?import org.cuiyang.assistant.control.LogOutPane?>
+<LogOutPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="logOut"
+            fx:controller="org.cuiyang.assistant.controller.XmlController">
+    <AnchorPane>
+        <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
+            <VBox>
                 <padding>
-                    <Insets top="2" bottom="5" right="5"/>
+                    <Insets right="5"/>
                 </padding>
-                <Label styleClass="menu-item" onMouseClicked="#xmlFormat" text="格式化"/>
-            </HBox>
-            <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="editor"/>
-        </VBox>
-        <VBox>
-            <padding>
-                <Insets left="5"/>
-            </padding>
-            <HBox alignment="CENTER_LEFT" spacing="5" styleClass="menu">
+                <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
+                    <padding>
+                        <Insets top="2" bottom="5" right="5"/>
+                    </padding>
+                    <Label styleClass="menu-item" onMouseClicked="#xmlFormat" text="格式化"/>
+                </HBox>
+                <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="editor"/>
+            </VBox>
+            <VBox>
                 <padding>
-                    <Insets top="2" bottom="5" right="5"/>
+                    <Insets left="5"/>
                 </padding>
-                <TextField HBox.hgrow="ALWAYS" fx:id="xpathTextField" promptText="请输入XPath" onKeyReleased="#xpath"/>
-                <Label styleClass="menu-item" onMouseClicked="#xpath" text="查询"/>
-                <Separator orientation="VERTICAL"/>
-                <Label styleClass="menu-item" onMouseClicked="#openCssManual" text="手册"/>
-            </HBox>
-            <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="xpathTextArea"/>
-        </VBox>
-    </SplitPane>
-</AnchorPane>
+                <HBox alignment="CENTER_LEFT" spacing="5" styleClass="menu">
+                    <padding>
+                        <Insets top="2" bottom="5" right="5"/>
+                    </padding>
+                    <TextField HBox.hgrow="ALWAYS" fx:id="xpathTextField" promptText="请输入XPath" onKeyReleased="#xpath"/>
+                    <Label styleClass="menu-item" onMouseClicked="#xpath" text="查询"/>
+                    <Separator orientation="VERTICAL"/>
+                    <Label styleClass="menu-item" onMouseClicked="#openCssManual" text="手册"/>
+                </HBox>
+                <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="xpathTextArea"/>
+            </VBox>
+        </SplitPane>
+    </AnchorPane>
+</LogOutPane>

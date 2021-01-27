@@ -7,68 +7,71 @@
 <?import org.cuiyang.assistant.control.Box?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<VBox xmlns:fx="http://javafx.com/fxml/1"
-      fx:id="rootPane"
-      fx:controller="org.cuiyang.assistant.controller.ToolController" spacing="20">
-    <padding>
-        <Insets top="10" bottom="10" left="5" right="5"/>
-    </padding>
+<?import org.cuiyang.assistant.control.LogOutPane?>
+<LogOutPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="logOut"
+            fx:controller="org.cuiyang.assistant.controller.ToolController">
+    <VBox spacing="20">
+        <padding>
+            <Insets top="10" bottom="10" left="5" right="5"/>
+        </padding>
 
-    <Box title="时间格式化">
-        <HBox alignment="CENTER_LEFT" spacing="5" Box.topAnchor="10" Box.rightAnchor="10" Box.bottomAnchor="10" Box.leftAnchor="10">
-            <TextField fx:id="timestampTextField" HBox.hgrow="ALWAYS" promptText="时间戳" onKeyReleased="#timestamp2datetime"/>
-            <Separator orientation="VERTICAL"/>
-            <TextField fx:id="datetimeTextField" HBox.hgrow="ALWAYS" promptText="北京时间" onKeyReleased="#datetime2timestamp"/>
-            <Separator orientation="VERTICAL"/>
-            <TextField fx:id="dateFormatterTextField" HBox.hgrow="ALWAYS" text="yyyy-MM-dd HH:mm:ss" promptText="日期格式" onKeyReleased="#timestamp2datetime"/>
-            <Separator orientation="VERTICAL"/>
-            <ComboBox fx:id="timezoneComboBox" value="UTC+8" onAction="#timestamp2datetime">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="UTC" />
-                        <String fx:value="UTC+1" />
-                        <String fx:value="UTC+2" />
-                        <String fx:value="UTC+3" />
-                        <String fx:value="UTC+4" />
-                        <String fx:value="UTC+5" />
-                        <String fx:value="UTC+6" />
-                        <String fx:value="UTC+7" />
-                        <String fx:value="UTC+8" />
-                        <String fx:value="UTC+9" />
-                        <String fx:value="UTC+10" />
-                        <String fx:value="UTC+11" />
-                        <String fx:value="UTC+12" />
-                        <String fx:value="UTC-11" />
-                        <String fx:value="UTC-10" />
-                        <String fx:value="UTC-9" />
-                        <String fx:value="UTC-8" />
-                        <String fx:value="UTC-7" />
-                        <String fx:value="UTC-6" />
-                        <String fx:value="UTC-5" />
-                        <String fx:value="UTC-4" />
-                        <String fx:value="UTC-3" />
-                        <String fx:value="UTC-2" />
-                        <String fx:value="UTC-1" />
-                    </FXCollections>
-                </items>
-            </ComboBox>
-        </HBox>
-    </Box>
-    <Box title="常用工具">
-        <HBox alignment="CENTER_LEFT" spacing="5" Box.topAnchor="10" Box.rightAnchor="10" Box.bottomAnchor="10" Box.leftAnchor="10">
-            <Button text="uuid" onMouseClicked="#uuid"/>
-            <Separator orientation="VERTICAL"/>
-            <Button text="uuid2" onMouseClicked="#uuid2"/>
-            <Separator orientation="VERTICAL"/>
-            <Button text="UUID" onMouseClicked="#uuidUpper"/>
-            <Separator orientation="VERTICAL"/>
-            <Button text="UUID2" onMouseClicked="#uuid2Upper"/>
-            <Separator orientation="VERTICAL"/>
-            <Button text="时间戳" onMouseClicked="#timestamp"/>
-            <Separator orientation="VERTICAL"/>
-            <Button text="日期" onMouseClicked="#datetime"/>
-            <Separator orientation="VERTICAL"/>
-            <Button text="Dex合并" onMouseClicked="#merge"/>
-        </HBox>
-    </Box>
-</VBox>
+        <Box title="时间格式化">
+            <HBox alignment="CENTER_LEFT" spacing="5" Box.topAnchor="10" Box.rightAnchor="10" Box.bottomAnchor="10" Box.leftAnchor="10">
+                <TextField fx:id="timestampTextField" HBox.hgrow="ALWAYS" promptText="时间戳" onKeyReleased="#timestamp2datetime"/>
+                <Separator orientation="VERTICAL"/>
+                <TextField fx:id="datetimeTextField" HBox.hgrow="ALWAYS" promptText="北京时间" onKeyReleased="#datetime2timestamp"/>
+                <Separator orientation="VERTICAL"/>
+                <TextField fx:id="dateFormatterTextField" HBox.hgrow="ALWAYS" text="yyyy-MM-dd HH:mm:ss" promptText="日期格式" onKeyReleased="#timestamp2datetime"/>
+                <Separator orientation="VERTICAL"/>
+                <ComboBox fx:id="timezoneComboBox" value="UTC+8" onAction="#timestamp2datetime">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="UTC" />
+                            <String fx:value="UTC+1" />
+                            <String fx:value="UTC+2" />
+                            <String fx:value="UTC+3" />
+                            <String fx:value="UTC+4" />
+                            <String fx:value="UTC+5" />
+                            <String fx:value="UTC+6" />
+                            <String fx:value="UTC+7" />
+                            <String fx:value="UTC+8" />
+                            <String fx:value="UTC+9" />
+                            <String fx:value="UTC+10" />
+                            <String fx:value="UTC+11" />
+                            <String fx:value="UTC+12" />
+                            <String fx:value="UTC-11" />
+                            <String fx:value="UTC-10" />
+                            <String fx:value="UTC-9" />
+                            <String fx:value="UTC-8" />
+                            <String fx:value="UTC-7" />
+                            <String fx:value="UTC-6" />
+                            <String fx:value="UTC-5" />
+                            <String fx:value="UTC-4" />
+                            <String fx:value="UTC-3" />
+                            <String fx:value="UTC-2" />
+                            <String fx:value="UTC-1" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </HBox>
+        </Box>
+        <Box title="常用工具">
+            <HBox alignment="CENTER_LEFT" spacing="5" Box.topAnchor="10" Box.rightAnchor="10" Box.bottomAnchor="10" Box.leftAnchor="10">
+                <Button text="uuid" onMouseClicked="#uuid"/>
+                <Separator orientation="VERTICAL"/>
+                <Button text="uuid2" onMouseClicked="#uuid2"/>
+                <Separator orientation="VERTICAL"/>
+                <Button text="UUID" onMouseClicked="#uuidUpper"/>
+                <Separator orientation="VERTICAL"/>
+                <Button text="UUID2" onMouseClicked="#uuid2Upper"/>
+                <Separator orientation="VERTICAL"/>
+                <Button text="时间戳" onMouseClicked="#timestamp"/>
+                <Separator orientation="VERTICAL"/>
+                <Button text="日期" onMouseClicked="#datetime"/>
+                <Separator orientation="VERTICAL"/>
+                <Button text="Dex合并" onMouseClicked="#merge"/>
+            </HBox>
+        </Box>
+    </VBox>
+</LogOutPane>

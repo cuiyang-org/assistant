@@ -3,17 +3,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox spacing="5" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.cuiyang.assistant.controller.EncodeController">
-    <TextArea fx:id="encodeInput" wrapText="true" VBox.vgrow="ALWAYS" promptText="请输入要编码/解码的内容"/>
-    <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
-        <Label styleClass="menu-item" onMouseClicked="#encodeExchange" text="互换"/>
-        <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="URLEncode"/>
-        <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="URLDecode"/>
-        <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="Base64Encode"/>
-        <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="Base64Decode"/>
-        <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="UnicodeEncode"/>
-        <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="UnicodeDecode"/>
-    </HBox>
-    <TextArea fx:id="encodeOutput" wrapText="true" VBox.vgrow="ALWAYS" promptText="编码/解码结果"/>
-</VBox>
+<?import org.cuiyang.assistant.control.LogOutPane?>
+<LogOutPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="logOut"
+            fx:controller="org.cuiyang.assistant.controller.EncodeController">
+    <VBox spacing="5">
+        <TextArea fx:id="encodeInput" wrapText="true" VBox.vgrow="ALWAYS" promptText="请输入要编码/解码的内容"/>
+        <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
+            <Label styleClass="menu-item" onMouseClicked="#encodeExchange" text="互换"/>
+            <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="URLEncode"/>
+            <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="URLDecode"/>
+            <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="Base64Encode"/>
+            <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="Base64Decode"/>
+            <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="UnicodeEncode"/>
+            <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="UnicodeDecode"/>
+        </HBox>
+        <TextArea fx:id="encodeOutput" wrapText="true" VBox.vgrow="ALWAYS" promptText="编码/解码结果"/>
+    </VBox>
+</LogOutPane>

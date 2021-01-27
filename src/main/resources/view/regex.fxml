@@ -3,18 +3,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox spacing="5" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.cuiyang.assistant.controller.RegexController">
-    <TextArea fx:id="inputTextArea" promptText="待匹配的文本" VBox.vgrow="ALWAYS" onKeyReleased="#match" wrapText="true"/>
-    <HBox alignment="CENTER_LEFT" spacing="5">
-        <TextField HBox.hgrow="ALWAYS" fx:id="regexTextField" promptText="正则表达式" onKeyReleased="#match"/>
-        <CheckBox fx:id="ignoreCaseCheckBox" text="忽略大小写" selected="true" onMouseClicked="#match"/>
-        <Label styleClass="menu-item" onMouseClicked="#match" text="匹配"/>
-        <Separator orientation="VERTICAL"/>
-        <TextField HBox.hgrow="ALWAYS" fx:id="replaceTextField" promptText="替换文本"/>
-        <Label styleClass="menu-item" onMouseClicked="#replace" text="替换"/>
-        <Separator orientation="VERTICAL"/>
-        <Label styleClass="menu-item" onMouseClicked="#openRegexManual" text="手册"/>
-    </HBox>
-    <TextArea fx:id="outputTextArea" promptText="匹配结果" VBox.vgrow="ALWAYS" wrapText="true"/>
-</VBox>
+<?import org.cuiyang.assistant.control.LogOutPane?>
+<LogOutPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="logOut"
+            fx:controller="org.cuiyang.assistant.controller.RegexController">
+    <VBox spacing="5">
+        <TextArea fx:id="inputTextArea" promptText="待匹配的文本" VBox.vgrow="ALWAYS" onKeyReleased="#match" wrapText="true"/>
+        <HBox alignment="CENTER_LEFT" spacing="5">
+            <TextField HBox.hgrow="ALWAYS" fx:id="regexTextField" promptText="正则表达式" onKeyReleased="#match"/>
+            <CheckBox fx:id="ignoreCaseCheckBox" text="忽略大小写" selected="true" onMouseClicked="#match"/>
+            <Label styleClass="menu-item" onMouseClicked="#match" text="匹配"/>
+            <Separator orientation="VERTICAL"/>
+            <TextField HBox.hgrow="ALWAYS" fx:id="replaceTextField" promptText="替换文本"/>
+            <Label styleClass="menu-item" onMouseClicked="#replace" text="替换"/>
+            <Separator orientation="VERTICAL"/>
+            <Label styleClass="menu-item" onMouseClicked="#openRegexManual" text="手册"/>
+        </HBox>
+        <TextArea fx:id="outputTextArea" promptText="匹配结果" VBox.vgrow="ALWAYS" wrapText="true"/>
+    </VBox>
+</LogOutPane>

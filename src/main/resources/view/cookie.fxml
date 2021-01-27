@@ -5,7 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
 <?import org.cuiyang.assistant.control.KeyValueTreeView?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.CookieController">
+<?import org.cuiyang.assistant.control.LogOutPane?>
+<LogOutPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="logOut"
+            fx:controller="org.cuiyang.assistant.controller.CookieController">
     <SplitPane dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
         <VBox>
             <padding>
@@ -34,4 +37,4 @@
             <KeyValueTreeView fx:id="cookieTreeView" VBox.vgrow="ALWAYS"/>
         </VBox>
     </SplitPane>
-</AnchorPane>
+</LogOutPane>

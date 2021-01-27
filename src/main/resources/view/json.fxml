@@ -7,59 +7,64 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import org.cuiyang.assistant.control.KeyValueTreeView?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cuiyang.assistant.controller.JsonController">
-    <SplitPane fx:id="splitPane" dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
-        <VBox fx:id="splitLeft">
-            <padding>
-                <Insets right="5"/>
-            </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2">
+<?import org.cuiyang.assistant.control.LogOutPane?>
+<LogOutPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="logOut"
+            fx:controller="org.cuiyang.assistant.controller.JsonController">
+    <AnchorPane>
+        <SplitPane fx:id="splitPane" dividerPositions="0.6" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
+            <VBox fx:id="splitLeft">
                 <padding>
-                    <Insets top="2" bottom="5" right="5"/>
+                    <Insets right="5"/>
                 </padding>
-                <Button styleClass="menu-item" onMouseClicked="#jsonFormat" text="格式化"/>
-                <Button styleClass="menu-item" onMouseClicked="#jsonSimple" text="去格式化"/>
-                <Button styleClass="menu-item" onMouseClicked="#sort" text="排序"/>
-                <Button styleClass="menu-item" onMouseClicked="#genPojo" text="生成POJO"/>
-                <Button styleClass="menu-item" onMouseClicked="#genMap" text="生成Map"/>
-                <Button onMouseClicked="#switchEdit">
-                    <graphic>
-                        <ImageView fx:id="editZoomImageView" fitWidth="16" fitHeight="16">
-                            <Image url="/view/image/zoom-up.png"/>
-                        </ImageView>
-                    </graphic>
-                </Button>
-            </HBox>
-            <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="editor"/>
-        </VBox>
-        <VBox fx:id="splitRight">
-            <padding>
-                <Insets left="5"/>
-            </padding>
-            <HBox alignment="CENTER_LEFT" spacing="2">
-                <padding>
-                    <Insets top="2" bottom="5" right="5"/>
-                </padding>
-                <Button styleClass="menu-item" onMouseClicked="#jsonFold" text="折叠"/>
-                <Button styleClass="menu-item" onMouseClicked="#jsonExpanded" text="展开"/>
-                <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
-                    <Button onMouseClicked="#switchPreview">
+                <HBox alignment="CENTER_LEFT" spacing="2">
+                    <padding>
+                        <Insets top="2" bottom="5" right="5"/>
+                    </padding>
+                    <Button styleClass="menu-item" onMouseClicked="#jsonFormat" text="格式化"/>
+                    <Button styleClass="menu-item" onMouseClicked="#jsonSimple" text="去格式化"/>
+                    <Button styleClass="menu-item" onMouseClicked="#sort" text="排序"/>
+                    <Button styleClass="menu-item" onMouseClicked="#genPojo" text="生成POJO"/>
+                    <Button styleClass="menu-item" onMouseClicked="#genMap" text="生成Map"/>
+                    <Button onMouseClicked="#switchEdit">
                         <graphic>
-                            <ImageView fx:id="previewZoomImageView" fitWidth="16" fitHeight="16">
+                            <ImageView fx:id="editZoomImageView" fitWidth="16" fitHeight="16">
                                 <Image url="/view/image/zoom-up.png"/>
                             </ImageView>
                         </graphic>
                     </Button>
                 </HBox>
-            </HBox>
-            <KeyValueTreeView fx:id="jsonTreeView" VBox.vgrow="ALWAYS">
-                <contextMenu>
-                    <ContextMenu>
-                        <items><MenuItem text="生成POJO" onAction="#genSubPojo"/></items>
-                        <items><MenuItem text="生成Map" onAction="#genSubMap"/></items>
-                    </ContextMenu>
-                </contextMenu>
-            </KeyValueTreeView>
-        </VBox>
-    </SplitPane>
-</AnchorPane>
+                <SearchCodeEditor VBox.vgrow="ALWAYS" fx:id="editor"/>
+            </VBox>
+            <VBox fx:id="splitRight">
+                <padding>
+                    <Insets left="5"/>
+                </padding>
+                <HBox alignment="CENTER_LEFT" spacing="2">
+                    <padding>
+                        <Insets top="2" bottom="5" right="5"/>
+                    </padding>
+                    <Button styleClass="menu-item" onMouseClicked="#jsonFold" text="折叠"/>
+                    <Button styleClass="menu-item" onMouseClicked="#jsonExpanded" text="展开"/>
+                    <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                        <Button onMouseClicked="#switchPreview">
+                            <graphic>
+                                <ImageView fx:id="previewZoomImageView" fitWidth="16" fitHeight="16">
+                                    <Image url="/view/image/zoom-up.png"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </HBox>
+                </HBox>
+                <KeyValueTreeView fx:id="jsonTreeView" VBox.vgrow="ALWAYS">
+                    <contextMenu>
+                        <ContextMenu>
+                            <items><MenuItem text="生成POJO" onAction="#genSubPojo"/></items>
+                            <items><MenuItem text="生成Map" onAction="#genSubMap"/></items>
+                        </ContextMenu>
+                    </contextMenu>
+                </KeyValueTreeView>
+            </VBox>
+        </SplitPane>
+    </AnchorPane>
+</LogOutPane>

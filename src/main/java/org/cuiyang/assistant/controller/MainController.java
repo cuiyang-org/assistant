@@ -6,15 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import lombok.SneakyThrows;
 import org.cuiyang.assistant.control.InputDialog;
-import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.file.FileOperation;
 import org.cuiyang.assistant.util.AlertUtils;
 import org.cuiyang.assistant.util.ResourceUtils;
@@ -38,11 +35,6 @@ public class MainController extends BaseController implements Initializable {
 
     /** 按钮容器 */
     public Pane menuContainer;
-    /** 日志输出 */
-    public SearchCodeEditor logOut;
-    public VBox logOutParent;
-    /** 分割面板 */
-    public SplitPane splitPane;
     /** 日志开关图标 */
     public ImageView logImageView;
     /** tab pan */
@@ -61,24 +53,21 @@ public class MainController extends BaseController implements Initializable {
      * 切换日志显示
      */
     public void switchLogOut() {
-        boolean show = splitPane.getItems().size() == 1;
-        showLogOut(show);
+        Tab tab = tabPane.getSelectionModel().getSelectedItem();
+        if (tab != null) {
+            BaseController controller = (BaseController) tab.getUserData();
+            controller.logOut.showLogOut(!controller.logOut.isShowLogOut());
+        }
     }
 
     /**
      * 隐藏日志输出
      */
     public void showLogOut(boolean show) {
-        if (show && splitPane.getItems().size() == 1) {
-            splitPane.getItems().add(logOutParent);
-            splitPane.setDividerPositions(0.8);
-            logImageView.setImage(new Image("/view/image/log-open.png"));
-            splitPane.getStyleClass().remove("no-divider");
-        } else if (!show && splitPane.getItems().size() == 2) {
-            splitPane.getItems().remove(logOutParent);
-            splitPane.setDividerPositions(1);
-            logImageView.setImage(new Image("/view/image/log-close.png"));
-            splitPane.getStyleClass().add("no-divider");
+        Tab tab = tabPane.getSelectionModel().getSelectedItem();
+        if (tab != null) {
+            BaseController controller = (BaseController) tab.getUserData();
+            controller.logOut.showLogOut(show);
         }
     }
 

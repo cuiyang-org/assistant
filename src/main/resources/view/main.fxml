@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<?import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor?>
 <BorderPane stylesheets="@css/default.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.cuiyang.assistant.controller.MainController">
     <top>
@@ -31,26 +30,18 @@
         </VBox>
     </top>
     <center>
-        <SplitPane fx:id="splitPane" dividerPositions="0.8" orientation="VERTICAL">
-            <StackPane>
-                <VBox alignment="CENTER">
-                    <padding>
-                        <Insets bottom="30" top="30"/>
-                    </padding>
-                    <ImageView>
-                        <Image url="/logo.png"/>
-                    </ImageView>
-                </VBox>
-                <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
-                </TabPane>
-            </StackPane>
-            <VBox fx:id="logOutParent">
+        <StackPane>
+            <VBox alignment="CENTER">
                 <padding>
-                    <Insets bottom="5" left="5" right="5" top="5"/>
+                    <Insets bottom="30" top="30"/>
                 </padding>
-                <SearchCodeEditor fx:id="logOut" VBox.vgrow="ALWAYS"/>
+                <ImageView>
+                    <Image url="/logo.png"/>
+                </ImageView>
             </VBox>
-        </SplitPane>
+            <TabPane fx:id="tabPane" tabClosingPolicy="ALL_TABS">
+            </TabPane>
+        </StackPane>
     </center>
     <bottom>
         <VBox>
