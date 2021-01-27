@@ -69,6 +69,13 @@ public abstract class BaseController {
     }
 
     /**
+     * 关闭
+     */
+    public boolean close() {
+        return true;
+    }
+
+    /**
      * 是否可关闭
      */
     public abstract boolean isCloseable();

@@ -36,7 +36,7 @@ public class AssistantApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
-            AlertUtils.exception(throwable);
+            AlertUtils.error(throwable.getCause().getCause().getMessage());
             throwable.printStackTrace();
         });
 
@@ -60,6 +60,7 @@ public class AssistantApplication extends Application {
         primaryStage.getIcons().add(new Image(ResourceUtils.getResourceAsStream("logo.png")));
         primaryStage.setWidth(1200);
         primaryStage.setHeight(800);
+        primaryStage.setOnCloseRequest(event -> System.exit(0));
         primaryStage.show();
     }
 

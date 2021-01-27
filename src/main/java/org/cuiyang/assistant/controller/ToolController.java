@@ -1,5 +1,6 @@
 package org.cuiyang.assistant.controller;
 
+import javafx.application.Platform;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -121,7 +122,8 @@ public class ToolController extends BaseController {
                 try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(outFile))) {
                     for (int i = 0; i < files.size(); i++) {
                         String classes = String.format("classes%s.dex", i > 0 ? (i + 1) : "");
-                        log(files.get(i).getName() + " -> " + classes);
+                        int finalI = i;
+                        Platform.runLater(() -> log(files.get(finalI).getName() + " -> " + classes));
                         out.putNextEntry(new ZipEntry(classes));
                         try (FileInputStream in = new FileInputStream(files.get(i))) {
                             IOUtils.copy(in, out);

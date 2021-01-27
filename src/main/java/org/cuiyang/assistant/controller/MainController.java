@@ -1,7 +1,5 @@
 package org.cuiyang.assistant.controller;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -131,6 +129,9 @@ public class MainController extends BaseController implements Initializable {
             case "地址计算":
                 resource = "view/address.fxml";
                 break;
+            case "ADB":
+                resource = "view/adb.fxml";
+                break;
             default:
                 throw new RuntimeException(text);
         }
@@ -255,7 +256,8 @@ public class MainController extends BaseController implements Initializable {
         if (tab == null && (tab = tabPane.getSelectionModel().getSelectedItem()) == null) {
             return;
         }
-        if (!((BaseController) tab.getUserData()).isCloseable()) {
+        BaseController controller = (BaseController) tab.getUserData();
+        if (!(controller).isCloseable()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.getDialogPane().getStylesheets().add(getThemeResource());
             alert.setTitle("提示");
@@ -263,10 +265,14 @@ public class MainController extends BaseController implements Initializable {
             alert.showAndWait();
             ButtonType result = alert.getResult();
             if (result == ButtonType.OK) {
-                tabPane.getTabs().remove(tab);
+                if (controller.close()) {
+                    tabPane.getTabs().remove(tab);
+                }
             }
         } else {
-            tabPane.getTabs().remove(tab);
+            if (controller.close()) {
+                tabPane.getTabs().remove(tab);
+            }
         }
     }
 
@@ -281,7 +287,7 @@ public class MainController extends BaseController implements Initializable {
         alert.showAndWait();
         ButtonType result = alert.getResult();
         if (result == ButtonType.OK) {
-            tabPane.getTabs().removeIf(tab1 -> true);
+            tabPane.getTabs().removeIf(tab -> ((BaseController) tab.getUserData()).close());
         }
     }
 
@@ -296,7 +302,7 @@ public class MainController extends BaseController implements Initializable {
         alert.showAndWait();
         ButtonType result = alert.getResult();
         if (result == ButtonType.OK) {
-            tabPane.getTabs().removeIf(tab1 -> !tab1.equals(tab));
+            tabPane.getTabs().removeIf(tab1 -> !tab1.equals(tab) && ((BaseController) tab1.getUserData()).close());
         }
     }
 

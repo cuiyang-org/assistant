@@ -84,6 +84,11 @@
             <artifactId>freemarker</artifactId>
             <version>2.3.30</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.cosysoft</groupId>
+            <artifactId>device-api</artifactId>
+            <version>0.9.3</version>
+        </dependency>
     </dependencies>
 
     <build>

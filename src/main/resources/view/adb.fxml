@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import org.cuiyang.assistant.control.Box?>
+<?import javafx.collections.FXCollections?>
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.cuiyang.assistant.controller.AdbController" spacing="20">
+    <padding>
+        <Insets top="10" bottom="10" left="5" right="5"/>
+    </padding>
+
+    <Box title="选择设备">
+        <HBox alignment="CENTER_LEFT" spacing="5" Box.topAnchor="10" Box.rightAnchor="10" Box.bottomAnchor="10" Box.leftAnchor="10">
+            <ComboBox fx:id="deviceComboBox">
+                <items>
+                    <FXCollections fx:factory="observableArrayList"/>
+                </items>
+            </ComboBox>
+        </HBox>
+    </Box>
+    <Box title="常用工具">
+        <HBox alignment="CENTER_LEFT" spacing="5" Box.topAnchor="10" Box.rightAnchor="10" Box.bottomAnchor="10" Box.leftAnchor="10">
+            <Button text="当前应用Activity" onMouseClicked="#currentActivity"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="远程连接" onMouseClicked="#remoteConnect"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="开发者选项" onMouseClicked="#developmentSettings"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="IP地址" onMouseClicked="#ipAddr"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="代理设置" onMouseClicked="#proxySettings"/>
+            <Separator orientation="VERTICAL"/>
+            <Button fx:id="fridaServerBtn" text="启动FridaServer" onMouseClicked="#fridaServer"/>
+            <Separator orientation="VERTICAL"/>
+            <Button fx:id="androidServerBtn" text="启动AndroidServer" onMouseClicked="#androidServer"/>
+        </HBox>
+    </Box>
+</VBox>
