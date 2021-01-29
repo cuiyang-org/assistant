@@ -23,6 +23,7 @@ import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import static org.cuiyang.assistant.AssistantApplication.primaryStage;
 import static org.cuiyang.assistant.constant.ConfigConstant.LAST_DEX_DIRECTORY;
 import static org.cuiyang.assistant.util.ThreadUtils.run;
 
@@ -32,7 +33,6 @@ import static org.cuiyang.assistant.util.ThreadUtils.run;
  * @author cy48576
  */
 public class ToolController extends BaseController {
-    public VBox rootPane;
     public TextField timestampTextField;
     public TextField datetimeTextField;
     public TextField dateFormatterTextField;
@@ -109,7 +109,7 @@ public class ToolController extends BaseController {
             chooser.setInitialDirectory(new File(ConfigUtils.get(LAST_DEX_DIRECTORY)));
         }
         chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("android dex", "*.dex"));
-        List<File> files = chooser.showOpenMultipleDialog(rootPane.getScene().getWindow());
+        List<File> files = chooser.showOpenMultipleDialog(primaryStage());
         if (CollectionUtils.isEmpty(files)) {
             log("没有选择要合并的dex");
             return;

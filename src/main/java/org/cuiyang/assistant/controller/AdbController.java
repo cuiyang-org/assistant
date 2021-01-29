@@ -2,12 +2,12 @@ package org.cuiyang.assistant.controller;
 
 import com.android.ddmlib.MultiLineReceiver;
 import com.github.cosysoft.device.android.AndroidDevice;
-import com.github.cosysoft.device.android.impl.AndroidDeviceStore;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.util.StringConverter;
+import org.cuiyang.assistant.core.AndroidDeviceStore2;
 import org.cuiyang.assistant.util.AlertUtils;
 import org.cuiyang.assistant.util.ThreadUtils;
 
@@ -29,7 +29,6 @@ public class AdbController extends BaseController implements Initializable {
 
     public static final String REMOTE_CONNECT_CMD = "setprop service.adb.tcp.port 5555";
     public static final String DEVELOPMENT_SETTINGS_CMD = "am start com.android.settings/com.android.settings.DevelopmentSettings";
-    public static final String PROXY_SELECTOR_CMD = "am start com.android.settings/com.android.settings.ProxySelector";
     public static final String IF_CONFIG_CMD = "ifconfig";
     public static final String FRIDA_SERVER = "su -c '/data/local/tmp/frida-server'";
     public static final String ANDROID_SERVER = "su -c '/data/local/tmp/cy -p6789'";
@@ -73,11 +72,13 @@ public class AdbController extends BaseController implements Initializable {
                 return null;
             }
         });
-        TreeSet<AndroidDevice> devices = AndroidDeviceStore.getInstance().getDevices();
-        devices.forEach(item -> deviceComboBox.getItems().add(item));
-        if (!deviceComboBox.getItems().isEmpty()) {
-            deviceComboBox.setValue(deviceComboBox.getItems().get(0));
-        }
+        ThreadUtils.run(() -> {
+            TreeSet<AndroidDevice> devices = AndroidDeviceStore2.getInstance().getDevices();
+            devices.forEach(item -> deviceComboBox.getItems().add(item));
+            if (!deviceComboBox.getItems().isEmpty()) {
+                Platform.runLater(() -> deviceComboBox.setValue(deviceComboBox.getItems().get(0)));
+            }
+        });
     }
 
     /**
@@ -117,13 +118,6 @@ public class AdbController extends BaseController implements Initializable {
             }
             log(ip);
         }
-    }
-
-    /**
-     * 代理设置
-     */
-    public void proxySettings() {
-        cmd(PROXY_SELECTOR_CMD);
     }
 
     /**

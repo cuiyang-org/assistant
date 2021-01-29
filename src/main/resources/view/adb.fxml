@@ -33,8 +33,6 @@
                 <Separator orientation="VERTICAL"/>
                 <Button text="IP地址" onMouseClicked="#ipAddr"/>
                 <Separator orientation="VERTICAL"/>
-                <Button text="代理设置" onMouseClicked="#proxySettings"/>
-                <Separator orientation="VERTICAL"/>
                 <Button fx:id="fridaServerBtn" text="启动FridaServer" onMouseClicked="#fridaServer"/>
                 <Separator orientation="VERTICAL"/>
                 <Button fx:id="androidServerBtn" text="启动AndroidServer" onMouseClicked="#androidServer"/>
