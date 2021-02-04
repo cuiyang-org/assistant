@@ -3,7 +3,6 @@ package org.cuiyang.assistant.controller;
 import javafx.application.Platform;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
@@ -130,9 +129,9 @@ public class ToolController extends BaseController {
                         }
                     }
                 }
-                log("合并dex成功，输出目录：" + outFile);
+                Platform.runLater(() -> log("合并dex成功，输出目录：" + outFile));
             } catch (Exception e) {
-                log("合并dex失败", e);
+                Platform.runLater(() -> log("合并dex失败", e));
             }
         });
     }
