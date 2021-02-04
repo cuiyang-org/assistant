@@ -181,6 +181,7 @@ public class AdbController extends BaseController implements Initializable {
     /**
      * 启动Android Server
      */
+    @SneakyThrows
     public void androidServer() {
         if (androidServerRunning.get()) {
             androidServerRunning.set(false);
@@ -188,6 +189,7 @@ public class AdbController extends BaseController implements Initializable {
         } else {
             androidServerRunning.set(true);
             androidServerBtn.setText("暂停AndroidServer");
+            currentDevice().createForward(6789, 6789);
             cmd(ANDROID_SERVER, "AndroidServer", androidServerRunning);
         }
     }
