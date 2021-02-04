@@ -85,9 +85,9 @@
             <version>2.3.30</version>
         </dependency>
         <dependency>
-            <groupId>com.github.cosysoft</groupId>
-            <artifactId>device-api</artifactId>
-            <version>0.9.3</version>
+            <groupId>com.android.tools.ddms</groupId>
+            <artifactId>ddmlib</artifactId>
+            <version>25.3.0</version>
         </dependency>
     </dependencies>
 

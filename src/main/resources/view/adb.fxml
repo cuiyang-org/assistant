@@ -21,6 +21,10 @@
                         <FXCollections fx:factory="observableArrayList"/>
                     </items>
                 </ComboBox>
+                <Separator orientation="VERTICAL"/>
+                <Button text="刷新" onMouseClicked="#flush"/>
+                <Separator orientation="VERTICAL"/>
+                <Button text="选择ADB" onMouseClicked="#selectAdb"/>
             </HBox>
         </Box>
         <Box title="常用工具">

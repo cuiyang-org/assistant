@@ -1,24 +1,33 @@
 package org.cuiyang.assistant.controller;
 
+import com.android.ddmlib.IDevice;
 import com.android.ddmlib.MultiLineReceiver;
-import com.github.cosysoft.device.android.AndroidDevice;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.util.StringConverter;
-import org.cuiyang.assistant.core.AndroidDeviceStore2;
+import lombok.SneakyThrows;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.cuiyang.assistant.adb.AdbClient;
 import org.cuiyang.assistant.util.AlertUtils;
+import org.cuiyang.assistant.util.ConfigUtils;
+import org.cuiyang.assistant.util.FileUtils;
 import org.cuiyang.assistant.util.ThreadUtils;
 
+import java.io.File;
+import java.io.StringReader;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.cuiyang.assistant.constant.ConfigConstant.ADB_PATH;
 
 /**
  * AdbController
@@ -27,6 +36,7 @@ import java.util.regex.Pattern;
  */
 public class AdbController extends BaseController implements Initializable {
 
+    public static final String CURRENT_ACTIVITY = "dumpsys activity top";
     public static final String REMOTE_CONNECT_CMD = "setprop service.adb.tcp.port 5555";
     public static final String DEVELOPMENT_SETTINGS_CMD = "am start com.android.settings/com.android.settings.DevelopmentSettings";
     public static final String IF_CONFIG_CMD = "ifconfig";
@@ -35,7 +45,7 @@ public class AdbController extends BaseController implements Initializable {
 
     private static final Pattern IP_PATTERN = Pattern.compile("addr:(\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3})");
 
-    public ComboBox<AndroidDevice> deviceComboBox;
+    public ComboBox<IDevice> deviceComboBox;
     public Button androidServerBtn;
     public Button fridaServerBtn;
     private AtomicBoolean androidServerRunning = new AtomicBoolean(false);
@@ -61,19 +71,32 @@ public class AdbController extends BaseController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        deviceComboBox.setConverter(new StringConverter<AndroidDevice>() {
+        deviceComboBox.setConverter(new StringConverter<IDevice>() {
             @Override
-            public String toString(AndroidDevice object) {
+            public String toString(IDevice object) {
                 return object.getName();
             }
 
             @Override
-            public AndroidDevice fromString(String string) {
+            public IDevice fromString(String string) {
                 return null;
             }
         });
+        flush();
+    }
+
+    /**
+     * 刷新设备
+     */
+    public void flush() {
+        String adbPath = ConfigUtils.get(ADB_PATH);
+        if (StringUtils.isEmpty(adbPath)) {
+            selectAdb();
+            return;
+        }
+        deviceComboBox.getItems().removeIf(item -> true);
         ThreadUtils.run(() -> {
-            TreeSet<AndroidDevice> devices = AndroidDeviceStore2.getInstance().getDevices();
+            List<IDevice> devices = AdbClient.getInstance().getDevices();
             devices.forEach(item -> deviceComboBox.getItems().add(item));
             if (!deviceComboBox.getItems().isEmpty()) {
                 Platform.runLater(() -> deviceComboBox.setValue(deviceComboBox.getItems().get(0)));
@@ -82,11 +105,32 @@ public class AdbController extends BaseController implements Initializable {
     }
 
     /**
+     * 选择adb
+     */
+    public void selectAdb() {
+        File file = FileUtils.chooserOpenFile();
+        if (file != null) {
+            String adbPath = file.getAbsolutePath();
+            ConfigUtils.setAndSave(ADB_PATH, adbPath);
+            AdbClient.setAdbPath(adbPath);
+        }
+    }
+
+    /**
      * 当前Activity
      */
+    @SneakyThrows
     public void currentActivity() {
-        AndroidDevice device = currentDevice();
-        log(device.currentActivity());
+        String out = cmd(CURRENT_ACTIVITY);
+        if (out.contains("ACTIVITY")) {
+            List<String> lines = IOUtils.readLines(new StringReader(out));
+            for (String line : lines) {
+                if (line.contains("ACTIVITY")) {
+                    String[] tokens = StringUtils.split(line, " ");
+                    log(tokens[1]);
+                }
+            }
+        }
     }
 
     /**
@@ -148,8 +192,8 @@ public class AdbController extends BaseController implements Initializable {
         }
     }
 
-    private AndroidDevice currentDevice() {
-        AndroidDevice device = deviceComboBox.getValue();
+    private IDevice currentDevice() {
+        IDevice device = deviceComboBox.getValue();
         if (device == null) {
             AlertUtils.info("请先连接设备");
             throw new IllegalStateException("请先连接设备");
@@ -157,16 +201,31 @@ public class AdbController extends BaseController implements Initializable {
         return device;
     }
 
+    @SneakyThrows
     private String cmd(String cmd) {
-        AndroidDevice device = currentDevice();
-        return device.runAdbCommand("shell " + cmd);
+        IDevice device = currentDevice();
+        StringBuilder sb = new StringBuilder();
+        device.executeShellCommand(cmd, new MultiLineReceiver() {
+            @Override
+            public boolean isCancelled() {
+                return false;
+            }
+
+            @Override
+            public void processNewLines(String[] strings) {
+                for (String line : strings) {
+                    sb.append(line).append("\n");
+                }
+            }
+        });
+        return sb.toString();
     }
 
     private void cmd(String cmd, String name, AtomicBoolean running) {
         log("启动" + name + "...");
         ThreadUtils.run(() -> {
             try {
-                currentDevice().getDevice().executeShellCommand(cmd, new MultiLineReceiver() {
+                currentDevice().executeShellCommand(cmd, new MultiLineReceiver() {
                     @Override
                     public boolean isCancelled() {
                         if (!running.get()) {
