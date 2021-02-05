@@ -145,7 +145,7 @@ public class MainController extends BaseController implements Initializable {
         });
         tab.setClosable(true);
         tab.setContent(node);
-        tab.setText(text);
+        tab.setText(" " + text + " ");
         // 判断是否需要打开文件
         FileOperation fileOperation;
         if (controller instanceof FileOperation) {
