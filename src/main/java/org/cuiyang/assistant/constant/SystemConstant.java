@@ -11,7 +11,7 @@ public class SystemConstant {
     /** 用户目录 */
     public static final String USER_DIR = System.getProperty("user.dir");
     /** 配置文件 */
-    public static final String CONFIG_FILE = USER_DIR + "/conf/conf.ini";
+    public static final String CONFIG_FILE = System.getProperty("user.home") + "/.assistant/conf.ini";
     /** 选择要打开的文件 */
     public static final String CHOOSER_OPEN_FILE_TITLE = "选择要打开的文件";
     /** 选择要保存的文件 */
