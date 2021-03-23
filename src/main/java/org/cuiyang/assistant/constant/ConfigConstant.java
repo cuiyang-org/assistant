@@ -12,4 +12,6 @@ public class ConfigConstant {
     public static final String LAST_DIRECTORY = "last_directory";
     /** adb路径 */
     public static final String ADB_PATH = "adb_path";
+    /** 自定义命令 */
+    public static final String CMD = "cmd";
 }
