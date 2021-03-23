@@ -213,6 +213,7 @@ public class ToolController extends BaseController implements Initializable {
             optional.ifPresent(name -> {
                 cmd.setName(name);
                 button.setText(name);
+                saveCmd();
             });
         });
         contextMenu.getItems().add(rename);
