@@ -110,8 +110,12 @@ public class AdbController extends BaseController implements Initializable {
      * 选择adb
      */
     public void selectAdb() {
-        File adbFile = new File(ConfigUtils.get(ADB_PATH));
-        File file = FileUtils.chooserOpenFile(adbFile.exists() ? adbFile.getParent() : null);
+        File adbFile = null;
+        try {
+            adbFile = new File(ConfigUtils.get(ADB_PATH));
+        } catch (Exception ignore) {
+        }
+        File file = FileUtils.chooserOpenFile(adbFile != null && adbFile.exists() ? adbFile.getParent() : null);
         if (file != null) {
             String adbPath = file.getAbsolutePath();
             ConfigUtils.setAndSave(ADB_PATH, adbPath);
