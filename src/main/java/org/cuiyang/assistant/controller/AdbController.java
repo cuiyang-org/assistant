@@ -93,6 +93,8 @@ public class AdbController extends BaseController implements Initializable {
         if (StringUtils.isEmpty(adbPath)) {
             selectAdb();
             return;
+        } else {
+            AdbClient.setAdbPath(adbPath);
         }
         deviceComboBox.getItems().removeIf(item -> true);
         ThreadUtils.run(() -> {
@@ -108,7 +110,8 @@ public class AdbController extends BaseController implements Initializable {
      * 选择adb
      */
     public void selectAdb() {
-        File file = FileUtils.chooserOpenFile();
+        File adbFile = new File(ConfigUtils.get(ADB_PATH));
+        File file = FileUtils.chooserOpenFile(adbFile.exists() ? adbFile.getParent() : null);
         if (file != null) {
             String adbPath = file.getAbsolutePath();
             ConfigUtils.setAndSave(ADB_PATH, adbPath);

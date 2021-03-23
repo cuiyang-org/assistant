@@ -23,11 +23,11 @@ public class FileUtils {
      * @param title 标题
      * @return 选择的文件
      */
-    public static File fileChooser(String title, boolean save, FileChooser.ExtensionFilter... filters) {
+    public static File fileChooser(String title, boolean save, String initDir, FileChooser.ExtensionFilter... filters) {
         FileChooser chooser = new FileChooser();
         chooser.setTitle(title);
-        if (StringUtils.isNotEmpty(ConfigUtils.get(LAST_DIRECTORY))) {
-            chooser.setInitialDirectory(new File(ConfigUtils.get(LAST_DIRECTORY)));
+        if (StringUtils.isNotEmpty(initDir)) {
+            chooser.setInitialDirectory(new File(initDir));
         }
         if (filters != null) {
             chooser.getExtensionFilters().addAll(filters);
@@ -40,11 +40,28 @@ public class FileUtils {
     }
 
     /**
+     * 选择文件
+     * @param title 标题
+     * @return 选择的文件
+     */
+    public static File fileChooser(String title, boolean save, FileChooser.ExtensionFilter... filters) {
+        return fileChooser(title, save, ConfigUtils.get(LAST_DIRECTORY), filters);
+    }
+
+    /**
      * 选择要打开的文件
      * @return 选择的文件
      */
     public static File chooserOpenFile() {
         return fileChooser(CHOOSER_OPEN_FILE_TITLE, false);
+    }
+
+    /**
+     * 选择要打开的文件
+     * @return 选择的文件
+     */
+    public static File chooserOpenFile(String initDir) {
+        return fileChooser(CHOOSER_OPEN_FILE_TITLE, false, initDir);
     }
 
     /**
