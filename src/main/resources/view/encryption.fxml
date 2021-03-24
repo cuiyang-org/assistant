@@ -65,6 +65,10 @@
                             <String fx:value="From Hex" />
                             <String fx:value="To Base64" />
                             <String fx:value="From Base64" />
+                            <String fx:value="To Gzip" />
+                            <String fx:value="From Gzip" />
+                            <String fx:value="To Zlib" />
+                            <String fx:value="From Zlib" />
                             <String fx:value="To DES" />
                             <String fx:value="From DES" />
                             <String fx:value="To AES" />

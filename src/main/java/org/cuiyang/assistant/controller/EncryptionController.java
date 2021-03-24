@@ -13,13 +13,14 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.util.CipherUtils;
 import org.cuiyang.assistant.util.ConfigUtils;
+import org.cuiyang.assistant.util.GZipUtils;
+import org.cuiyang.assistant.util.ZLibUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 
-import static org.cuiyang.assistant.constant.ConfigConstant.LAST_DEX_DIRECTORY;
 import static org.cuiyang.assistant.constant.ConfigConstant.LAST_DIRECTORY;
 import static org.cuiyang.assistant.util.CommonUtils.parentVisible;
 import static org.cuiyang.assistant.util.CommonUtils.visible;
@@ -87,6 +88,10 @@ public class EncryptionController extends BaseController {
             case "From Hex" :
             case "To Base64" :
             case "From Base64" :
+            case "To Gzip" :
+            case "From Gzip" :
+            case "To Zlib" :
+            case "From Zlib" :
                 if (StringUtils.isEmpty(input.getText())) {
                     inputType.setValue("String");
                 }
@@ -153,6 +158,18 @@ public class EncryptionController extends BaseController {
                     break;
                 case "From Base64" :
                     output.setText(getOutput(Base64.getDecoder().decode(getInput())));
+                    break;
+                case "To Gzip" :
+                    output.setText(getOutput(GZipUtils.compress(getInput())));
+                    break;
+                case "From Gzip" :
+                    output.setText(getOutput(GZipUtils.uncompress(getInput())));
+                    break;
+                case "To Zlib" :
+                    output.setText(getOutput(ZLibUtils.compress(getInput())));
+                    break;
+                case "From Zlib" :
+                    output.setText(getOutput(ZLibUtils.decompress(getInput())));
                     break;
                 case "To DES" :
                     CipherUtils.DEFAULT_ALGORITHM = "DES";
