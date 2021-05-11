@@ -1,8 +1,11 @@
 package org.cuiyang.assistant.controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import org.apache.commons.codec.DecoderException;
@@ -18,8 +21,10 @@ import org.cuiyang.assistant.util.ZLibUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Base64;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import static org.cuiyang.assistant.constant.ConfigConstant.LAST_DIRECTORY;
 import static org.cuiyang.assistant.util.CommonUtils.parentVisible;
@@ -30,7 +35,7 @@ import static org.cuiyang.assistant.util.CommonUtils.visible;
  *
  * @author cy48576
  */
-public class EncryptionController extends BaseController {
+public class EncryptionController extends BaseController implements Initializable {
 
     /** 输入 */
     public TextArea input;
@@ -276,9 +281,9 @@ public class EncryptionController extends BaseController {
             case "String":
                 return input.getText().getBytes(inputCharset.getValue());
             case "Base64":
-                return Base64.getDecoder().decode(input.getText());
+                return Base64.getDecoder().decode(input.getText().replaceAll("\\s", ""));
             case "Hex":
-                return Hex.decodeHex(input.getText().toCharArray());
+                return Hex.decodeHex(input.getText().replaceAll("\\s", "").toCharArray());
             case "Binary":
                 if (StringUtils.isEmpty(input.getText())) {
                     throw new IllegalArgumentException("请选择文件");
@@ -373,5 +378,24 @@ public class EncryptionController extends BaseController {
     @Override
     public boolean isCloseable() {
         return StringUtils.isBlank(input.getText());
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // 文件类型支持拖拽
+        this.input.setOnDragOver(event -> {
+            Dragboard dragboard = event.getDragboard();
+            if (dragboard.hasFiles()) {
+                event.acceptTransferModes(TransferMode.ANY);
+            }
+        });
+        this.input.setOnDragDropped(event -> {
+            if (event.getDragboard().hasFiles()) {
+                File file = event.getDragboard().getFiles().get(0);
+                this.inputType.setValue("Binary");
+                input.setText(file.getAbsolutePath());
+                event.consume();
+            }
+        });
     }
 }

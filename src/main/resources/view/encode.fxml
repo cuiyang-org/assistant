@@ -15,8 +15,13 @@
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="URLDecode"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="Base64Encode"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="Base64Decode"/>
+            <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="HexEncode"/>
+            <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="HexDecode"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="UnicodeEncode"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="UnicodeDecode"/>
+            <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="去空格"/>
+            <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="去空行"/>
+            <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="去空白"/>
         </HBox>
         <TextArea fx:id="encodeOutput" wrapText="true" VBox.vgrow="ALWAYS" promptText="编码/解码结果"/>
     </VBox>

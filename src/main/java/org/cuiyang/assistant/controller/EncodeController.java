@@ -3,6 +3,7 @@ package org.cuiyang.assistant.controller;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.cuiyang.assistant.util.UnicodeUtils;
@@ -50,13 +51,27 @@ public class EncodeController extends BaseController {
                     encodeOutput.setText(new String(Base64.getEncoder().encode(encodeInput.getText().getBytes())));
                     break;
                 case "Base64Decode" :
-                    encodeOutput.setText(new String(Base64.getDecoder().decode(encodeInput.getText().getBytes())));
+                    encodeOutput.setText(new String(Base64.getDecoder().decode(encodeInput.getText().replaceAll("\\s", "").getBytes())));
+                    break;
+                case "HexEncode" :
+                    encodeOutput.setText(Hex.encodeHexString(encodeInput.getText().getBytes()));
+                    break;
+                case "HexDecode" :
+                    encodeOutput.setText(new String(Hex.decodeHex(encodeInput.getText().replaceAll("\\s", "").toCharArray())));
                     break;
                 case "UnicodeEncode" :
                     encodeOutput.setText(UnicodeUtils.stringToUnicode(encodeInput.getText()));
                     break;
                 case "UnicodeDecode" :
                     encodeOutput.setText(UnicodeUtils.unicodeToString(encodeInput.getText()));
+                case "去空格" :
+                    encodeOutput.setText(encodeInput.getText().replace(" ", ""));
+                    break;
+                case "去空行" :
+                    encodeOutput.setText(encodeInput.getText().replace("\n", ""));
+                    break;
+                case "去空白" :
+                    encodeOutput.setText(encodeInput.getText().replaceAll("\\s", ""));
                     break;
                 default:
             }

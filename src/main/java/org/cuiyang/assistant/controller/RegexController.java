@@ -50,10 +50,6 @@ public class RegexController extends BaseController {
      */
     public void replace() {
         try {
-            if (StringUtils.isEmpty(replaceTextField.getText())) {
-                match();
-                return;
-            }
             outputTextArea.setText(matcher().replaceAll(replaceTextField.getText()));
         } catch (Exception ignore) {
         }
