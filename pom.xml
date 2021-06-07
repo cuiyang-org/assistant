@@ -89,6 +89,11 @@
             <artifactId>ddmlib</artifactId>
             <version>25.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+            <version>1.7.4</version>
+        </dependency>
     </dependencies>
 
     <build>

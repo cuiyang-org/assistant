@@ -9,16 +9,27 @@
             fx:controller="org.cuiyang.assistant.controller.EncodeController">
     <VBox spacing="5">
         <TextArea fx:id="encodeInput" wrapText="true" VBox.vgrow="ALWAYS" promptText="请输入要编码/解码的内容"/>
-        <HBox alignment="CENTER_LEFT" spacing="2" styleClass="menu">
-            <Label styleClass="menu-item" onMouseClicked="#encodeExchange" text="互换"/>
+        <HBox alignment="CENTER_LEFT" spacing="2">
+            <Label styleClass="menu-item" onMouseClicked="#encodeExchange" text="互换" prefWidth="40" />
+            <Separator orientation="VERTICAL"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="URLEncode"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="URLDecode"/>
+            <Separator orientation="VERTICAL"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="Base64Encode"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="Base64Decode"/>
+            <Separator orientation="VERTICAL"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="HexEncode"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="HexDecode"/>
+            <Separator orientation="VERTICAL"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="UnicodeEncode"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="UnicodeDecode"/>
+            <Separator orientation="VERTICAL"/>
+            <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="PBDecode"/>
+            <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="PBDecodeBytes"/>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="2">
+            <Label prefWidth="40"/>
+            <Separator orientation="VERTICAL"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="去空格"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="去空行"/>
             <Label styleClass="menu-item" onMouseClicked="#encodeOrDecode" text="去空白"/>

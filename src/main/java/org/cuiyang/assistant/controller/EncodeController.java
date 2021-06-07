@@ -6,6 +6,8 @@ import javafx.scene.input.MouseEvent;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.cuiyang.assistant.util.JSONUtils;
+import org.cuiyang.assistant.util.PBUtils;
 import org.cuiyang.assistant.util.UnicodeUtils;
 
 import java.net.URLDecoder;
@@ -64,6 +66,13 @@ public class EncodeController extends BaseController {
                     break;
                 case "UnicodeDecode" :
                     encodeOutput.setText(UnicodeUtils.unicodeToString(encodeInput.getText()));
+                    break;
+                case "PBDecode" :
+                    encodeOutput.setText(JSONUtils.format(PBUtils.decode(Base64.getDecoder().decode(encodeInput.getText()), false), true));
+                    break;
+                case "PBDecodeBytes" :
+                    encodeOutput.setText(JSONUtils.format(PBUtils.decode(Base64.getDecoder().decode(encodeInput.getText()), true), true));
+                    break;
                 case "去空格" :
                     encodeOutput.setText(encodeInput.getText().replace(" ", ""));
                     break;
