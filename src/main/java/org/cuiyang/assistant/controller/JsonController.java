@@ -25,6 +25,8 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.alibaba.fastjson.serializer.SerializerFeature.*;
 import static freemarker.template.Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS;
@@ -419,5 +421,20 @@ public class JsonController extends BaseController implements Initializable, Edi
     @Override
     public FileTypeEnum fileType() {
         return FileTypeEnum.JSON;
+    }
+
+    /**
+     * 提取JSON
+     */
+    public void json() {
+        String text = this.editor.getText();
+        if (StringUtils.isEmpty(text)) {
+            return;
+        }
+        Pattern pattern = Pattern.compile("\\{.+}");
+        Matcher matcher = pattern.matcher(text.replaceAll("\\n", ""));
+        if (matcher.find()) {
+            this.editor.setText(matcher.group());
+        }
     }
 }
