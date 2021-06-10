@@ -38,7 +38,7 @@ public class JSONUtils {
         if (sort) {
             obj = sort(o);
         }
-        String jsonStr = JSON.toJSONString(obj, WriteMapNullValue, PrettyFormat);
-        return jsonStr.replaceAll("\\n\\s+\"", "\n    \"");
+        String jsonStr = JSON.toJSONString(obj, WriteMapNullValue, PrettyFormat, QuoteFieldNames);
+        return jsonStr.replaceAll("\t", "    ");
     }
 }
