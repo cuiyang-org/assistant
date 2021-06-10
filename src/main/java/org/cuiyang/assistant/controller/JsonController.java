@@ -20,6 +20,7 @@ import org.cuiyang.assistant.control.CodeEditor;
 import org.cuiyang.assistant.control.KeyValueTreeItem;
 import org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor;
 import org.cuiyang.assistant.file.EditorFileOperation;
+import org.cuiyang.assistant.util.JSONUtils;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -80,9 +81,7 @@ public class JsonController extends BaseController implements Initializable, Edi
             return;
         }
         try {
-            String jsonStr = JSON.toJSONString(JSON.parse(text, Feature.OrderedField), WriteMapNullValue, PrettyFormat);
-            jsonStr = jsonStr.replaceAll("\t", "    ");
-            this.editor.setText(jsonStr);
+            this.editor.setText(JSONUtils.format(JSON.parseObject(text), false));
         } catch (Exception e) {
             log(e.getMessage());
         }
@@ -111,9 +110,7 @@ public class JsonController extends BaseController implements Initializable, Edi
             return;
         }
         try {
-            String jsonStr = JSON.toJSONString(JSON.parse(text), WriteMapNullValue, PrettyFormat, MapSortField);
-            jsonStr = jsonStr.replaceAll("\t", "    ");
-            this.editor.setText(jsonStr);
+            this.editor.setText(JSONUtils.format(JSON.parseObject(text), true));
         } catch (Exception e) {
             log(e.getMessage());
         }
@@ -435,6 +432,7 @@ public class JsonController extends BaseController implements Initializable, Edi
         Matcher matcher = pattern.matcher(text.replaceAll("\\n", ""));
         if (matcher.find()) {
             this.editor.setText(matcher.group());
+            this.jsonFormat();
         }
     }
 }
