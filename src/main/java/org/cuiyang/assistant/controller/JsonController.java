@@ -9,6 +9,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -29,7 +30,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.alibaba.fastjson.serializer.SerializerFeature.*;
+import static com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValue;
 import static freemarker.template.Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS;
 import static org.cuiyang.assistant.control.searchcodeeditor.SearchCodeEditor.FILE_EVENT;
 import static org.cuiyang.assistant.util.WordUtils.firstUpperCase;
@@ -235,6 +236,9 @@ public class JsonController extends BaseController implements Initializable, Edi
                 jsonTreeView.setRoot(null);
             }
         });
+        MenuItem sort = new MenuItem("排序");
+        sort.setOnAction(event -> sort());
+        this.editor.getContextMenu().getItems().add(sort);
     }
 
     /**

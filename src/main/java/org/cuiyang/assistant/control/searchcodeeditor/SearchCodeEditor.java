@@ -6,6 +6,7 @@ import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -238,6 +239,13 @@ public class SearchCodeEditor extends VBox implements Initializable {
         } catch (Exception e) {
             AlertUtils.error(ExceptionUtils.getStackTrace(e));
         }
+    }
+
+    /**
+     * 右键菜单
+     */
+    public ContextMenu getContextMenu() {
+        return this.codeEditor.getContextMenu();
     }
 
     /**
