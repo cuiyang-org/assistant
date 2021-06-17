@@ -82,7 +82,7 @@ public class JsonController extends BaseController implements Initializable, Edi
             return;
         }
         try {
-            this.editor.setText(JSONUtils.format(JSON.parseObject(text), false));
+            this.editor.setText(JSONUtils.format(JSON.parse(text, Feature.OrderedField), false));
         } catch (Exception e) {
             log(e.getMessage());
         }
@@ -111,7 +111,7 @@ public class JsonController extends BaseController implements Initializable, Edi
             return;
         }
         try {
-            this.editor.setText(JSONUtils.format(JSON.parseObject(text), true));
+            this.editor.setText(JSONUtils.format(JSON.parse(text, Feature.OrderedField), true));
         } catch (Exception e) {
             log(e.getMessage());
         }
