@@ -24,6 +24,10 @@
                 <Separator orientation="VERTICAL"/>
                 <Button text="刷新" onMouseClicked="#flush"/>
                 <Separator orientation="VERTICAL"/>
+                <Button text="投屏" onMouseClicked="#projection"/>
+                <Separator orientation="VERTICAL"/>
+                <Button text="断开" onMouseClicked="#disconnect"/>
+                <Separator orientation="VERTICAL"/>
                 <Button text="选择ADB" onMouseClicked="#selectAdb"/>
             </HBox>
         </Box>

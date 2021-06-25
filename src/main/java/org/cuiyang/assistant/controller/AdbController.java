@@ -11,12 +11,10 @@ import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.cuiyang.assistant.adb.AdbClient;
-import org.cuiyang.assistant.util.AlertUtils;
-import org.cuiyang.assistant.util.ConfigUtils;
-import org.cuiyang.assistant.util.FileUtils;
-import org.cuiyang.assistant.util.ThreadUtils;
+import org.cuiyang.assistant.util.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
 import java.util.Arrays;
@@ -96,14 +94,36 @@ public class AdbController extends BaseController implements Initializable {
         } else {
             AdbClient.setAdbPath(adbPath);
         }
+        IDevice device = deviceComboBox.getValue();
         deviceComboBox.getItems().removeIf(item -> true);
         ThreadUtils.run(() -> {
             List<IDevice> devices = AdbClient.getInstance().getDevices();
             devices.forEach(item -> deviceComboBox.getItems().add(item));
             if (!deviceComboBox.getItems().isEmpty()) {
-                Platform.runLater(() -> deviceComboBox.setValue(deviceComboBox.getItems().get(0)));
+                if (device != null && deviceComboBox.getItems().contains(device)) {
+                    Platform.runLater(() -> deviceComboBox.setValue(device));
+                } else {
+                    Platform.runLater(() -> deviceComboBox.setValue(deviceComboBox.getItems().get(0)));
+                }
             }
         });
+    }
+
+    public void projection() {
+        IDevice device = currentDevice();
+        ThreadUtils.run(() -> {
+            try {
+                CMDUtils.run("scrcpy -s " + device.getSerialNumber());
+            } catch (IOException ignore) {
+            }
+        });
+    }
+
+    public void disconnect() throws IOException {
+        IDevice device = currentDevice();
+        String ret = CMDUtils.run("adb disconnect " + device.getSerialNumber());
+        log(ret);
+        flush();
     }
 
     /**

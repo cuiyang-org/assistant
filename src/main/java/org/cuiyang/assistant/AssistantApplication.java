@@ -10,9 +10,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.TransferMode;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 import org.cuiyang.assistant.constant.FileTypeEnum;
 import org.cuiyang.assistant.controller.MainController;
-import org.cuiyang.assistant.util.AlertUtils;
 import org.cuiyang.assistant.util.ResourceUtils;
 
 import java.io.File;
@@ -26,6 +26,7 @@ import static org.cuiyang.assistant.util.ThemeUtils.getThemeResource;
  *
  * @author cy48576
  */
+@Slf4j
 public class AssistantApplication extends Application {
 
     /** 主窗体 */
@@ -36,8 +37,7 @@ public class AssistantApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
-            AlertUtils.exception(throwable);
-            throwable.printStackTrace();
+            log.error("系统异常", throwable);
         });
 
         PRIMARY_STAGE = primaryStage;
