@@ -18,6 +18,7 @@ import org.cuiyang.assistant.control.InputDialog;
 import org.cuiyang.assistant.model.Cmd;
 import org.cuiyang.assistant.util.ConfigUtils;
 import org.cuiyang.assistant.util.FileUtils;
+import org.cuiyang.assistant.util.ThreadUtils;
 
 import java.awt.*;
 import java.io.*;
@@ -182,26 +183,28 @@ public class ToolController extends BaseController implements Initializable {
             if (event.getButton() != MouseButton.PRIMARY) {
                 return;
             }
-            try {
-                Process process = Runtime.getRuntime().exec(cmd.getPath());
+            ThreadUtils.run(() -> {
+                try {
+                    Process process = Runtime.getRuntime().exec(cmd.getPath());
 
-                InputStream is = process.getInputStream();
-                InputStream es = process.getErrorStream();
-                String line;
-                BufferedReader br;
-                br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-                while ((line = br.readLine()) != null) {
-                    String finalLine = line;
-                    Platform.runLater(() -> log(finalLine));
+                    InputStream is = process.getInputStream();
+                    InputStream es = process.getErrorStream();
+                    String line;
+                    BufferedReader br;
+                    br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+                    while ((line = br.readLine()) != null) {
+                        String finalLine = line;
+                        Platform.runLater(() -> log(finalLine));
+                    }
+                    br = new BufferedReader(new InputStreamReader(es, StandardCharsets.UTF_8));
+                    while ((line = br.readLine()) != null) {
+                        String finalLine1 = line;
+                        Platform.runLater(() -> log(finalLine1));
+                    }
+                } catch (Exception e) {
+                    Platform.runLater(() -> log(e.getMessage()));
                 }
-                br = new BufferedReader(new InputStreamReader(es, StandardCharsets.UTF_8));
-                while ((line = br.readLine()) != null) {
-                    String finalLine1 = line;
-                    Platform.runLater(() -> log(finalLine1));
-                }
-            } catch (Exception e) {
-                Platform.runLater(() -> log(e.getMessage()));
-            }
+            });
         });
 
         ContextMenu contextMenu = new ContextMenu();
