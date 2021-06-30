@@ -8,7 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import org.apache.commons.collections.CollectionUtils;
@@ -173,6 +175,23 @@ public class ToolController extends BaseController implements Initializable {
             cmdList.forEach(c -> cmdParent.getChildren().add(getCmdNode(c)));
         } catch (Exception ignore) {
         }
+
+        // 命令行工具支持拖拽
+        this.cmdParent.setOnDragOver(event -> {
+            Dragboard dragboard = event.getDragboard();
+            if (dragboard.hasFiles()) {
+                event.acceptTransferModes(TransferMode.ANY);
+            }
+        });
+        this.cmdParent.setOnDragDropped(event -> {
+            if (event.getDragboard().hasFiles()) {
+                File file = event.getDragboard().getFiles().get(0);
+                Cmd cmd = Cmd.builder().name(file.getName()).path(file.getAbsolutePath()).build();
+                cmdParent.getChildren().add(0, getCmdNode(cmd));
+                saveCmd();
+                event.consume();
+            }
+        });
     }
 
     private Node getCmdNode(Cmd cmd) {
