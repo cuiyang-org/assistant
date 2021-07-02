@@ -364,7 +364,7 @@ public class EncryptionController extends BaseController implements Initializabl
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < text.length(); i += 2) {
             if (i % 32 == 0) {
-                output.appendText(new String(Hex.decodeHex(sb.toString().toCharArray())));
+                output.appendText(new String(Hex.decodeHex(sb.toString().toCharArray())).replace("\n", "."));
                 sb = new StringBuilder();
                 output.appendText("\n");
             }
@@ -378,7 +378,7 @@ public class EncryptionController extends BaseController implements Initializabl
             for (int i = 0; i < padding; i++) {
                 output.appendText("   ");
             }
-            output.appendText(new String(Hex.decodeHex(sb.toString().toCharArray())));
+            output.appendText(new String(Hex.decodeHex(sb.toString().toCharArray())).replace("\n", "."));
         }
     }
 
