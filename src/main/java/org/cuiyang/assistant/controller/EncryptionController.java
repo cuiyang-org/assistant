@@ -357,7 +357,7 @@ public class EncryptionController extends BaseController implements Initializabl
     public void format(MouseEvent mouseEvent) throws DecoderException {
         this.run();
         String text = output.getText().trim();
-        output.setText(" 0\t 1\t 2\t 3\t 4\t 5\t 6\t 7\t 8\t 9\t A\t B\t C\t D\t E\t F");
+        output.setText(" 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F");
         if (StringUtils.isEmpty(text)) {
             return;
         }
@@ -371,7 +371,14 @@ public class EncryptionController extends BaseController implements Initializabl
             String str = text.substring(i, i + 2);
             sb.append(str);
             output.appendText(str);
-            output.appendText("\t");
+            output.appendText(" ");
+        }
+        if (sb.length() > 0) {
+            int padding = (32 - sb.length()) / 2;
+            for (int i = 0; i < padding; i++) {
+                output.appendText("   ");
+            }
+            output.appendText(new String(Hex.decodeHex(sb.toString().toCharArray())));
         }
     }
 
